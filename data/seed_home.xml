@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Home page collection rows. References the singleton content record
+         (content_singleton) defined in data/seed_careers.xml, so
+         seed_home.xml MUST load after that file. Values reproduce the current
+         hard-coded HTML byte-identical. -->
+
+    <!-- ============================================================= -->
+    <!-- STATS (DOM order)                                             -->
+    <!-- ============================================================= -->
+    <record id="seed_home_stat_1" model="atlasco.home.stat">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">10</field>
+        <field name="target">5000</field>
+        <field name="suffix">+</field>
+        <field name="label">Machines Served</field>
+    </record>
+    <record id="seed_home_stat_2" model="atlasco.home.stat">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">20</field>
+        <field name="target">50</field>
+        <field name="suffix">+</field>
+        <field name="label">Satisfied Clients</field>
+    </record>
+    <record id="seed_home_stat_3" model="atlasco.home.stat">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">30</field>
+        <field name="target">25</field>
+        <field name="suffix">+</field>
+        <field name="label">Global Partners</field>
+    </record>
+    <record id="seed_home_stat_4" model="atlasco.home.stat">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">40</field>
+        <field name="target">80</field>
+        <field name="suffix">+</field>
+        <field name="label">Product Line</field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- INDUSTRY CARDS (DOM order). title may hold <br/> markup, stored -->
+    <!-- as literal string and rendered via t-out. First card has no    -->
+    <!-- data-fx-delay (empty fx_delay).                                -->
+    <!-- ============================================================= -->
+    <record id="seed_home_industry_1" model="atlasco.home.industry">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">10</field>
+        <field name="href">/industries/oil-gas</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/industries/cards/card-oil-gas.jpg"/>
+        <field name="image_alt">Oil &amp; Gas industry</field>
+        <field name="fx_delay"></field>
+        <field name="title">OIL &amp; GAS</field>
+        <field name="desc">Atlasco Egypt delivers advanced air and reliability solutions for the toughest oil &amp; gas environments—ensuring safe and uninterrupted operations.</field>
+    </record>
+    <record id="seed_home_industry_2" model="atlasco.home.industry">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">20</field>
+        <field name="href">/industries/pharmaceutical</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/industries/cards/card-pharmaceutical.jpg"/>
+        <field name="image_alt">Pharmaceutical industry</field>
+        <field name="fx_delay">60</field>
+        <field name="title">PHARMACEUTICAL</field>
+        <field name="desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding pharmaceutical environments—ensuring continuous uptime.</field>
+    </record>
+    <record id="seed_home_industry_3" model="atlasco.home.industry">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">30</field>
+        <field name="href">/industries/medical</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/industries/cards/card-medical.jpg"/>
+        <field name="image_alt">Medical industry</field>
+        <field name="fx_delay">120</field>
+        <field name="title">MEDICAL</field>
+        <field name="desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding medical environments—ensuring continuous uptime.</field>
+    </record>
+    <record id="seed_home_industry_4" model="atlasco.home.industry">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">40</field>
+        <field name="href">/industries/steel</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/industries/cards/card-steel.jpg"/>
+        <field name="image_alt">Steel industry</field>
+        <field name="fx_delay">180</field>
+        <field name="title">STEEL</field>
+        <field name="desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding steel environments—ensuring continuous uptime.</field>
+    </record>
+    <record id="seed_home_industry_5" model="atlasco.home.industry">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">50</field>
+        <field name="href">/industries/food-beverage</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/industries/cards/card-food-beverage.jpg"/>
+        <field name="image_alt">Food &amp; Beverage industry</field>
+        <field name="fx_delay">240</field>
+        <field name="title">FOOD &amp;&lt;br/&gt;BEVERAGE</field>
+        <field name="desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding food &amp; beverage environments—ensuring continuous uptime.</field>
+    </record>
+    <record id="seed_home_industry_6" model="atlasco.home.industry">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">60</field>
+        <field name="href">/industries/textile</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/industries/cards/card-textile.jpg"/>
+        <field name="image_alt">Textile industry</field>
+        <field name="fx_delay">300</field>
+        <field name="title">TEXTILE</field>
+        <field name="desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding textile environments—ensuring continuous uptime.</field>
+    </record>
+    <record id="seed_home_industry_7" model="atlasco.home.industry">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">70</field>
+        <field name="href">/industries/electronics</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/industries/cards/card-electronics.jpg"/>
+        <field name="image_alt">Electronics industry</field>
+        <field name="fx_delay">360</field>
+        <field name="title">ELECTRONICS</field>
+        <field name="desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding electronics environments—ensuring continuous uptime.</field>
+    </record>
+    <record id="seed_home_industry_8" model="atlasco.home.industry">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">80</field>
+        <field name="href">/industries/cement</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/industries/cards/card-cement.jpg"/>
+        <field name="image_alt">Cement industry</field>
+        <field name="fx_delay">420</field>
+        <field name="title">CEMENT</field>
+        <field name="desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding cement environments—ensuring continuous uptime.</field>
+    </record>
+    <record id="seed_home_industry_9" model="atlasco.home.industry">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">90</field>
+        <field name="href">/industries/construction</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/industries/cards/card-construction.jpg"/>
+        <field name="image_alt">Construction industry</field>
+        <field name="fx_delay">480</field>
+        <field name="title">CONSTRUCTION</field>
+        <field name="desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding construction environments—ensuring continuous uptime.</field>
+    </record>
+    <record id="seed_home_industry_10" model="atlasco.home.industry">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">100</field>
+        <field name="href">/industries/power-generation</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/industries/cards/card-oil-gas.jpg"/>
+        <field name="image_alt">Power Generation industry</field>
+        <field name="fx_delay">540</field>
+        <field name="title">POWER&lt;br/&gt;GENERATION</field>
+        <field name="desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding power generation environments—ensuring continuous uptime.</field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- SEPARATOR CARDS (DOM order, left col then right col)          -->
+    <!-- category may hold & entity -> literal ampersand via t-out     -->
+    <!-- ============================================================= -->
+    <record id="seed_home_sepcard_1" model="atlasco.home.sepcard">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">10</field>
+        <field name="column">left</field>
+        <field name="number">01</field>
+        <field name="category">Compressed Air</field>
+        <field name="name">Oil-Injected Screw Compressor</field>
+    </record>
+    <record id="seed_home_sepcard_2" model="atlasco.home.sepcard">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">20</field>
+        <field name="column">left</field>
+        <field name="number">02</field>
+        <field name="category">Gas Generation</field>
+        <field name="name">PSA Oxygen Generator</field>
+    </record>
+    <record id="seed_home_sepcard_3" model="atlasco.home.sepcard">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">30</field>
+        <field name="column">left</field>
+        <field name="number">03</field>
+        <field name="category">Cryogenic &amp; Medical Gas</field>
+        <field name="name">Cryogenic Tanks</field>
+    </record>
+    <record id="seed_home_sepcard_4" model="atlasco.home.sepcard">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">40</field>
+        <field name="column">right</field>
+        <field name="number">04</field>
+        <field name="category">Oil Filtration &amp; Purification</field>
+        <field name="name">SVR Hydro</field>
+    </record>
+    <record id="seed_home_sepcard_5" model="atlasco.home.sepcard">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">50</field>
+        <field name="column">right</field>
+        <field name="number">05</field>
+        <field name="category">Ultrasound / Leak Detection</field>
+        <field name="name">SDT340 Detector</field>
+    </record>
+    <record id="seed_home_sepcard_6" model="atlasco.home.sepcard">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">60</field>
+        <field name="column">right</field>
+        <field name="number">06</field>
+        <field name="category">Condition Monitoring</field>
+        <field name="name">SPM Diamond Instrument</field>
+    </record>
+
+</odoo>

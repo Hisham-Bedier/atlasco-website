@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- The ONE canonical atlasco.content singleton. Loaded before every other
+         seed so all collection rows and _get() resolve to the same record. -->
+    <record id="content_singleton" model="atlasco.content">
+        <field name="name">Atlasco Website Content</field>
+    </record>
+</odoo>

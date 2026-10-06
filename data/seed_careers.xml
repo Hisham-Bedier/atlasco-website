@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Singleton lives in seed_000_singleton.xml (xmlid content_singleton). -->
+
+    <!-- ============================================================= -->
+    <!-- CAREERS — Why Build cards (DOM order)                          -->
+    <!-- ============================================================= -->
+    <record id="seed_career_why_1" model="atlasco.career.why">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">10</field>
+        <field name="title">Real Impact on Egyptian Industry</field>
+        <field name="body">Your work directly supports the infrastructure and production lines that power Egypt's leading industrial sectors.</field>
+    </record>
+    <record id="seed_career_why_2" model="atlasco.career.why">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">20</field>
+        <field name="title">A Legacy You Can Be Proud Of</field>
+        <field name="body">Join a company with 35+ years of engineering heritage, trusted by Egypt's most demanding industrial clients.</field>
+    </record>
+    <record id="seed_career_why_3" model="atlasco.career.why">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">30</field>
+        <field name="title">Technical Depth &amp; Domain Mastery</field>
+        <field name="body">Work alongside engineers who specialize in reliability, compressed air, fluid analysis, and predictive maintenance.</field>
+    </record>
+    <record id="seed_career_why_4" model="atlasco.career.why">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">40</field>
+        <field name="title">People-First Environment</field>
+        <field name="body">We invest in the well-being and development of our people — because great results come from teams that feel valued.</field>
+    </record>
+    <record id="seed_career_why_5" model="atlasco.career.why">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">50</field>
+        <field name="title">Room to Grow</field>
+        <field name="body">Clear career paths, mentorship from senior engineers, and access to international training through PrimeGear Academy.</field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- CAREERS — Employee Benefits (DOM order)                        -->
+    <!-- ============================================================= -->
+    <record id="seed_career_benefit_1" model="atlasco.career.benefit">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">10</field>
+        <field name="title">Competitive Compensation</field>
+        <field name="body">Market-aligned salaries with performance-based incentives tied to clear deliverables.</field>
+    </record>
+    <record id="seed_career_benefit_2" model="atlasco.career.benefit">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">20</field>
+        <field name="title">Learning &amp; Development</field>
+        <field name="body">Access to PrimeGear Academy training programs, international certifications, and on-the-job mentorship.</field>
+    </record>
+    <record id="seed_career_benefit_3" model="atlasco.career.benefit">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">30</field>
+        <field name="title">Health &amp; Wellbeing</field>
+        <field name="body">Comprehensive medical coverage and a work environment designed to support your physical and mental health.</field>
+    </record>
+    <record id="seed_career_benefit_4" model="atlasco.career.benefit">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">40</field>
+        <field name="title">Flexible Working Arrangements</field>
+        <field name="body">Where the role allows, we support flexible hours and hybrid working to help you balance life and work.</field>
+    </record>
+    <record id="seed_career_benefit_5" model="atlasco.career.benefit">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">50</field>
+        <field name="title">Annual Celebrations &amp; Team Events</field>
+        <field name="body">From the GEM Gathering to annual events, we celebrate our people and milestones together.</field>
+    </record>
+    <record id="seed_career_benefit_6" model="atlasco.career.benefit">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">60</field>
+        <field name="title">Career Advancement</field>
+        <field name="body">Structured growth pathways for every function — from field service to technical leadership.</field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- CAREERS — Current Openings (DOM order)                         -->
+    <!-- ============================================================= -->
+    <record id="seed_career_opening_1" model="atlasco.career.opening">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">10</field>
+        <field name="title">Senior Service Engineer</field>
+        <field name="department">Service</field>
+        <field name="location">Cairo</field>
+        <field name="job_type">Full-time</field>
+        <field name="blurb">Technical lead for on-site installation, maintenance, and complex troubleshooting of industrial systems.</field>
+        <field name="description">As a Senior Service Engineer, you will be the technical lead for on-site installation, maintenance, and complex troubleshooting of industrial systems</field>
+        <field name="points">Lead installation &amp; commissioning of industrial systems
+Diagnose and resolve complex technical issues on-site
+Mentor junior service engineers
+Own customer relationships through reliable support</field>
+    </record>
+    <record id="seed_career_opening_2" model="atlasco.career.opening">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">20</field>
+        <field name="title">Sales Manager – Air Systems</field>
+        <field name="department">Sales</field>
+        <field name="location">Alexandria</field>
+        <field name="job_type">Full-time</field>
+        <field name="blurb">Drive the strategic growth of our industrial air solutions — HVAC, compressed air, and pneumatic systems.</field>
+        <field name="description">As the Sales Manager for Air Systems, you will lead the strategic growth of our industrial air solutions (HVAC, compressed air, or pneumatic systems)</field>
+        <field name="points">Grow the air-systems portfolio across the region
+Build long-term relationships with industrial clients
+Translate technical needs into reliable solutions
+Consistently hit and exceed revenue targets</field>
+    </record>
+    <record id="seed_career_opening_3" model="atlasco.career.opening">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">30</field>
+        <field name="title">Logistics Coordinator</field>
+        <field name="department">Logistics</field>
+        <field name="location">Suez</field>
+        <field name="job_type">Full-time</field>
+        <field name="blurb">The backbone of the supply chain — the seamless movement of goods from our Suez facility to destinations worldwide.</field>
+        <field name="description">You will be the backbone of the supply chain, ensuring the seamless movement of goods from our Suez facility to regional and international destinations</field>
+        <field name="points">Coordinate shipments, documentation &amp; customs
+Optimize routes and delivery timelines
+Liaise with suppliers and internal teams
+Keep the flow moving, on time, every time</field>
+    </record>
+    <record id="seed_career_opening_4" model="atlasco.career.opening">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">40</field>
+        <field name="title">Mechanical Design Engineer</field>
+        <field name="department">Engineering</field>
+        <field name="location">Cairo</field>
+        <field name="job_type">Full-time</field>
+        <field name="blurb">Design and refine the mechanical systems that power Egypt's leading industrial facilities.</field>
+        <field name="points">Develop mechanical designs &amp; technical drawings
+Run analysis, tolerancing &amp; validation
+Collaborate closely with service and sales teams
+Take ideas from concept to commissioning</field>
+    </record>
+    <record id="seed_career_opening_5" model="atlasco.career.opening">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">50</field>
+        <field name="title">Field Maintenance Technician</field>
+        <field name="department">Service</field>
+        <field name="location">Suez</field>
+        <field name="job_type">Full-time</field>
+        <field name="blurb">Keep critical equipment running with preventive and corrective maintenance across customer sites.</field>
+        <field name="points">Perform preventive &amp; corrective maintenance
+Troubleshoot mechanical &amp; electrical faults
+Document accurate service reports
+Represent Atlasco on the ground</field>
+    </record>
+    <record id="seed_career_opening_6" model="atlasco.career.opening">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">60</field>
+        <field name="title">Procurement Specialist</field>
+        <field name="department">Logistics</field>
+        <field name="location">Cairo</field>
+        <field name="job_type">Full-time</field>
+        <field name="blurb">Source the right parts and partners to keep projects moving and costs smart.</field>
+        <field name="points">Manage sourcing &amp; supplier negotiations
+Track orders and manage inventory levels
+Ensure quality and compliance
+Support engineering and service demand</field>
+    </record>
+    <record id="seed_career_opening_7" model="atlasco.career.opening">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">70</field>
+        <field name="title">HR Business Partner</field>
+        <field name="department">People</field>
+        <field name="location">Cairo</field>
+        <field name="job_type">Full-time</field>
+        <field name="blurb">Help our people grow — from hiring great talent to nurturing an environment where they thrive.</field>
+        <field name="points">Partner with teams on hiring &amp; development
+Own onboarding and employee experience
+Champion culture, recognition &amp; wellbeing
+Turn people strategy into everyday practice</field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- CULTURE — Core Values (DOM order)                              -->
+    <!-- ============================================================= -->
+    <record id="seed_culture_value_1" model="atlasco.culture.value">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">10</field>
+        <field name="title">Customer-Centered Approach</field>
+        <field name="body">Every decision starts with the customer's success in mind.</field>
+    </record>
+    <record id="seed_culture_value_2" model="atlasco.culture.value">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">20</field>
+        <field name="title">Integrated Solutions</field>
+        <field name="body">We connect products, services and expertise into one.</field>
+    </record>
+    <record id="seed_culture_value_3" model="atlasco.culture.value">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">30</field>
+        <field name="title">Digital Transformation</field>
+        <field name="body">We embrace technology to work smarter and faster.</field>
+    </record>
+    <record id="seed_culture_value_4" model="atlasco.culture.value">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">40</field>
+        <field name="title">Productive Culture</field>
+        <field name="body">A healthy, collaborative environment that gets things done.</field>
+    </record>
+    <record id="seed_culture_value_5" model="atlasco.culture.value">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">50</field>
+        <field name="title">Continuous Development</field>
+        <field name="body">We never stop learning, teaching, and improving.</field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- CULTURE — Life Beyond the Workplace tiles (DOM order)          -->
+    <!-- ============================================================= -->
+    <record id="seed_culture_life_1" model="atlasco.culture.life">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">10</field>
+        <field name="label">GEM Gathering</field>
+        <field name="vtype">video</field>
+        <field name="vsrc">/atlasco_website/static/src/video/gem-event.mp4</field>
+        <field name="poster">/atlasco_website/static/src/video/gem-event.mp4#t=0.1</field>
+    </record>
+    <record id="seed_culture_life_2" model="atlasco.culture.life">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">20</field>
+        <field name="label">Annual Event 2026</field>
+        <field name="vtype">iframe</field>
+        <field name="vsrc">https://drive.google.com/file/d/1orQb3Q2y_M95XjqsgrauEV4r6lq3yODN/preview</field>
+    </record>
+    <record id="seed_culture_life_3" model="atlasco.culture.life">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">30</field>
+        <field name="label">Annual Event 2025</field>
+        <field name="vtype">iframe</field>
+        <field name="vsrc">https://drive.google.com/file/d/1qjnMSJ_o8KIs-S-qcLMeqPCzakRPOHAV/preview</field>
+    </record>
+    <record id="seed_culture_life_4" model="atlasco.culture.life">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">40</field>
+        <field name="label">Team Moments</field>
+        <field name="vtype">iframe</field>
+        <field name="vsrc">https://drive.google.com/file/d/1py-nyk1zNOBWUP9b5BIANUqdRkTv2XWT/preview</field>
+    </record>
+
+    <!-- Photo tiles (ticket 869eg8xmt): previously 3 static, non-editable
+         hardcoded <img> tags reusing the same file with zero model backing.
+         Seeded here with no `photo` upload yet, so the template falls back
+         to the exact same static image until the client uploads a real one
+         from the backend Culture admin list or the front-end editor. -->
+    <record id="seed_culture_life_photo_1" model="atlasco.culture.life">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">50</field>
+        <field name="label">Field Days</field>
+        <field name="vtype">photo</field>
+        <field name="photo_alt">Field Days</field>
+    </record>
+    <record id="seed_culture_life_photo_2" model="atlasco.culture.life">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">60</field>
+        <field name="label">Celebrations</field>
+        <field name="vtype">photo</field>
+        <field name="photo_alt">Celebrations</field>
+    </record>
+    <record id="seed_culture_life_photo_3" model="atlasco.culture.life">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">70</field>
+        <field name="label">Office Life</field>
+        <field name="vtype">photo</field>
+        <field name="photo_alt">Office Life</field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- CULTURE — Awards / Recognition (DOM order)                     -->
+    <!-- ============================================================= -->
+    <record id="seed_culture_award_1" model="atlasco.culture.award">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">10</field>
+        <field name="title">Customer-Centered Approach</field>
+        <field name="body">Recognized across Egypt's industrial sector.</field>
+    </record>
+    <record id="seed_culture_award_2" model="atlasco.culture.award">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">20</field>
+        <field name="title">35 Years of Excellence</field>
+        <field name="body">Three decades powering Egyptian industry.</field>
+    </record>
+    <record id="seed_culture_award_3" model="atlasco.culture.award">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">30</field>
+        <field name="title">Global Partnerships</field>
+        <field name="body">Trusted by leading international brands.</field>
+    </record>
+    <record id="seed_culture_award_4" model="atlasco.culture.award">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">40</field>
+        <field name="title">Continuous Development</field>
+        <field name="body">A culture of learning through PrimeGear.</field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- CULTURE — Why Our People Stay (Voices) (DOM order)             -->
+    <!-- ============================================================= -->
+    <record id="seed_culture_voice_1" model="atlasco.culture.voice">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">10</field>
+        <field name="quote">I joined for the engineering. I stayed for the people — here, senior engineers actually make time to teach you.</field>
+        <field name="person_role">Field Service Engineer</field>
+        <field name="years_label">4 years at Atlasco</field>
+        <field name="avatar" type="base64" file="atlasco_website/static/src/img/team/raafat-henry.png"/>
+    </record>
+    <record id="seed_culture_voice_2" model="atlasco.culture.voice">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">20</field>
+        <field name="quote">Every project touches something real — a factory, a plant, a line that keeps Egypt moving. That makes the hard days worth it.</field>
+        <field name="person_role">Mechanical Engineer</field>
+        <field name="years_label">6 years at Atlasco</field>
+        <field name="avatar" type="base64" file="atlasco_website/static/src/img/team/naguib-maher.png"/>
+    </record>
+    <record id="seed_culture_voice_3" model="atlasco.culture.voice">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">30</field>
+        <field name="quote">From my first week I was trusted with responsibility. The growth here is real, and so is the support behind it.</field>
+        <field name="person_role">Sales Team Lead</field>
+        <field name="years_label">3 years at Atlasco</field>
+        <field name="avatar" type="base64" file="atlasco_website/static/src/img/team/rami-nader.png"/>
+    </record>
+
+</odoo>

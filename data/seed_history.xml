@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- /about/history — Timeline milestones (render order, oldest → newest) -->
+    <record id="history_ms_1990" model="atlasco.history.milestone">
+        <field name="sequence">10</field>
+        <field name="variant">standard</field>
+        <field name="year">1990</field>
+        <field name="title">Foundation — SPM Partnership</field>
+        <field name="body_1">Atlasco Trading Egypt was founded by Mr. Nabil Soliman. Located in Al-Abbasya Square. It represents International European companies in the Egyptian Market.</field>
+        <field name="body_2">SPM Instruments AB – Swedish which is specialized in the field of predictive maintenance programs, bearing monitoring and all over machines monitoring. It also Producers Vibrometers, alignment and balancing equipment with experience over 40 years with the inventors of the science of the condition monitoring field.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/1990-founding.png"/>
+    </record>
+
+    <record id="history_ms_1992" model="atlasco.history.milestone">
+        <field name="sequence">20</field>
+        <field name="variant">standard</field>
+        <field name="reverse" eval="True"/>
+        <field name="year">1992</field>
+        <field name="title">Eco Air Partnership</field>
+        <field name="body_1">Eco Air, it was one of the biggest manufacturer and supplier of air treatment products.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/1992-ecoair.jpg"/>
+    </record>
+
+    <record id="history_ms_1994" model="atlasco.history.milestone">
+        <field name="sequence">30</field>
+        <field name="variant">standard</field>
+        <field name="year">1994</field>
+        <field name="title">National Sugar Contract — Sotras Partnership</field>
+        <field name="body_1">Contract with one of the biggest national Sugar production companies within the Egyptian market to supply 15 of preventive maintenance machines.</field>
+        <field name="body_2">Sotras is an Italian company. It is considered the second biggest factory world wide which manufacture: air filters, oil air separators, in line filters, oil filters. For all types of air compressors.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/1994-sotras.jpg"/>
+    </record>
+
+    <record id="history_ms_1995" model="atlasco.history.milestone">
+        <field name="sequence">40</field>
+        <field name="variant">standard</field>
+        <field name="reverse" eval="True"/>
+        <field name="year">1995</field>
+        <field name="title">Suez Canal Port — Bega Special Tools Partnership</field>
+        <field name="body_1">Atlasco Supplied Air Compressors to one of the biggest Suez Canal national ports, our works consisted of replacing, re-appealing and installing of oxygen generators as well 1995.</field>
+        <field name="body_2">Bega Holland, it is specialized in mounting and dismounting all types of bearing and rotating mechanical elements using electromagnetic induction and hydraulic Collars.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/1995-canal.jpg"/>
+    </record>
+
+    <record id="history_ms_1998" model="atlasco.history.milestone">
+        <field name="sequence">50</field>
+        <field name="variant">parallax</field>
+        <field name="year">1998</field>
+        <field name="title">Atlasco Upper Egypt Project</field>
+        <field name="body_1">Atlasco Upper Egypt Project, changing and replacing old (20) Air compressors of one of the major Cement factories that serves mostly 40% of the Egyptian need of cement. Atlasco Project consisted of creating a new air compressed stations in the factory that reduces leakage and maximize utility of the machines.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/1998-cement.jpg"/>
+    </record>
+
+    <record id="history_ms_2007" model="atlasco.history.milestone">
+        <field name="sequence">60</field>
+        <field name="variant">standard</field>
+        <field name="year">2007</field>
+        <field name="title">Oxymat Partnership</field>
+        <field name="body_1">Oxymat is a Danish/Slovak company was founded in 1978. Worldwide Manufacturer of PSA gas generators with long term experience within O2 and N2. Specialist in PSA (Pressure Swing Adsorption). Product Groups: (Oxygen Generator Systems, Nitrogen Generator Systems, Oxygen Cylinder Filling Station).</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/2007-oxymat.jpg"/>
+    </record>
+
+    <record id="history_ms_2008" model="atlasco.history.milestone">
+        <field name="sequence">70</field>
+        <field name="variant">standard</field>
+        <field name="reverse" eval="True"/>
+        <field name="year">2008</field>
+        <field name="title">Renewed Suez Canal Contract</field>
+        <field name="body_1">A Renewed contract for one of our main old national clients (one of the biggest Suez Canal national ports) we supplied, replaced and installed a new air compressors, and repair the old ships.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/1995-canal.jpg"/>
+    </record>
+
+    <record id="history_ms_2010" model="atlasco.history.milestone">
+        <field name="sequence">80</field>
+        <field name="variant">standard</field>
+        <field name="year">2010</field>
+        <field name="title">Al-Obour Office</field>
+        <field name="body_1">In 2010 our move from Al Abbassia office to Al-Obour office with more employees and new departments, by this movement we collect our warehouses and workshops in one area.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/2010-office.jpg"/>
+    </record>
+
+    <record id="history_ms_2013" model="atlasco.history.milestone">
+        <field name="sequence">90</field>
+        <field name="variant">parallax</field>
+        <field name="year">2013</field>
+        <field name="title">Armed Forces Oxygen Generators</field>
+        <field name="body_1">In 2013 our contract with administrated projects by the Armed Forces, Atlasco supplied 7 stations of oxygen generators in 7 different military hospitals working in the service of civilian patients.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/2013-generators.jpg"/>
+    </record>
+
+    <record id="history_ms_2014" model="atlasco.history.milestone">
+        <field name="sequence">100</field>
+        <field name="variant">standard</field>
+        <field name="reverse" eval="True"/>
+        <field name="year">2014</field>
+        <field name="title">Stiavelli Irio Partnership</field>
+        <field name="body_1">Stiavelli is an Italian company was founded in 1946. Stiavelli Irio is one of the market leaders in fans production with their highest concern is about best quality products with competitive. Product Groups: Centrifugal Blowers, Axial Fans, Special Design Fans (Atex, high pressure).</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/2014-stiavelli.jpg"/>
+    </record>
+
+    <record id="history_ms_2015" model="atlasco.history.milestone">
+        <field name="sequence">110</field>
+        <field name="variant">standard</field>
+        <field name="year">2015</field>
+        <field name="title">25 Years of Success — Noria Partnership</field>
+        <field name="body_1">Atlasco Egypt Celebrates 25 years of Success and profitability in serving the Egyptian and Middle Eastern market.</field>
+        <field name="body_2">Noria helps companies enable reliability through better lubrication processes. Over the past 18 years, our approach has changed how organizations manage and monitor lubricants for maintaining optimum reliability and safety. We are the trusted advisor to the world's leading organizations.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/2015-25years.jpg"/>
+    </record>
+
+    <record id="history_ms_2016" model="atlasco.history.milestone">
+        <field name="sequence">120</field>
+        <field name="variant">standard</field>
+        <field name="reverse" eval="True"/>
+        <field name="year">2016</field>
+        <field name="title">Egyptian Military Project — Hospital 57357 — Luneta Partnership</field>
+        <field name="body_1">In 2016 we provided One of the civil Administrated project by the Egyptian Military organizations to provide oxygen and nitrogen generators to manufacturing industries in various application by re-appealing and installing it under German, American, Slovakian and Danish and Italian control.</field>
+        <field name="body_2">One of the biggest National CSR projects of the year, hosted and executed by Atlasco Egypt in collaboration with Oxymat was the inauguration ceremony of the oxygen generation station for hospital 57357.</field>
+        <field name="body_3">Luneta offers you a window into your machine health. Monitoring your machine oil made easy &amp; efficient. Now you can do daily inspections on critical assets at no cost.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/2016-57357.jpg"/>
+    </record>
+
+    <record id="history_ms_2017" model="atlasco.history.milestone">
+        <field name="sequence">130</field>
+        <field name="variant">standard</field>
+        <field name="year">2017</field>
+        <field name="title">PrimeGear Academy Creation</field>
+        <field name="body_1">In 2017 (PrimeGear Academy Creation) as the new separate training body powered by Atlasco Egypt, offering wide range of trainings and ISO certification in partnership with reputable international partners.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/2017-primegear.png"/>
+    </record>
+
+    <record id="history_ms_2018" model="atlasco.history.milestone">
+        <field name="sequence">140</field>
+        <field name="variant">standard</field>
+        <field name="reverse" eval="True"/>
+        <field name="year">2018</field>
+        <field name="title">UE Systems — FLIR/ITC — RMF — Harvard — Continental Industrie</field>
+        <field name="body_1">UE Systems signed as Atlasco's partner in July 2018. UE Systems is a leading producer of airborne/structure borne ultrasonic instruments. Used primarily for leak detection, mechanical analysis and electrical inspection. Such instruments can save plants and manufacturers millions in premature failure detection, elimination of downtime, increased productivity and overall replacement costs.</field>
+        <field name="body_2">Flir / ITC signed as Atlasco's partner in July 2018. FLIR Systems designs and manufactures technologies that enhance perception and awareness using sensing solutions into daily life through thermal imaging systems while ITC training will help you build your thermal imaging business.</field>
+        <field name="body_3">RMF Systems (August 2018) is the solution to oil cleanliness, conditioning and monitoring for all types of machinery in practically every industry. We have built a solid reputation and our systems are being used in an extensive range of hydraulic applications all over the world.</field>
+        <field name="body_4">Harvard Corporation (September 2018). In the early 1970s, the ever-increasing cost and complexity of engines and manufacturing machinery prompted the need for an improved system of filtration. Harvard Corporation was founded in April 1973 to meet that need.</field>
+        <field name="body_5">Continental Industrie (October 2018) Blowers are French company, and considered a benchmark in reliability and efficiency in air and gas applications. With more than 40 years of experience in research, development and manufacturing of centrifugal blowers and exhausters.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/2018-ue.jpg"/>
+    </record>
+
+    <record id="history_ms_2019" model="atlasco.history.milestone">
+        <field name="sequence">150</field>
+        <field name="variant">standard</field>
+        <field name="year">2019</field>
+        <field name="title">MOBIUS — IRISS</field>
+        <field name="body_1">MOBIUS is PrimeGear's partner since (June) 2019. Mobius was formed in 1999. Mobius Institute now is a worldwide provider of Reliability Improvement, Condition Monitoring and Precision Maintenance education.</field>
+        <field name="body_2">IRISS provides customers unsurpassed quality, focusing on continuously improving electrical maintenance safety and building reliable products. IRISS Electrical Maintenance Safety Devices (EMSDs) facilitate safer, more efficient inspections of energized electrical equipment.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/2019-mobius.png"/>
+    </record>
+
+    <record id="history_ms_2020" model="atlasco.history.milestone">
+        <field name="sequence">160</field>
+        <field name="variant">standard</field>
+        <field name="reverse" eval="True"/>
+        <field name="year">2020</field>
+        <field name="title">CompAir</field>
+        <field name="body_1">CompAir — 200 years of experience in the marketplace. The origins of CompAir can be traced back to two British companies, Holman and BroomWade, with over 200 years of experience in the marketplace. The brand is now owned by Ingersoll Rand.</field>
+        <field name="image" type="base64" file="atlasco_website/static/src/img/history/2020-compair.png"/>
+    </record>
+
+    <record id="history_ms_2021" model="atlasco.history.milestone">
+        <field name="sequence">170</field>
+        <field name="variant">standard</field>
+        <field name="year">2021</field>
+        <field name="title">[Milestone — Emad to provide]</field>
+        <field name="body_1">[Content — Emad to provide]</field>
+    </record>
+
+    <record id="history_ms_2022" model="atlasco.history.milestone">
+        <field name="sequence">180</field>
+        <field name="variant">standard</field>
+        <field name="reverse" eval="True"/>
+        <field name="year">2022</field>
+        <field name="title">[Milestone — Emad to provide]</field>
+        <field name="body_1">[Content — Emad to provide]</field>
+    </record>
+
+    <record id="history_ms_2023" model="atlasco.history.milestone">
+        <field name="sequence">190</field>
+        <field name="variant">standard</field>
+        <field name="year">2023</field>
+        <field name="title">[Milestone — Emad to provide]</field>
+        <field name="body_1">[Content — Emad to provide]</field>
+    </record>
+
+    <record id="history_ms_2024" model="atlasco.history.milestone">
+        <field name="sequence">200</field>
+        <field name="variant">standard</field>
+        <field name="reverse" eval="True"/>
+        <field name="year">2024</field>
+        <field name="title">[Milestone — Emad to provide]</field>
+        <field name="body_1">[Content — Emad to provide]</field>
+    </record>
+
+    <record id="history_ms_2025" model="atlasco.history.milestone">
+        <field name="sequence">210</field>
+        <field name="variant">standard</field>
+        <field name="year">2025</field>
+        <field name="title">[Milestone — Emad to provide]</field>
+        <field name="body_1">[Content — Emad to provide]</field>
+    </record>
+
+    <record id="history_ms_2026" model="atlasco.history.milestone">
+        <field name="sequence">220</field>
+        <field name="variant">standard</field>
+        <field name="reverse" eval="True"/>
+        <field name="year">2026</field>
+        <field name="title">[Milestone — Emad to provide]</field>
+        <field name="body_1">[Content — Emad to provide]</field>
+    </record>
+
+    <!-- /about/history — Green stats -->
+    <record id="history_stat_1" model="atlasco.history.stat">
+        <field name="sequence">10</field>
+        <field name="number">35+</field>
+        <field name="label">Years Active</field>
+    </record>
+
+    <record id="history_stat_2" model="atlasco.history.stat">
+        <field name="sequence">20</field>
+        <field name="number">2</field>
+        <field name="label">Key Sectors</field>
+    </record>
+
+    <record id="history_stat_3" model="atlasco.history.stat">
+        <field name="sequence">30</field>
+        <field name="number">100+</field>
+        <field name="label">Industry Clients</field>
+    </record>
+
+    <record id="history_stat_4" model="atlasco.history.stat">
+        <field name="sequence">40</field>
+        <field name="number">5</field>
+        <field name="label">Countries Served</field>
+    </record>
+
+</odoo>

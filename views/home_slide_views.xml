@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_atlasco_home_slide_list" model="ir.ui.view">
+        <field name="name">atlasco.home.slide.list</field>
+        <field name="model">atlasco.home.slide</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="image" widget="image" options="{'size': [64, 64]}"/>
+                <field name="show_overlay"/>
+                <field name="line1"/>
+                <field name="highlight"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_atlasco_home_slide_form" model="ir.ui.view">
+        <field name="name">atlasco.home.slide.form</field>
+        <field name="model">atlasco.home.slide</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Slide name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="image_alt"/>
+                        </group>
+                    </group>
+                    <group string="Text Overlay">
+                        <field name="show_overlay"/>
+                        <field name="text_theme" invisible="not show_overlay"/>
+                        <field name="established" invisible="not show_overlay"/>
+                        <field name="line1" invisible="not show_overlay"/>
+                        <field name="highlight" invisible="not show_overlay"/>
+                        <field name="subtitle" invisible="not show_overlay"/>
+                        <field name="btn_label" invisible="not show_overlay"/>
+                        <field name="btn_url" invisible="not show_overlay"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_atlasco_home_slide" model="ir.actions.act_window">
+        <field name="name">Homepage Hero Slides</field>
+        <field name="res_model">atlasco.home.slide</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a homepage hero slide</p>
+            <p>Slides rotate in the homepage hero carousel. Drag to reorder. Images and text
+               can also be edited inline on the site via the Website editor.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_atlasco_home_slide"
+              name="Homepage Hero Slides"
+              parent="atlasco_website.menu_atlasco_group_media"
+              action="action_atlasco_home_slide"
+              sequence="10"/>
+
+    <!-- Idempotent seed of a first slide matching the current static hero -->
+    <function model="atlasco.home.slide" name="_seed_default_slides"/>
+</odoo>

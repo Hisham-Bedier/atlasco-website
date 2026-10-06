@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_atlasco_reliability_card_list" model="ir.ui.view">
+        <field name="name">atlasco.reliability.card.list</field>
+        <field name="model">atlasco.reliability.card</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="industry_slug"/>
+                <field name="problem"/>
+                <field name="solution_title"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_atlasco_reliability_card_form" model="ir.ui.view">
+        <field name="name">atlasco.reliability.card.form</field>
+        <field name="model">atlasco.reliability.card</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <group>
+                        <group>
+                            <field name="industry_slug"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group string="Content">
+                        <field name="problem"/>
+                        <field name="solution_title"/>
+                        <field name="solution_body"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_atlasco_reliability_card" model="ir.actions.act_window">
+        <field name="name">Industry Reliability Cards</field>
+        <field name="res_model">atlasco.reliability.card</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a reliability card</p>
+            <p>Each card shows on an industry detail page. Text is also editable inline on the site via the Website editor; the image can be replaced there too.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_atlasco_reliability_card"
+              name="Reliability Cards"
+              parent="atlasco_website.menu_atlasco_group_catalog"
+              action="action_atlasco_reliability_card"
+              sequence="30"/>
+
+    <!-- Idempotent seed from the controller dict (runs on install + upgrade) -->
+    <function model="atlasco.reliability.card" name="_seed_from_controller"/>
+</odoo>

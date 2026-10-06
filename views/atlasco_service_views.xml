@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="view_atlasco_service_list" model="ir.ui.view">
+    <field name="name">atlasco.service.list</field>
+    <field name="model">atlasco.service</field>
+    <field name="arch" type="xml">
+      <tree string="Services">
+        <field name="sequence" widget="handle"/>
+        <field name="name"/>
+        <field name="slug"/>
+        <field name="subtitle"/>
+        <field name="is_dark_panel"/>
+      </tree>
+    </field>
+  </record>
+  <record id="view_atlasco_service_form" model="ir.ui.view">
+    <field name="name">atlasco.service.form</field>
+    <field name="model">atlasco.service</field>
+    <field name="arch" type="xml">
+      <form string="Service">
+        <sheet>
+          <group>
+            <group>
+              <field name="name"/>
+              <field name="slug" placeholder="condition-monitoring"/>
+              <field name="subtitle"/>
+            </group>
+            <group>
+              <field name="active"/>
+              <field name="is_dark_panel"/>
+              <field name="link_override" placeholder="/primegear"/>
+              <field name="hero_image" widget="image"/>
+            </group>
+          </group>
+          <group>
+            <field name="card_description" placeholder="Short copy shown on the /services listing card."/>
+            <field name="intro" placeholder="Longer intro shown on the /services/&lt;slug&gt; detail page."/>
+          </group>
+          <notebook>
+            <page string="Sub-Offerings">
+              <field name="offering_ids">
+                <tree editable="bottom">
+                  <field name="sequence" widget="handle"/>
+                  <field name="name"/>
+                  <field name="desc"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="action_atlasco_service" model="ir.actions.act_window">
+    <field name="name">Services</field>
+    <field name="res_model">atlasco.service</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <menuitem id="menu_atlasco_service" name="Services" action="action_atlasco_service"
+            parent="atlasco_website.menu_atlasco_group_catalog" sequence="20"/>
+</odoo>

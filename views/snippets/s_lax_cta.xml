@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Culture-style dark-green gradient CTA band, matching /culture's own
+     .lax-cta (see views/atlasco_culture_page.xml). -->
+<template id="s_lax_cta" name="Atlasco CTA Band">
+    <section class="s_lax_cta lax" style="padding:80px 40px;">
+        <div class="lax-cta">
+            <div style="max-width:560px;">
+                <div class="lax-eyebrow">Ready When You Are</div>
+                <h2>Like what you see? Let's talk.</h2>
+                <p>A short line inviting the reader to take the next step, styled to match the rest of the site.</p>
+            </div>
+            <a href="#" class="lax-cta-btn">Call to Action →</a>
+        </div>
+    </section>
+</template>
+</odoo>

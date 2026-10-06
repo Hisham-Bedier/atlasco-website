@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="products" name="Products L1 — Categories">
+<t t-call="atlasco_website.atlasco_layout">
+
+<!-- Page-scoped oe_structure (same pattern as /services, /about, /culture)
+     so Insert Blocks has a valid drop target on this page. -->
+<div id="wrap_products" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.products').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+     below are real Odoo-native Insert-Blocks drop targets - see the long
+     root-cause comment on wrap_about in atlasco_about_page.xml. -->
+<div id="wrap_products_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.products').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<!-- HERO (Figma 4767:261) -->
+<t t-set="hero_bg" t-value="request.env['atlasco.page.hero'].sudo()._image_url('products')"/>
+<t t-set="style_products_hero" t-value="request.env['atlasco.block.style'].sudo()._get('products_hero')"/>
+<section class="atl-products-l1-hero atl-font-editable o_editable" t-att-data-style-model="'atlasco.block.style'" t-att-data-style-id="style_products_hero.id" t-attf-style="#{'background-image:url(%s);background-size:cover;background-position:center;' % hero_bg if hero_bg else ''}--atl-dyn-font-family:#{style_products_hero.font_family or ''};--atl-dyn-font-size:#{style_products_hero.font_size or ''};">
+    <div class="atl-products-l1-hero-inner">
+        <h1>Complete Industrial Systems. Built for Reliability.</h1>
+        <p>Atlasco Egypt integrates compressed air, gas generation, filtration, lubrication, condition monitoring, and smart technologies into one unified performance system &#8212; engineered to maximize uptime, eliminate inefficiencies, and protect every critical asset across your operation.</p>
+        <a t-att-href="style_products_hero.cta_url or '#atl-products-l1-categories'" class="atl-products-l1-cta">Explore Products &#8594;</a>
+    </div>
+</section>
+
+<div id="wrap_products_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.products').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<!-- CATEGORIES GRID (Figma 4767:267) -->
+<section id="atl-products-l1-categories" class="atl-products-l1-section">
+  <div class="atl-products-l1-section-inner">
+    <div class="atl-products-l1-section-head">
+        <h2>Categories</h2>
+        <div class="atl-products-l1-rule"></div>
+    </div>
+
+    <div class="atl-industry-list-grid">
+        <t t-foreach="categories" t-as="cat">
+            <a t-att-href="'/products/' + cat['slug']" class="atl-industry-card">
+                <t t-if="cat.get('image')">
+                    <img t-att-src="cat['image']" t-att-alt="cat['name']" class="atl-industry-placeholder"/>
+                </t>
+                <t t-else="">
+                    <div class="atl-industry-placeholder"></div>
+                </t>
+                <div class="atl-industry-card-overlay"></div>
+                <div class="atl-industry-card-label">
+                    <span class="tag">Category</span>
+                    <h3 t-esc="cat['name'].upper()"/>
+                    <p class="ind-desc" t-esc="cat.get('tagline', '')"/>
+                    <div class="ind-line"></div>
+                </div>
+            </a>
+        </t>
+    </div>
+  </div>
+</section>
+
+<div id="wrap_products_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.products').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+<!-- CTA BANNER (Figma 4767:348) -->
+<section class="atl-products-l1-cta-banner">
+  <div class="atl-products-l1-cta-banner-inner">
+    <div class="atl-products-l1-cta-copy">
+        <h2>Find the Right Product for Your Operation</h2>
+        <p>Our specialists help you select the right industrial equipment tailored to your industry and application.</p>
+    </div>
+    <a href="/contact" class="atl-products-l1-cta-btn">Talk to a Specialist &#8594;</a>
+  </div>
+</section>
+
+<div id="wrap_products_gap_3" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.products').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[4]"/>
+
+</div>
+
+</t>
+</template>
+</odoo>

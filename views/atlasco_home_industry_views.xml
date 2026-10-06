@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_atlasco_home_industry_list" model="ir.ui.view">
+        <field name="name">atlasco.home.industry.list</field>
+        <field name="model">atlasco.home.industry</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="href" string="Link URL"/>
+                <field name="card_name"/>
+                <field name="card_desc"/>
+                <field name="related_industry_ids" widget="many2many_tags"
+                       string="Related Industries Shown Here"
+                       domain="[('id', '!=', id)]"
+                       options="{'no_create': True}"/>
+                <field name="image" widget="image" options="{'size': [64, 64]}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_atlasco_home_industry_form" model="ir.ui.view">
+        <field name="name">atlasco.home.industry.form</field>
+        <field name="model">atlasco.home.industry</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <group>
+                        <field name="href" string="Link URL"/>
+                        <field name="sequence"/>
+                    </group>
+                    <group string="Related Industries Card">
+                        <field name="card_name"/>
+                        <field name="card_desc"/>
+                    </group>
+                    <group string="Related Industries Shown On This Industry's Page">
+                        <field name="related_industry_ids" widget="many2many_tags"
+                               domain="[('id', '!=', id)]"
+                               options="{'no_create': True}"
+                               nolabel="1" colspan="2"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_atlasco_home_industry" model="ir.actions.act_window">
+        <field name="name">Related Industries</field>
+        <field name="res_model">atlasco.home.industry</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Image, link, and card text for the "Related Industries" cards shown at the
+                bottom of every industry detail page (/industries/&lt;slug&gt;) — matched to an
+                industry by the last segment of its Link URL (e.g. "/industries/oil-gas"
+                matches the "oil-gas" industry).</p>
+            <p><b>This does not add or remove an industry from the site.</b> The site's
+                industries (which pages exist, the /industries listing, and the nav menu) are
+                fixed in code. A row here only overrides the image/name/description shown for
+                an industry that already exists — a Link URL pointing at a slug the site
+                doesn't have won't create a new industry page.</p>
+            <p>Open an industry's own record and use "Related Industries Shown On This
+                Industry's Page" to choose exactly which (and how many) other industries
+                appear in ITS "Related Industries" section — e.g. Oil &amp; Gas can show just 3
+                specific ones instead of the site default of 5. Leave it empty to keep that
+                default.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_atlasco_home_industry"
+              name="Related Industries"
+              parent="atlasco_website.menu_atlasco_group_catalog"
+              action="action_atlasco_home_industry"
+              sequence="45"/>
+</odoo>

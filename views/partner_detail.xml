@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="partner_detail" name="Partner Detail">
+<!-- WAEL-AI 2026-06-17 — preload the partner hero banner so the photo is present at first paint.
+     The visible banner is a CSS background-image (inline style on the hero section), which the
+     browser preload scanner does NOT discover during HTML parse; Odoo also force-lazies body imgs.
+     A head-level rel=preload link IS picked up by the preload scanner at parse start and is immune
+     to the lazy filter, so the banner downloads in parallel with CSS and paints with no fade/pop.
+     Templated via partner['banner'] so it covers every bannered partner; guarded so the gradient-only
+     fallback (no banner) emits nothing. -->
+<!-- Partner's own Banner (edited right on this partner's own backend
+     record) wins; Page Hero Banners is only the fallback when a partner
+     has none set. Scoped to this page only — every other page type still
+     reads Page Hero Banners as primary, unaffected. Reversed on request:
+     the old order (Page Hero Banners primary) meant editing a partner's
+     own Banner field could silently do nothing if a hero-banner row
+     already existed for that slug, with zero indication anywhere why. -->
+<t t-set="hero_bg" t-value="partner.get('banner') or request.env['atlasco.page.hero'].sudo()._image_url('partner_' + partner.get('slug', ''))"/>
+<t t-if="hero_bg" t-set="head"><link rel="preload" as="image" t-att-href="hero_bg" fetchpriority="high"/></t>
+<t t-call="atlasco_website.atlasco_layout">
+
+<!-- Namespaced per-slug oe_structure (same pattern as industry_detail.xml):
+     this template is shared across every /partners/<slug> page, so a plain
+     id="wrap" would make a block inserted while editing one partner appear
+     on every other partner sharing this template. -->
+<div t-attf-id="wrap_partner_#{partner.get('slug', '')}" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partner_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+     below are real Odoo-native Insert-Blocks drop targets - see the long
+     root-cause comment on wrap_about in atlasco_about_page.xml. Namespaced
+     per-slug like the div above, for the same COW-safety reason. -->
+<div t-attf-id="wrap_partner_#{partner.get('slug', '')}_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partner_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<!-- HERO (Figma Partner Page L2 4831:200..203 + Partners.pdf vendor detail page) -->
+<section class="atl-partner-hero" t-att-class="hero_bg and 'atl-partner-hero atl-partner-hero--img' or 'atl-partner-hero'" t-att-style="hero_bg and ('background-image:linear-gradient(180deg,rgba(13,31,20,0) 40%,rgba(13,31,20,0.6) 100%),url(' + hero_bg + ');background-size:cover;background-position:center;') or ''">
+    <div class="atl-partner-hero-inner">
+        <div class="atl-partner-hero-eyebrow"><t t-esc="partner.get('category', 'Technology Partner')"/></div>
+        <h1 class="atl-partner-hero-title"><t t-esc="partner.get('name', 'Our Partner')"/></h1>
+        <p class="atl-partner-hero-banner"><t t-esc="partner.get('headline', '')"/></p>
+        <p class="atl-partner-hero-tagline"><t t-esc="partner.get('tagline', '')"/></p>
+        <a href="/contact" class="btn-green" style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;">Request a Consultation &#8594;</a>
+    </div>
+</section>
+
+<!-- KEY PERFORMANCE FIGURES (per-partner, guarded; client-provided stat row) -->
+<div t-attf-id="wrap_partner_#{partner.get('slug', '')}_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partner_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<section class="atl-partner-kpis" t-if="partner.get('kpis')">
+    <div class="atl-partner-kpis-grid">
+        <t t-foreach="partner.get('kpis', [])" t-as="kpi">
+            <div class="atl-partner-kpi-card">
+                <span class="atl-partner-kpi-value"><t t-esc="kpi.get('value', '')"/></span>
+                <span class="atl-partner-kpi-label"><t t-esc="kpi.get('label', '')"/></span>
+            </div>
+        </t>
+    </div>
+</section>
+
+<!-- ABOUT THE PARTNERSHIP (per-partner body from Partners.pdf) -->
+<div t-attf-id="wrap_partner_#{partner.get('slug', '')}_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partner_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+<section class="atl-partner-about">
+    <h2>About the Partnership</h2>
+    <div class="atl-partner-about-body">
+        <t t-foreach="partner.get('body', [])" t-as="para">
+            <p><t t-esc="para"/></p>
+        </t>
+        <!-- 'body_raw': admin-authored HTML (atlasco.partner.body_html, widget="html",
+             sanitize=False) for partners created purely from the backend (ClickUp
+             869f081z9) — never set alongside 'body' above, see to_page_data(). -->
+        <t t-if="partner.get('body_raw')" t-raw="partner.get('body_raw')"/>
+        <p t-if="partner.get('together')" class="atl-partner-together"><strong><t t-esc="partner.get('together')"/></strong></p>
+        <p t-if="partner.get('country')" class="atl-partner-country"><strong>Country of Origin:</strong> <t t-esc="partner.get('country')"/></p>
+    </div>
+    <div t-if="partner.get('certifications')" class="atl-partner-certs">
+        <h3>Certifications</h3>
+        <div class="atl-partner-certs-grid">
+            <t t-foreach="partner.get('certifications', [])" t-as="cert">
+                <div class="atl-partner-cert-card">
+                    <img t-att-src="cert.get('image')" t-att-alt="cert.get('name')"
+                         onerror="this.style.display='none'"/>
+                    <span class="atl-partner-cert-name"><t t-esc="cert.get('name')"/></span>
+                </div>
+            </t>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURED TECHNOLOGY (per-partner, guarded; client-provided highlight block) -->
+<div t-attf-id="wrap_partner_#{partner.get('slug', '')}_gap_3" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partner_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[4]"/>
+
+<section class="atl-partner-featured" t-if="partner.get('featured_technology')">
+    <div class="atl-partner-featured-inner">
+        <div class="atl-partner-featured-eyebrow">&#9733; Featured Technology</div>
+        <h2 class="atl-partner-featured-title"><t t-esc="partner['featured_technology'].get('name', '')"/></h2>
+        <p class="atl-partner-featured-desc"><t t-esc="partner['featured_technology'].get('description', '')"/></p>
+        <div t-if="partner['featured_technology'].get('links')" class="atl-partner-featured-links">
+            <t t-foreach="partner['featured_technology'].get('links', [])" t-as="ftlink">
+                <a t-att-href="ftlink.get('url', '#')" target="_blank" rel="noopener">
+                    &#8599; <t t-esc="ftlink.get('text', '')"/>
+                </a>
+            </t>
+        </div>
+        <t t-if="partner.get('featured_technology', {}).get('video')">
+          <video controls="controls" preload="metadata" style="max-width:100%;border-radius:8px;margin-top:16px;display:block;">
+            <source t-att-src="partner['featured_technology']['video']" type="video/mp4"/>
+          </video>
+        </t>
+    </div>
+</section>
+
+<!-- SERVICE PROGRAMS (per-partner, only when present in Partners.pdf — e.g. CompAir Assure + iConn) -->
+<div t-attf-id="wrap_partner_#{partner.get('slug', '')}_gap_4" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partner_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[5]"/>
+
+<section class="atl-partner-programs" t-if="partner.get('service_programs')">
+    <h2>Service Programs &amp; Features</h2>
+    <div class="atl-partner-programs-grid">
+        <t t-foreach="partner.get('service_programs', [])" t-as="prog">
+            <div class="atl-partner-program-card">
+                <div class="atl-partner-program-shield">
+                    <span class="atl-partner-program-name"><t t-esc="prog['name']"/></span>
+                </div>
+                <h4><t t-esc="prog.get('subtitle', '')"/></h4>
+                <p><t t-esc="prog.get('description', '')"/></p>
+                <ul class="atl-partner-program-features">
+                    <t t-foreach="prog.get('features', [])" t-as="feat">
+                        <li><t t-esc="feat"/></li>
+                    </t>
+                </ul>
+            </div>
+        </t>
+    </div>
+</section>
+
+<!-- PRODUCT RANGE (per-partner from Partners.pdf, mapped to product/service pages) -->
+<!-- NOTE (BUG-11, ticket 869f03vbh): the href below always resolves to the
+     internal `url` field (the Products/Services catalogue), never to
+     `external_url` — that field is stored on atlasco.partner.product for
+     reference/admin use only and is never used as a navigation target here.
+     Routing every tile to the on-site catalogue is intentional (keeps
+     traffic on Atlasco's own site), so the badge must describe THAT
+     destination rather than claim an external "Brand Site" link that the
+     click never actually goes to. -->
+<div t-attf-id="wrap_partner_#{partner.get('slug', '')}_gap_5" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partner_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[6]"/>
+
+<section class="atl-partner-products" t-if="partner.get('product_range')">
+    <h2>Product Range</h2>
+    <div class="atl-partner-products-grid">
+        <t t-foreach="partner.get('product_range', [])" t-as="prod">
+            <a t-att-href="prod.get('url', '#') if isinstance(prod, dict) else '#'"
+               class="atl-partner-product-tile">
+                <!-- ClickUp 869emevtx: once a real image is uploaded to the backing
+                     atlasco.partner.product row (via its backend form, or the
+                     Website Editor once this first image exists), render via
+                     t-field so the Website Editor can inline-edit it going forward
+                     (writes straight back to that record's `image` field — the
+                     same one the backend list/form edits). Until then, keep the
+                     old background-div + catalog-fallback rendering: t-field's
+                     built-in "no image" state is an empty-camera placeholder icon,
+                     which would regress every tile that currently looks correct
+                     only via the _product_catalog_image/_service_catalog_image
+                     fallback (true today for 100% of rows — zero real uploads
+                     yet). Legacy hardcoded partners_data entries carry no record
+                     at all and always take this same div path. -->
+                <span t-if="prod.get('record') and prod['record'].image" t-field="prod['record'].image"
+                      t-options="{'widget': 'image', 'class': 'atl-partner-product-img'}"/>
+                <div t-else="" class="atl-partner-product-img" t-att-style="prod.get('image') and ('background-image:url(' + prod['image'] + ');background-size:cover;background-position:center;') or ''"/>
+                <p><t t-esc="prod.get('text', '') if isinstance(prod, dict) else prod"/></p>
+                <t t-if="isinstance(prod, dict) and prod.get('url')">
+                    <span class="atl-partner-product-ext" style="cursor:pointer;display:inline-block;margin-top:6px;font-size:0.72rem;color:#16a37f;border:1px solid #16a37f;border-radius:12px;padding:2px 10px;">&#8594; View Product</span>
+                </t>
+            </a>
+        </t>
+    </div>
+</section>
+
+<!-- WHY ATLASCO EGYPT (per-partner, guarded; client-provided reasons block) -->
+<div t-attf-id="wrap_partner_#{partner.get('slug', '')}_gap_6" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partner_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[7]"/>
+
+<section class="atl-partner-why" t-if="partner.get('why_atlasco')">
+    <h2>Why Atlasco Egypt</h2>
+    <p class="atl-partner-why-lead">What Atlasco Egypt adds</p>
+    <div class="atl-partner-why-grid">
+        <t t-foreach="partner.get('why_atlasco', [])" t-as="reason">
+            <div class="atl-partner-why-card">
+                <span class="atl-partner-why-bullet">&#10003;</span>
+                <div class="atl-partner-why-text">
+                    <strong><t t-esc="reason.get('title', '')"/></strong>
+                    <span><t t-esc="reason.get('description', '')"/></span>
+                </div>
+            </div>
+        </t>
+    </div>
+</section>
+
+<!-- QUICK LINKS (per-partner from Partners.pdf, mapped to product/service pages) -->
+<div t-attf-id="wrap_partner_#{partner.get('slug', '')}_gap_7" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partner_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[8]"/>
+
+<section class="atl-partner-quicklinks" t-if="partner.get('quick_links')">
+    <h2>Quick Links</h2>
+    <t t-foreach="partner.get('quick_links', [])" t-as="link">
+        <a t-att-href="link.get('url', '#') if isinstance(link, dict) else '#'">
+            &#8594; <t t-esc="link.get('text', '') if isinstance(link, dict) else link"/>
+        </a>
+    </t>
+</section>
+
+<!-- BRAND CTA STRIP (Figma 4831:229..230) -->
+<a t-att-href="'/partners/' + partner.get('slug', '')" class="atl-partner-cta-strip">
+    <span><t t-esc="partner.get('name', '')"/> Products &#8594;</span>
+</a>
+
+<!--
+    EXPLORE MORE PARTNERS (Hazem item #14 + #20)
+    Replaces previous "Our Partners" carousel at bottom of partner detail with
+    a simple "Explore More Partners →" link + compact partner-logo row.
+-->
+<div t-attf-id="wrap_partner_#{partner.get('slug', '')}_gap_8" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partner_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[9]"/>
+
+<section class="atl-partner-explore-more">
+    <div class="atl-partner-explore-head">
+        <a href="/partners" class="atl-partner-explore-link">Explore More Partners &#8594;</a>
+    </div>
+    <div class="atl-partner-explore-logos">
+        <a href="/partners/compair"><img src="/atlasco_website/static/src/img/partners/compair.png" alt="CompAir" onerror="this.style.display='none'"/></a>
+        <a href="/partners/oxymat"><img src="/atlasco_website/static/src/img/partners/OXYMAT.png" alt="OXYMAT" onerror="this.style.display='none'"/></a>
+        <a href="/partners/spm"><img src="/atlasco_website/static/src/img/partners/SPM.png" alt="SPM" onerror="this.style.display='none'"/></a>
+        <a href="/partners/chart-industries"><img src="/atlasco_website/static/src/img/partners/chart.png" alt="Chart Industries" onerror="this.style.display='none'"/></a>
+        <a href="/partners/ept-clean-oil"><img src="/atlasco_website/static/src/img/partners/EPT%20Clean%20Oil.png" alt="EPT Clean Oil" onerror="this.style.display='none'"/></a>
+        <a href="/partners/iriss"><img src="/atlasco_website/static/src/img/partners/Iriss.png" alt="IRISS" onerror="this.style.display='none'"/></a>
+        <a href="/partners/sdt-systems"><img src="/atlasco_website/static/src/img/partners/SDT%20Ultrasound.png" alt="SDT Systems" onerror="this.style.display='none'"/></a>
+        <a href="/partners/des-case"><img src="/atlasco_website/static/src/img/partners/Des-Case.png" alt="Des-Case" onerror="this.style.display='none'"/></a>
+    </div>
+</section>
+
+<div t-attf-id="wrap_partner_#{partner.get('slug', '')}_gap_9" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partner_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[10]"/>
+
+<!-- BOTTOM CTA BANNER -->
+<div class="atl-cta-banner">
+  <div class="atl-cta-banner-inner">
+    <div>
+        <h2>Interested in <t t-esc="partner.get('name', 'this partner')"/> solutions?</h2>
+        <p>Talk to our team for expert guidance, technical specifications, and pricing.</p>
+    </div>
+    <a href="/contact" class="btn-white" style="background:white;color:#0d1f14;padding:16px 32px;border-radius:4px;font-size:14px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;text-decoration:none;">REQUEST A CONSULTATION</a>
+  </div>
+</div>
+
+<div t-attf-id="wrap_partner_#{partner.get('slug', '')}_gap_10" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partner_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[11]"/>
+
+</div>
+
+</t>
+</template>
+</odoo>

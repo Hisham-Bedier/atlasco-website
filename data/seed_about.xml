@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- About › What Sets Us Apart — seed rows in render order -->
+    <record id="about_diff_1" model="atlasco.about.differentiator">
+        <field name="sequence">10</field>
+        <field name="title">Integrated Industrial Solutions</field>
+        <field name="body">End-to-end compressed air and gas solutions backed by deep technical expertise.</field>
+    </record>
+
+    <record id="about_diff_2" model="atlasco.about.differentiator">
+        <field name="sequence">20</field>
+        <field name="title">Customer Commitment</field>
+        <field name="body">Building lasting relationships through tailored solutions and unwavering support.</field>
+    </record>
+
+    <record id="about_diff_3" model="atlasco.about.differentiator">
+        <field name="sequence">30</field>
+        <field name="title">Continuous Development</field>
+        <field name="body">Investing in people, technology, and knowledge for continuous improvement.</field>
+    </record>
+
+    <record id="about_diff_4" model="atlasco.about.differentiator">
+        <field name="sequence">40</field>
+        <field name="title">Digital Transformation</field>
+        <field name="body">Leveraging real-time data to enhance visibility and drive operational efficiency.</field>
+    </record>
+
+    <record id="about_diff_5" model="atlasco.about.differentiator">
+        <field name="sequence">50</field>
+        <field name="title">High-Performance Culture</field>
+        <field name="body">A collaborative, accountable, and innovation-driven team environment.</field>
+    </record>
+
+</odoo>

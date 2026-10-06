@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- Sitemap: a real, human-readable index of the site's actual pages/routes.
+     Not the machine-readable /sitemap.xml (that one is provided natively by
+     the core `website` module) — this is the footer-facing page. -->
+<template id="atlasco_sitemap" name="Sitemap">
+<t t-call="atlasco_website.atlasco_layout">
+
+<div id="wrap_sitemap" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.atlasco_sitemap').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+     below are real Odoo-native Insert-Blocks drop targets - see the long
+     root-cause comment on wrap_about in atlasco_about_page.xml. -->
+<div id="wrap_sitemap_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.atlasco_sitemap').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<section class="atl-legal-hero">
+    <div class="atl-legal-hero-inner">
+        <div class="atl-legal-badge">Site Navigation</div>
+        <h1>Sitemap</h1>
+        <p>A full index of every page on the Atlasco Egypt website.</p>
+    </div>
+</section>
+
+<div id="wrap_sitemap_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.atlasco_sitemap').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<section class="atl-sitemap-section">
+    <div class="atl-sitemap-col">
+        <h3>Company</h3>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/about/team">Our Team</a></li>
+            <li><a href="/about/history">Our History</a></li>
+            <li><a href="/careers">Careers</a></li>
+            <li><a href="/culture">Culture</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+        </ul>
+    </div>
+    <div class="atl-sitemap-col">
+        <h3>Industries &amp; Services</h3>
+        <ul>
+            <li><a href="/industries">Industries</a></li>
+            <li><a href="/services">Services</a></li>
+        </ul>
+    </div>
+    <div class="atl-sitemap-col">
+        <h3>Products &amp; Partners</h3>
+        <ul>
+            <li><a href="/products">Products</a></li>
+            <li><a href="/partners">Partners</a></li>
+            <li><a href="/primegear">PrimeGear</a></li>
+        </ul>
+    </div>
+    <div class="atl-sitemap-col">
+        <h3>Legal</h3>
+        <ul>
+            <li><a href="/privacy-policy">Privacy Policy</a></li>
+            <li><a href="/terms-of-service">Terms of Service</a></li>
+            <li><a href="/sitemap.xml">XML Sitemap (for search engines)</a></li>
+        </ul>
+    </div>
+</section>
+
+<div id="wrap_sitemap_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.atlasco_sitemap').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+</div>
+
+</t>
+</template>
+
+<!-- Privacy Policy: honest "content pending" placeholder — NOT fabricated
+     legal copy. Real policy text must come from the client / legal counsel. -->
+<template id="atlasco_privacy_policy" name="Privacy Policy">
+<t t-call="atlasco_website.atlasco_layout">
+
+<div id="wrap_privacy_policy" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.atlasco_privacy_policy').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<div id="wrap_privacy_policy_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.atlasco_privacy_policy').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<section class="atl-legal-hero">
+    <div class="atl-legal-hero-inner">
+        <div class="atl-legal-badge">Legal</div>
+        <h1>Privacy Policy</h1>
+    </div>
+</section>
+
+<div id="wrap_privacy_policy_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.atlasco_privacy_policy').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<section class="atl-legal-section">
+    <div class="atl-legal-pending">
+        <h2>Content pending</h2>
+        <p>
+            Our formal Privacy Policy is being finalized and will be published on this
+            page shortly. In the meantime, if you have any questions about how Atlasco
+            Egypt handles your data, please
+            <a href="/contact">contact us directly</a>.
+        </p>
+    </div>
+</section>
+
+<div id="wrap_privacy_policy_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.atlasco_privacy_policy').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+</div>
+
+</t>
+</template>
+
+<!-- Terms of Service: honest "content pending" placeholder — NOT fabricated
+     legal copy. Real terms must come from the client / legal counsel. -->
+<template id="atlasco_terms_of_service" name="Terms of Service">
+<t t-call="atlasco_website.atlasco_layout">
+
+<div id="wrap_terms_of_service" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.atlasco_terms_of_service').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<div id="wrap_terms_of_service_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.atlasco_terms_of_service').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<section class="atl-legal-hero">
+    <div class="atl-legal-hero-inner">
+        <div class="atl-legal-badge">Legal</div>
+        <h1>Terms of Service</h1>
+    </div>
+</section>
+
+<div id="wrap_terms_of_service_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.atlasco_terms_of_service').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<section class="atl-legal-section">
+    <div class="atl-legal-pending">
+        <h2>Content pending</h2>
+        <p>
+            Our formal Terms of Service are being finalized and will be published on
+            this page shortly. In the meantime, if you have any questions, please
+            <a href="/contact">contact us directly</a>.
+        </p>
+    </div>
+</section>
+
+<div id="wrap_terms_of_service_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.atlasco_terms_of_service').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+</div>
+
+</t>
+</template>
+
+</odoo>

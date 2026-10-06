@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- =====================================================================
+     CULTURE / "Life at Atlasco" — Option A redesign (pixel-perfect)
+     Editable website page: plain <img src> + plain text (NO t-field), so the
+     Odoo Website Editor can edit copy inline and replace images/backgrounds.
+     Images that sit behind a gradient use editor-replaceable section
+     backgrounds (oe_img_bg ...), never absolutely-positioned overlay <img>.
+     Real Atlasco content + assets preserved from the live /culture page and
+     mapped into the Option A layout.
+     ===================================================================== -->
+<template id="culture" name="Culture - Life At Atlasco">
+<t t-call="atlasco_website.atlasco_layout">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<style>
+  .lax{--g:#17833C;--gd:#0E5127;--gdd:#0A3F1E;--ink:#182029;font-family:'Archivo',system-ui,-apple-system,sans-serif;color:#182029;background:#fff;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  .lax h1,.lax h2,.lax h3,.lax p{margin:0}
+  .lax a{color:#17833C;text-decoration:none}
+  .lax a:hover{color:#0E5127}
+  @keyframes laxFade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .lax-in{animation:laxFade .5s ease both}
+  /* scroll-reveal (design motion: staged fade+rise per section) */
+  .lax [data-reveal]{opacity:0}
+  @keyframes laxPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+  /* hero */
+  .lax-hero{position:relative;min-height:470px;display:flex;align-items:center;overflow:hidden;background:#0A1710}
+  .lax-hero-bg{position:absolute;inset:0;background-position:center;background-size:cover;background-repeat:no-repeat}
+  .lax-hero-scrim{position:absolute;inset:0;background:linear-gradient(100deg,rgba(7,18,11,.94) 0%,rgba(7,18,11,.74) 42%,rgba(7,18,11,.22) 100%);pointer-events:none}
+  .lax-hero-wrap{position:relative;max-width:var(--atl-content-max-width);margin:0 auto;padding:60px 40px;width:100%}
+  .lax-badge{display:inline-flex;align-items:center;gap:8px;background:#17833C;color:#fff;font-size:11.5px;font-weight:700;letter-spacing:.11em;padding:8px 15px;border-radius:6px}
+  .lax-hero h1{margin-top:22px;font-size:58px;line-height:1.03;font-weight:900;letter-spacing:-.03em;color:#fff;max-width:740px}
+  .lax-hero h1 .g{color:#35B34C}
+  .lax-hero-sub{margin-top:22px;max-width:560px;font-size:16.5px;line-height:1.7;color:#CFD8D0}
+  .lax-hero-ctas{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+  .lax a.lax-btn{background:#17833C;color:#fff;border:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:15px;padding:14px 26px;border-radius:8px;display:inline-flex;align-items:center;gap:10px;transition:background .2s}
+  .lax a.lax-btn:hover{background:#0E5127;color:#fff}
+  /* generic section */
+  .lax-sec{padding:82px 40px}
+  .lax-cap{max-width:var(--atl-content-max-width);margin:0 auto}
+  .lax-eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#17833C;font-weight:700}
+  /* intro */
+  .lax-intro-grid{max-width:var(--atl-content-max-width);margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap}
+  .lax-intro-tag{display:flex;align-items:center;gap:14px}
+  .lax-intro-pill{font-size:11px;font-weight:700;color:#9AA4AC;border:1px solid #E1E6E2;border-radius:999px;padding:2px 9px}
+  .lax-intro-grid h2{font-size:47px;line-height:1.06;font-weight:800;letter-spacing:-.025em;margin-top:16px;color:#182029}
+  .lax-intro-grid h2 .g{color:#17833C}
+  .lax-intro-lead{max-width:390px;color:#5A6472;font-size:16px;line-height:1.75}
+  /* stats */
+  .lax-stats{max-width:var(--atl-content-max-width);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .lax-stat{background:#fff;border:1px solid #E6EBE7;border-radius:16px;padding:30px 32px;transition:transform .25s,box-shadow .25s,border-color .25s}
+  .lax-stat:hover{transform:translateY(-5px);box-shadow:0 22px 44px -28px rgba(11,22,32,.3);border-color:#17833C}
+  .lax-stat-big{font-size:44px;font-weight:800;letter-spacing:-.02em;color:#17833C;line-height:1}
+  .lax-stat-lbl{margin-top:12px;font-size:15px;font-weight:600;color:#3A434E}
+  /* day */
+  .lax-center{text-align:center;max-width:640px;margin:0 auto 44px}
+  .lax-center h2{font-size:38px;line-height:1.1;font-weight:800;letter-spacing:-.02em;margin-top:12px}
+  .lax-day-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .lax-day-media{position:relative;height:190px;border-radius:14px;overflow:hidden;background:#0A1710}
+  .lax-day-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.22,.61,.36,1)}
+  .lax-day-media:hover img{transform:scale(1.06)}
+  .lax-day-time{display:inline-block;margin-top:16px;background:#17833C;color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;padding:4px 11px;border-radius:6px}
+  .lax-day-title{font-weight:700;font-size:17px;margin-top:12px;color:#182029}
+  .lax-day-desc{font-size:14px;line-height:1.6;color:#5A6472;margin-top:6px}
+  /* values */
+  .lax-values-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-bottom:44px}
+  .lax-values-head h2{font-size:38px;line-height:1.1;font-weight:800;letter-spacing:-.02em;margin-top:12px}
+  .lax-values-lead{max-width:360px;color:#5A6472;font-size:15px;line-height:1.7}
+  .lax-values-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:22px}
+  .lax-value{border-top:2px solid #17833C;padding-top:18px}
+  .lax-value-n{font-size:34px;font-weight:800;color:#AED2BA;letter-spacing:-.02em;line-height:1}
+  .lax-value-t{font-weight:700;font-size:15.5px;margin-top:14px;color:#182029}
+  .lax-value-d{font-size:13.5px;line-height:1.6;color:#5A6472;margin-top:8px}
+  /* gallery mosaic */
+  .lax-gal-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:210px;gap:14px}
+  .lax-tile{position:relative;border-radius:16px;overflow:hidden;background:#0A1710;transition:transform .3s cubic-bezier(.22,.61,.36,1),box-shadow .3s}
+  .lax-tile:hover{transform:translateY(-4px);box-shadow:0 26px 50px -30px rgba(6,14,9,.6)}
+  /* In the Website Editor, the hover-lift shifts the tile under the
+     cursor mid-hover, fighting the editor's own selection outline and
+     making it feel like clicks land inconsistently between the text
+     label and the actual image/video. Purely cosmetic on the live site,
+     so it's safe to just turn off while editing. */
+  .editor_enable .lax-tile:hover{transform:none}
+  .lax-tile img,.lax-tile video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.22,.61,.36,1)}
+  .lax-tile:hover img{transform:scale(1.05)}
+  .lax-tile-scrim{position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(6,14,9,.85));pointer-events:none}
+  .lax-tile-label{position:absolute;left:16px;bottom:14px;color:#fff;font-weight:700;font-size:15px;z-index:2;text-shadow:0 1px 6px rgba(0,0,0,.4);pointer-events:none}
+  .lax-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;transition:opacity .25s}
+  .lax-play span{width:60px;height:60px;border-radius:50%;background:#17833C;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.35);animation:laxPulse 2.6s ease-in-out infinite;transition:transform .2s}
+  .lax-tile-video:hover .lax-play span{transform:scale(1.08)}
+  .lax-tile-video.lax-playing .lax-play{opacity:0}
+  .lax-tile-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#5A8F6C}
+  .lax-tile-empty svg{fill:none;stroke:#5A8F6C;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;opacity:.7}
+  .lax-tile-empty span{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;opacity:.7}
+  /* 869f03uhk follow-up: the inset box-shadow rim — without it, a dark/
+     near-black tile poster (GEM Gathering's) made the semi-transparent
+     dark button essentially invisible against it, even though it was
+     correctly present and clickable. */
+  .lax-tile-fs{position:absolute;bottom:10px;right:10px;z-index:3;width:32px;height:32px;border:0;border-radius:8px;background:rgba(10,23,16,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s}
+  .lax-tile-fs:hover{background:rgba(10,23,16,.85)}
+  .lax-tile-fs svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2}
+  /* voices */
+  .lax-voices{background:#0E5127;color:#fff}
+  .lax-voices-head{max-width:640px;margin-bottom:44px}
+  .lax-voices-head .lax-eyebrow{color:#8FD3A2}
+  .lax-voices-head h2{font-size:38px;line-height:1.1;font-weight:800;letter-spacing:-.02em;margin-top:12px;color:#fff}
+  .lax-voices-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+  .lax-voice{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:30px;display:flex;flex-direction:column;transition:transform .25s,border-color .25s,background .25s}
+  .lax-voice:hover{transform:translateY(-5px);border-color:rgba(143,211,162,.5);background:rgba(255,255,255,.09)}
+  .lax-voice-q{font-size:40px;line-height:1;color:#8FD3A2;font-weight:800}
+  .lax-voice-p{font-size:16.5px;line-height:1.7;color:#EAF3EC;margin-top:6px;flex:1}
+  .lax-voice-who{display:flex;align-items:center;gap:12px;margin-top:22px}
+  .lax-voice-av{width:46px;height:46px;border-radius:50%;overflow:hidden;background:#0A3F1E;flex-shrink:0}
+  .lax-voice-av img{width:100%;height:100%;object-fit:cover;display:block}
+  .lax-voice-name{font-weight:700;font-size:14.5px;color:#fff}
+  .lax-voice-meta{font-size:13px;color:#9DC3A9}
+  /* cta */
+  .lax-cta{max-width:var(--atl-content-max-width);margin:0 auto;background:linear-gradient(120deg,#0E5127,#0A3F1E);border-radius:22px;padding:56px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap}
+  .lax-cta .lax-eyebrow{color:#8FD3A2}
+  .lax-cta h2{font-size:34px;line-height:1.12;font-weight:800;letter-spacing:-.02em;margin-top:12px;color:#fff;max-width:560px}
+  .lax-cta p{margin-top:14px;color:#C5D9CC;font-size:16px;line-height:1.7;max-width:560px}
+  .lax-cta-btn{background:#fff;color:#0E5127;border:0;cursor:pointer;font-family:inherit;font-weight:800;font-size:16px;padding:16px 28px;border-radius:10px;display:inline-flex;align-items:center;gap:10px;flex-shrink:0;transition:background .2s}
+  .lax-cta-btn:hover{background:#E9F4EC;color:#0E5127}
+  @media(max-width:960px){
+    .lax-hero h1{font-size:44px}
+    .lax-day-grid{grid-template-columns:repeat(2,1fr)}
+    .lax-values-grid{grid-template-columns:repeat(2,1fr)}
+    .lax-gal-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:180px}
+    .lax-gal-grid > div{grid-column:auto!important;grid-row:auto!important}
+  }
+  @media(max-width:640px){
+    .lax-sec{padding:56px 22px}
+    .lax-hero-wrap{padding:44px 22px}
+    .lax-hero h1{font-size:36px}
+    .lax-stats,.lax-day-grid{grid-template-columns:1fr}
+    .lax-values-grid,.lax-gal-grid{grid-template-columns:1fr}
+    .lax-voices-grid{grid-template-columns:1fr}
+    .lax-cta{padding:36px 26px}
+  }
+</style>
+
+<!-- Each top-level section below carries "lax lax-in" directly (rather than
+     one shared wrapping div around all of them) so every section is a real,
+     independent block the Website Editor can insert new content next to —
+     see the "enable Add Section" ticket. The .lax classes (colors, fonts,
+     the .lax-in load-fade) apply identically per-section, so this is purely
+     structural: nothing about the page's look changes.
+
+     The oe_structure div below is this page's OWN (its arch literally
+     contains it, unlike atlasco_layout's shared #wrap which every page
+     nests inside) — matching the atlasco_page_template.xml precedent.
+     Website Editor "Add Section" saves a new block into whichever
+     oe_structure's owning view the drop happened in; without this, the
+     only oe_structure in scope belongs to the shared layout, so a drop
+     would (attempt to) modify every page's shared chrome instead of just
+     this one, and Odoo refuses to compute a valid drop target at all. -->
+<div id="wrap_culture" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.culture').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+  <!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+       below are real Odoo-native Insert-Blocks drop targets - see the long
+       root-cause comment on wrap_about in atlasco_about_page.xml. This div
+       itself can't be one: Odoo's distribute_branding() strips a
+       container's own branding down to its children whenever it contains
+       any QWEB-directive descendant, which every section below has. -->
+  <div id="wrap_culture_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.culture').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+  <!-- ============ HERO ============
+       Real Atlasco culture photo as editor-replaceable section background
+       (oe_img_bg) behind the gradient scrim — NOT an overlay <img>. -->
+  <t t-set="hero_bg" t-value="request.env['atlasco.page.hero'].sudo()._image_url('culture')"/>
+  <section class="lax-hero lax lax-in">
+    <img class="lax-hero-bg" t-att-src="hero_bg or '/atlasco_website/static/src/img/careers-culture-bg-v2.jpg'" alt="Life at Atlasco" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;"/>
+    <div class="lax-hero-scrim"/>
+    <div class="lax-hero-wrap">
+      <div class="lax-badge">35 YEARS OF CUSTOMER-CENTERED APPROACH</div>
+      <h1>The best part of Atlasco?<br/><span class="g">The people.</span></h1>
+      <p class="lax-hero-sub">More than a workplace — an environment where people are respected, developed, and trusted to deliver meaningful impact within a culture of strong values and collaboration.</p>
+      <div class="lax-hero-ctas">
+        <a href="/careers" class="lax-btn">Join Our Team →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTRO ============ -->
+  <div id="wrap_culture_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.culture').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+  <section class="lax-sec lax lax-in" style="padding:82px 40px 30px;">
+    <div class="lax-intro-grid" data-reveal="1">
+      <div style="max-width:720px;">
+        <div class="lax-intro-tag">
+          <span class="lax-eyebrow">Life at Atlasco</span>
+          <span class="lax-intro-pill">People &amp; Culture</span>
+        </div>
+        <h2>More than a workplace.<br/>A place to <span class="g">belong.</span></h2>
+      </div>
+      <p class="lax-intro-lead">For 35 years we've built more than industrial systems — we've built a team. This is what a day, a year, and a whole career here actually feels like.</p>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <div id="wrap_culture_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.culture').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+  <section class="lax lax-in" style="padding:20px 40px 46px;">
+    <div class="lax-stats" data-reveal="1">
+      <div class="lax-stat">
+        <div class="lax-stat-big">35+</div>
+        <div class="lax-stat-lbl">Years of engineering experience</div>
+      </div>
+      <div class="lax-stat">
+        <div class="lax-stat-big">Global</div>
+        <div class="lax-stat-lbl">Technology partners &amp; standards</div>
+      </div>
+      <div class="lax-stat">
+        <div class="lax-stat-big">People</div>
+        <div class="lax-stat-lbl">First, in everything we do</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ A DAY AT ATLASCO ============
+       New design section. Real culture photo used for each editable tile
+       (plain <img>, editor-replaceable). Distinct slots so the editor can
+       swap each independently. -->
+  <div id="wrap_culture_gap_3" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.culture').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[4]"/>
+
+  <section class="lax-sec lax lax-in" style="background:#F1F5F7;padding:74px 40px;">
+    <div class="lax-cap" data-reveal="1">
+      <div class="lax-center">
+        <div class="lax-eyebrow">A Day at Atlasco</div>
+        <h2>From first coffee to final whistle.</h2>
+      </div>
+      <div class="lax-day-grid">
+        <div>
+          <div class="lax-day-media"><img src="/atlasco_website/static/src/img/banners/careers-culture.jpg" alt="Morning kickoff"/></div>
+          <div class="lax-day-title">Morning kickoff</div>
+          <div class="lax-day-desc">Coffee, quick standups, and setting the day's priorities together.</div>
+        </div>
+        <div>
+          <div class="lax-day-media"><img src="/atlasco_website/static/src/img/banners/careers-culture.jpg" alt="On the ground"/></div>
+          <div class="lax-day-title">On the ground</div>
+          <div class="lax-day-desc">Solving real problems on-site — with customers, equipment, and each other.</div>
+        </div>
+        <div>
+          <div class="lax-day-media"><img src="/atlasco_website/static/src/img/banners/careers-culture.jpg" alt="Learn and share"/></div>
+          <div class="lax-day-title">Learn &amp; share</div>
+          <div class="lax-day-desc">Mentorship, knowledge sessions, and hands-on training at PrimeGear Academy.</div>
+        </div>
+        <div>
+          <div class="lax-day-media"><img src="/atlasco_website/static/src/img/banners/careers-culture.jpg" alt="Team moments"/></div>
+          <div class="lax-day-title">Team moments</div>
+          <div class="lax-day-desc">Wins celebrated, ideas swapped, and the occasional friendly match.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CORE VALUES ============
+       Real Atlasco core values (from live /culture). -->
+  <div id="wrap_culture_gap_4" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.culture').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[5]"/>
+
+  <section class="lax-sec lax lax-in" style="background:#EDF4EF;padding:80px 40px;">
+    <div class="lax-cap" data-reveal="1">
+      <div class="lax-values-head">
+        <div>
+          <div class="lax-eyebrow">Our DNA</div>
+          <h2>The values we actually live by.</h2>
+        </div>
+        <p class="lax-values-lead">Five principles that show up in the everyday — in how we treat customers, solve problems, and look after each other.</p>
+      </div>
+      <div class="lax-values-grid">
+        <div class="lax-value">
+          <div class="lax-value-n">01</div>
+          <div class="lax-value-t">Customer-Centered Approach</div>
+          <div class="lax-value-d">Every decision starts with the customer's success in mind.</div>
+        </div>
+        <div class="lax-value">
+          <div class="lax-value-n">02</div>
+          <div class="lax-value-t">Integrated Solutions</div>
+          <div class="lax-value-d">We connect products, services and expertise into one.</div>
+        </div>
+        <div class="lax-value">
+          <div class="lax-value-n">03</div>
+          <div class="lax-value-t">Digital Transformation</div>
+          <div class="lax-value-d">We embrace technology to work smarter and faster.</div>
+        </div>
+        <div class="lax-value">
+          <div class="lax-value-n">04</div>
+          <div class="lax-value-t">Productive Culture</div>
+          <div class="lax-value-d">A healthy, collaborative environment that gets things done.</div>
+        </div>
+        <div class="lax-value">
+          <div class="lax-value-n">05</div>
+          <div class="lax-value-t">Continuous Development</div>
+          <div class="lax-value-d">We never stop learning, teaching, and improving.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY MOSAIC — Life Beyond the Workplace ============
+       GEM Gathering / Annual Event 2026 / Annual Event 2025 / Team Moments
+       are all self-hosted <video> tiles, each with a real "Replace video"
+       upload button (Annual Event 2026/2025 and Team Moments used to be
+       Google Drive iframe embeds — migrated, see
+       AtlascoCultureLife._migrate_iframe_tiles_to_video). Photo tiles =
+       real culture photo (editor-replaceable <img>). -->
+  <div id="wrap_culture_gap_5" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.culture').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[6]"/>
+
+  <section class="lax-sec lax lax-in" style="padding:84px 40px;">
+    <div class="lax-cap" data-reveal="1">
+      <div class="lax-center" style="max-width:660px;">
+        <div class="lax-eyebrow">Life Beyond the Workplace</div>
+        <h2>The moments that make us more than a company.</h2>
+        <p style="margin-top:14px;color:#5A6472;font-size:16px;line-height:1.7;">A glimpse into the gatherings, the wins, and the people behind every project.</p>
+      </div>
+      <div class="lax-gal-grid">
+        <!-- Large: GEM Gathering + the 3 "Annual Event"/"Team Moments"
+             tiles — all real self-hosted video now (the 3 Drive-iframe
+             embeds were migrated to 'video' tiles, see
+             AtlascoCultureLife._migrate_iframe_tiles_to_video), each with
+             a real "Replace video" upload button (AtlascoVideoReplace,
+             see atlasco_snippet_options.xml) instead of a raw URL left as
+             editable page text. -->
+        <t t-set="lax_video_tiles" t-value="[l for l in content.culture_life_ids if l.vtype == 'video']"/>
+        <!-- First tile keeps the large 2x2 slot; the next 3 keep today's
+             exact 3 small-slot positions/label sizes. A 5th+ tile (an
+             admin adding one) falls back to plain grid auto-flow — no
+             explicit slot defined for it, but it still renders in the
+             next available cell rather than breaking anything. -->
+        <t t-set="lax_video_grid" t-value="['grid-column:1/3;grid-row:1/3;cursor:pointer;', 'grid-column:3/5;grid-row:1/2;', 'grid-column:3/4;grid-row:2/3;', 'grid-column:4/5;grid-row:2/3;']"/>
+        <t t-set="lax_video_label_style" t-value="['font-size:17px;left:18px;bottom:16px;', '', 'font-size:13.5px;left:14px;bottom:12px;', 'font-size:13.5px;left:14px;bottom:12px;']"/>
+        <t t-foreach="lax_video_tiles" t-as="lax_v">
+          <t t-set="lax_vi" t-value="lax_video_tiles.index(lax_v)"/>
+          <!-- o_editable + data-video-model/id/field: required for the
+               "Replace video" snippet option (AtlascoVideoReplace, see
+               atlasco_snippet_options.xml) to select this tile and persist
+               an uploaded mp4 straight to this row's own vsrc — same
+               pattern as the /about and /careers video blocks. -->
+          <div class="lax-tile lax-tile-video o_editable"
+               t-att-data-video-model="'atlasco.culture.life'" t-att-data-video-id="lax_v.id" data-video-field="vsrc"
+               t-attf-style="#{lax_video_grid[lax_vi] if lax_vi &lt; 4 else ''}">
+            <t t-if="lax_v.vsrc">
+              <!-- No `poster` attribute: poster must be a real IMAGE file
+                   (the seed's own "#{video}#t=0.1" value is the video's own
+                   URL with a time fragment — browsers silently fail to load
+                   that as an image, leaving flat black). The JS below seeks
+                   the loaded video to 0.1s instead, so its real first frame
+                   paints as the "poster". -->
+              <video muted="muted" loop="loop" playsinline="playsinline" preload="auto" t-att-src="lax_v.vsrc">
+                <source t-att-src="lax_v.vsrc" type="video/mp4"/>
+              </video>
+              <button type="button" class="lax-tile-fs" aria-label="Expand" title="Expand"
+                      onclick="event.stopPropagation();this.closest('.lax-tile').querySelector('video').requestFullscreen()">
+                <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+              </button>
+              <div class="lax-play">
+                <span>
+                  <svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 5v14l11-7z" fill="#fff"/></svg>
+                </span>
+              </div>
+            </t>
+            <t t-else="">
+              <!-- Empty state: a tile with no vsrc uploaded yet used to render
+                   as a bare dark box with a non-functional play/expand button
+                   (nothing to play, nothing to expand), which read as broken
+                   next to a fully-populated tile like GEM Gathering. This is
+                   the only actual difference between tiles - the container,
+                   sizing, and object-fit rules below are already identical
+                   for every tile regardless of vsrc. -->
+              <div class="lax-tile-empty" t-ignore="1" data-oe-readonly="1">
+                <svg viewBox="0 0 24 24" width="26" height="26"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                <span>Video coming soon</span>
+              </div>
+            </t>
+            <div class="lax-tile-scrim" t-ignore="1" data-oe-readonly="1"/>
+            <!-- t-ignore + data-oe-readonly: without these this childless label
+                 div gets swept up by Odoo's generic raw-HTML branding (it has no
+                 element children in the source, same rule that silently brands
+                 empty leaf nodes - see the oe_structure branding investigation),
+                 making it its own contenteditable text zone that intercepts
+                 clicks meant for the "Replace video" image/video target
+                 underneath with the plain text-edit toolbar instead.
+                 data-oe-readonly is belt-and-suspenders: editableElements()
+                 explicitly excludes anything carrying it from .o_editable,
+                 regardless of whether the automatic branding pass still adds
+                 data-oe-model/field to the node. -->
+            <div class="lax-tile-label" t-attf-style="#{lax_video_label_style[lax_vi] if lax_vi &lt; 4 else ''}" t-esc="lax_v.label" t-ignore="1" data-oe-readonly="1"/>
+          </div>
+        </t>
+        <!-- Photo tiles (ticket 869eg8xmt fix): real atlasco.culture.life
+             records (vtype='photo'), each with an attachment-backed
+             fields.Image. Rendered through the QWeb image converter (same
+             pattern as the homepage hero carousel, see t-field usage
+             below) so the tile is genuinely click-to-replace in the
+             Website Editor and also editable from the backend Culture
+             admin list. None of the 3 seeded records actually had a photo
+             uploaded yet (still the original static banner), which routed
+             every tile through the non-editable static <img> branch below
+             instead — so none of them were really click-to-replace despite
+             looking like they should be. Now any tile with a real record
+             always renders through t-field (Odoo's own empty-image
+             placeholder when .photo is unset is itself click-to-upload),
+             so the fallback only ever applies if a tile's record is
+             missing entirely. -->
+        <t t-set="lax_photo_tiles" t-value="[l for l in content.culture_life_ids if l.vtype == 'photo']"/>
+        <t t-set="lax_photo_grid" t-value="['1/2', '2/3', '3/5']"/>
+        <t t-set="lax_photo_fallback" t-value="['Field Days', 'Celebrations', 'Office Life']"/>
+        <t t-foreach="range(3)" t-as="lax_i">
+          <div class="lax-tile" t-attf-style="grid-column:#{lax_photo_grid[lax_i]};grid-row:3/4;">
+            <t t-if="lax_i &lt; len(lax_photo_tiles)">
+              <span t-field="lax_photo_tiles[lax_i].photo"
+                    t-options='{"widget": "image", "alt-field": "photo_alt", "qweb_img_responsive": false}'/>
+            </t>
+            <t t-else="">
+              <img src="/atlasco_website/static/src/img/banners/careers-culture.jpg"
+                   t-att-alt="lax_photo_fallback[lax_i]"/>
+            </t>
+            <div class="lax-tile-scrim" t-ignore="1" data-oe-readonly="1"/>
+            <!-- t-ignore + data-oe-readonly: see the same comment on the video
+                 tile's label above - keeps this childless overlay div from
+                 becoming its own contenteditable text zone that competes with
+                 clicking the image underneath. -->
+            <div class="lax-tile-label"
+                 t-attf-style="font-size:#{'13.5px' if lax_i != 2 else '15px'};left:#{'14px' if lax_i != 2 else '16px'};bottom:#{'12px' if lax_i != 2 else '13px'};"
+                 t-esc="lax_photo_tiles[lax_i].label if lax_i &lt; len(lax_photo_tiles) else lax_photo_fallback[lax_i]" t-ignore="1" data-oe-readonly="1"/>
+          </div>
+        </t>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VOICES — In Their Words ============
+       Dynamic section backed by content.culture_voice_ids — admins add,
+       remove, and reorder cards from the Website Content > Culture tab. -->
+  <div id="wrap_culture_gap_6" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.culture').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[7]"/>
+
+  <t t-if="content.culture_voice_ids">
+    <section class="lax-sec lax-voices lax lax-in" style="padding:84px 40px;">
+      <div class="lax-cap" data-reveal="1">
+        <div class="lax-voices-head">
+          <div class="lax-eyebrow">In Their Words</div>
+          <h2>Why our people stay.</h2>
+        </div>
+        <div class="lax-voices-grid">
+          <t t-foreach="content.culture_voice_ids" t-as="v">
+            <div class="lax-voice">
+              <div class="lax-voice-q">“</div>
+              <p class="lax-voice-p" t-field="v.quote"/>
+              <div class="lax-voice-who">
+                <div class="lax-voice-av">
+                  <span t-field="v.avatar" t-options="{'widget': 'image'}"/>
+                </div>
+                <div style="line-height:1.3;">
+                  <div class="lax-voice-name" t-field="v.person_role"/>
+                  <div class="lax-voice-meta" t-field="v.years_label"/>
+                </div>
+              </div>
+            </div>
+          </t>
+        </div>
+      </div>
+    </section>
+  </t>
+
+  <div id="wrap_culture_gap_7" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.culture').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[8]"/>
+
+  <!-- ============ CTA TO CAREERS ============ -->
+  <section class="lax-sec lax lax-in" style="padding:80px 40px;">
+    <div class="lax-cta" data-reveal="1">
+      <div style="max-width:560px;">
+        <div class="lax-eyebrow">Ready When You Are</div>
+        <h2>Like what you see? Come build it with us.</h2>
+        <p>Explore open roles across engineering, service, sales, and logistics — and find where you fit.</p>
+      </div>
+      <a href="/careers#openings" class="lax-cta-btn">Explore Careers →</a>
+    </div>
+  </section>
+
+  <div id="wrap_culture_gap_8" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.culture').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[9]"/>
+
+</div>
+
+<script>
+(function(){
+  // Was root.querySelectorAll() scoped to a single wrapping ".lax" div; now
+  // that each section carries its own "lax" class directly (so the Website
+  // Editor can add new sections between them - see "enable Add Section"
+  // ticket), query the whole document instead so every section's
+  // [data-reveal] elements are still found.
+  var els = [].slice.call(document.querySelectorAll('[data-reveal]'));
+  var reduce = window.matchMedia &amp;&amp; window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  els.forEach(function(el){ el.style.transition='opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1)'; el.style.transform='translateY(26px)'; });
+  function show(el){ el.style.opacity='1'; el.style.transform='none'; el.setAttribute('data-shown','1'); }
+  if (reduce){ els.forEach(show); }
+  else {
+    var tick=function(){ var vh=window.innerHeight||document.documentElement.clientHeight;
+      for (var i=0;i&lt;els.length;i++){ var el=els[i]; if(el.getAttribute('data-shown')) continue; var r=el.getBoundingClientRect(); if(r.top&lt;vh*0.92 &amp;&amp; r.bottom&gt;0) show(el); } };
+    /* Odoo's website layout scrolls #wrapwrap, not window (html/body are
+       overflow:hidden) — a plain window scroll listener never fires on a
+       real page, so anything below the initial fold stayed permanently
+       hidden. */
+    (document.getElementById('wrapwrap')||window).addEventListener('scroll',tick,{passive:true}); window.addEventListener('resize',tick,{passive:true});
+    var revealInterval=setInterval(function(){ tick(); if(!els.some(function(el){return !el.getAttribute('data-shown');})) clearInterval(revealInterval); },150);
+    [0,90,260,600].forEach(function(t){ setTimeout(tick,t); });
+  }
+  // BUG-09 (869f03uhk): local-video tiles — click-to-toggle play/pause so
+  // each behaves like a styled thumbnail (poster + play button) rather
+  // than exposing the browser's native video-controls chrome at rest.
+  // querySelectorAll, not querySelector: the gallery is now a backend
+  // collection (atlasco.culture.life) an admin can add more video-type
+  // tiles to, not a single hardcoded one.
+  document.querySelectorAll('.lax-tile-video').forEach(function(vidTile){
+    var vid = vidTile.querySelector('video');
+    if (!vid) return;
+    // Paint a real first-frame "poster" (see the &lt;video&gt; comment
+    // above — there's no valid poster attribute) as soon as enough of the
+    // video has loaded to seek. Just setting currentTime on a video
+    // that's never played is not enough to force a repaint in every
+    // browser — a real play()+pause() round-trip is the standard,
+    // reliable fix (confirmed: seeking alone left the canvas blank even
+    // though currentTime/readyState updated correctly).
+    var seekPoster = function(){
+      try {
+        vid.currentTime = 0.1;
+        var p = vid.play();
+        if (p &amp;&amp; p.then) { p.then(function(){ vid.pause(); }).catch(function(){}); }
+        else { vid.pause(); }
+      } catch (e) {}
+    };
+    if (vid.readyState >= 1) seekPoster();
+    else vid.addEventListener('loadedmetadata', seekPoster);
+    vidTile.addEventListener('click', function(){
+      if (vid.paused){ vid.play(); } else { vid.pause(); }
+    });
+    vid.addEventListener('play', function(){ vidTile.classList.add('lax-playing'); });
+    vid.addEventListener('pause', function(){ vidTile.classList.remove('lax-playing'); });
+    vid.addEventListener('ended', function(){ vidTile.classList.remove('lax-playing'); });
+  });
+})();
+</script>
+
+</t>
+</template>
+
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        BUG-16 (ClickUp 869f0401y): Odoo seeds a native, unbranded page at
+        /contactus (record website.contactus_page) on every website,
+        published by default. Atlasco's real, branded contact page lives at
+        /contact (atlasco_website.contact, controllers/main.py `contact`).
+
+        The primary fix is the /contactus -> /contact 301 redirect route
+        added in controllers/main.py (contactus_redirect). This data update
+        is defense-in-depth: it also unpublishes the native page so it no
+        longer shows as a live, duplicate entry in Website > Pages / the
+        sitemap, and points the stray native "Contact us" menu record at the
+        canonical URL. Atlasco's own navigation is fully hardcoded in
+        views/atlasco_layout.xml and never renders website.menu records, so
+        this menu update is cosmetic/hygiene only.
+    -->
+    <record id="website.contactus_page" model="website.page">
+        <field name="is_published">False</field>
+    </record>
+    <record id="website.menu_contactus" model="website.menu">
+        <field name="url">/contact</field>
+    </record>
+</odoo>

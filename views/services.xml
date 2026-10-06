@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="services" name="Services">
+<t t-call="atlasco_website.atlasco_layout">
+
+<!-- This page's OWN oe_structure (its arch literally contains it, unlike
+     atlasco_layout's shared #wrap which every page nests inside) — see
+     the same fix already applied on /culture (views/atlasco_culture_page.xml)
+     and ticket 869f082az ("cannot add a new section BETWEEN existing
+     customized sections"). Without a page-owned oe_structure, the Website
+     Editor has no valid drop target to save a new mid-page section into:
+     the only oe_structure in scope is the one shared by every page (the
+     layout's #wrap), so Odoo refuses the drop rather than let one page's
+     edit silently write into every other page's chrome. Wrapping this
+     page's own top-level sections in <div id="wrap" class="oe_structure">
+     gives /services its own independent, page-scoped drop target. Note
+     (2026-09-14): this comment originally claimed "Insert Blocks" already
+     worked between any two sections, but the editorial rows and bottom CTA
+     were actually nested inside one shared .svl-wrap div, not direct
+     children of this oe_structure — Odoo's dropzone algorithm only offers
+     insertion points between DIRECT children, so that claim was only true
+     for the gap before/after .svl-wrap as a whole. Fixed by moving the
+     .svl-wrap class onto each of its 3 former children (svl-head, svl-rows,
+     svl-cta-sec) individually and removing the wrapping div itself, so all
+     3 - plus the hero - are now genuine direct children and each gap
+     between them is a real insertion point.
+
+     ROOT CAUSE FOLLOW-UP (found via live DOM/console investigation): being
+     a direct child was necessary but not sufficient. Odoo's own branding
+     pass (distribute_branding() in ir_ui_view.py) strips this div's own
+     data-oe-model/id/field/xpath and pushes them down onto its children
+     whenever the div "contains a branded element" - true for any
+     descendant with a QWEB directive (t-set/t-if/t-esc/t-foreach/...),
+     which every real section here has. So this div's own branding never
+     actually survives into the editor's DOM, and it never gets Odoo's
+     `.o_editable` class - Structure snippets keep showing "No location to
+     drop in" regardless. The only container that reliably keeps its own
+     branding is one with zero QWEB-directive descendants (true even after
+     a real insertion, since Odoo saves an inserted block as plain static
+     HTML with no t-* attributes). The small, genuinely empty
+     "wrap_services_gap_N" oe_structure divs between/around the sections
+     below are real, permanent, Odoo-native insertion points - added
+     without touching any existing section's own content or styling. -->
+<t t-set="hero_bg" t-value="request.env['atlasco.page.hero'].sudo()._image_url('services') or '/atlasco_website/static/src/img/services/landing/hero.jpg'"/>
+<div id="wrap_services" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.services').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<div id="wrap_services_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.services').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<!-- HERO (Services PDF page 1) -->
+<t t-set="style_services_hero" t-value="request.env['atlasco.block.style'].sudo()._get('services_hero')"/>
+<section class="atl-page-hero atl-services-hero atl-font-editable o_editable" t-att-data-style-model="'atlasco.block.style'" t-att-data-style-id="style_services_hero.id" t-attf-style="background-image:linear-gradient(rgba(11,15,17,.12),rgba(11,15,17,.15)),url(#{hero_bg});background-size:cover;background-position:center;--atl-dyn-font-family:#{style_services_hero.font_family or ''};--atl-dyn-font-size:#{style_services_hero.font_size or ''};">
+    <div class="atl-page-hero-inner">
+        <div class="atl-section-label">Services</div>
+        <h1>Maximize Uptime.<br/>Minimize Risk.<br/>Optimize Every Asset.</h1>
+        <p>End-to-end industrial services designed to reduce costs, prevent failures, and drive continuous operational performance.</p>
+        <div class="atl-services-hero-cta">
+            <a t-att-href="style_services_hero.cta_url or '/contact'" class="btn-green">Request a Consultation &#8594;</a>
+        </div>
+    </div>
+</section>
+
+<div id="wrap_services_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.services').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<!-- ===== SERVICES — EDITORIAL ROWS (12-7 L1 redesign) ===== -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+  .svl-wrap{background:#FFFFFF;font-family:'Poppins',system-ui,sans-serif;color:#16232E}
+  .svl-wrap h2,.svl-wrap h3{font-family:'Poppins',system-ui,sans-serif;letter-spacing:-.01em;color:#132029;font-weight:700;margin:0}
+  .svl-wrap p{margin:0}
+  .svl-head{text-align:center;max-width:720px;margin:0 auto;padding:clamp(60px,8vw,104px) clamp(18px,4vw,44px) 0}
+  .svl-eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.2em;color:#159C57;text-transform:uppercase}
+  .svl-head h2{margin-top:14px;font-size:clamp(28px,3.8vw,46px);line-height:1.1}
+  .svl-head-div{display:block;width:64px;height:3px;border-radius:3px;background:linear-gradient(90deg,#159C57,#34C87D);margin:18px auto 0}
+  .svl-rows{max-width:var(--atl-content-max-width);margin:0 auto;display:flex;flex-direction:column;gap:clamp(52px,7vw,96px);padding:clamp(40px,6vw,80px) clamp(18px,4vw,44px) clamp(60px,8vw,104px)}
+  .svl-row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,6vw,84px);align-items:center}
+  .svl-text{position:relative}
+  .svl-ghostnum{position:absolute;top:-64px;font-weight:800;font-size:130px;line-height:1;color:rgba(21,156,87,.07);pointer-events:none;z-index:0;font-family:'Poppins',sans-serif}
+  .svl-gn-l{left:-8px}
+  .svl-gn-r{right:-8px}
+  .svl-text-in{position:relative;z-index:1}
+  .svl-numrow{display:flex;align-items:center;gap:14px}
+  .svl-numbadge{display:grid;place-items:center;width:44px;height:44px;border-radius:10px;color:#fff;font-weight:700;font-size:16px}
+  .svl-badge-a{background:#159C57}
+  .svl-badge-b{background:#0F7E45}
+  .svl-badge-c{background:#34C87D;color:#0B1620}
+  .svl-numline{height:2px;flex:1;transform-origin:left;animation:svllinegrow .9s cubic-bezier(.22,.61,.36,1) both}
+  .svl-line-a{background:linear-gradient(90deg,#159C57,transparent)}
+  .svl-line-b{background:linear-gradient(90deg,#0F7E45,transparent)}
+  .svl-line-c{background:linear-gradient(90deg,#34C87D,transparent)}
+  .svl-text-in h3{margin-top:18px;font-size:clamp(23px,3vw,36px);line-height:1.1}
+  .svl-text-in p{margin-top:16px;font-size:15.5px;line-height:1.72;color:#64717B;max-width:520px}
+  .svl-ulink{display:inline-flex;align-items:center;gap:9px;margin-top:22px;font-weight:600;font-size:15px;position:relative;text-decoration:none}
+  .svl-link-a{color:#159C57}
+  .svl-link-b{color:#0F7E45}
+  .svl-link-c{color:#34C87D}
+  .svl-ulink::after{content:"";position:absolute;left:0;bottom:-3px;height:2px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.22,.61,.36,1)}
+  .svl-ulink:hover::after{transform:scaleX(1)}
+  .svl-ulink svg{transition:transform .3s}
+  .svl-ulink:hover svg{transform:translateX(4px)}
+  .svl-efig{position:relative}
+  .svl-media-l{padding:0 20px 20px 0}
+  .svl-media-r{padding:0 0 20px 20px}
+  .svl-frameback{position:absolute;top:20px;bottom:0;border-radius:14px;pointer-events:none;transition:transform .55s cubic-bezier(.22,.61,.36,1)}
+  .svl-fb-l{left:20px;right:0}
+  .svl-fb-r{left:0;right:20px}
+  .svl-fb-green{border:2px solid rgba(21,156,87,.4)}
+  .svl-fb-dark{border:2px solid rgba(15,126,69,.4)}
+  .svl-efig:hover .svl-frameback{transform:translate(16px,16px)}
+  .svl-imgwrap{position:relative;border-radius:12px;overflow:hidden;min-height:380px;box-shadow:0 30px 56px -34px rgba(11,22,32,.5)}
+  .svl-imgz{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.22,.61,.36,1)}
+  .svl-efig:hover .svl-imgz{transform:scale(1.06)}
+  .svl-imgwrap::after{content:"";position:absolute;top:0;left:0;width:42%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.26),transparent);transform:translateX(-130%) skewX(-14deg);pointer-events:none;opacity:0;z-index:3}
+  .svl-efig:hover .svl-imgwrap::after{opacity:1;animation:svlsweep 1.05s cubic-bezier(.22,.61,.36,1)}
+  .svl-brk{position:absolute;width:22px;height:22px;pointer-events:none;z-index:4}
+  .svl-brk-tl{left:14px;top:14px;border-top:2px solid #fff;border-left:2px solid #fff}
+  .svl-brk-tr{right:14px;top:14px;border-top:2px solid #fff;border-right:2px solid #fff}
+  .svl-row7{position:relative;background:#0B1620;border-radius:18px;overflow:hidden;padding:clamp(32px,4vw,60px)}
+  .svl-row7-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+  .svl-row7-glow{position:absolute;top:-70px;right:-50px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(52,200,125,.2),transparent 66%);pointer-events:none}
+  .svl-row7-inner{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,56px);align-items:center}
+  .svl-row7 .svl-text-in h3{color:#fff}
+  .svl-row7 .svl-text-in p{color:rgba(255,255,255,.72)}
+  .svl-row7 .svl-ghostnum{color:rgba(255,255,255,.05)}
+  .svl-row7 .svl-imgwrap{min-height:320px}
+  .svl-brk-c{border-top-color:#34C87D;border-left-color:#34C87D}
+  .svl-cta-sec{background:#F4F6F7;padding:clamp(30px,4vw,48px) clamp(18px,4vw,44px) clamp(64px,8vw,110px)}
+  .svl-cta-box{position:relative;max-width:var(--atl-content-max-width);margin:0 auto;background:#0B1620;border-radius:20px;padding:clamp(46px,6vw,88px) clamp(24px,5vw,64px);overflow:hidden;text-align:center}
+  .svl-cta-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+  .svl-cta-glow-a{position:absolute;top:-90px;left:-50px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(21,156,87,.22),transparent 68%);pointer-events:none}
+  .svl-cta-glow-b{position:absolute;bottom:-90px;right:-50px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(52,200,125,.16),transparent 68%);pointer-events:none}
+  .svl-cta-in{position:relative;max-width:760px;margin:0 auto}
+  .svl-cta-in h2{font-size:clamp(26px,4vw,48px);line-height:1.1;color:#fff}
+  .svl-cta-in p{margin:18px auto 0;max-width:520px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.72)}
+  .svl-arrowbtn{display:inline-flex;align-items:center;gap:12px;padding:8px 8px 8px 24px;border-radius:8px;background:#159C57;color:#fff;font-weight:600;font-size:16px;box-shadow:0 14px 30px -10px rgba(21,156,87,.5);transition:transform .2s,background .2s;text-decoration:none;margin-top:32px}
+  .svl-arrowbtn:hover{background:#0F7E45;transform:translateY(-2px)}
+  .svl-arrowcircle{display:grid;place-items:center;width:38px;height:38px;border-radius:6px;background:rgba(255,255,255,.16);color:#fff;transition:transform .25s}
+  .svl-arrowbtn:hover .svl-arrowcircle{transform:translateX(3px)}
+  @keyframes svlsweep{0%{transform:translateX(-130%) skewX(-14deg)}100%{transform:translateX(230%) skewX(-14deg)}}
+  @keyframes svllinegrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @media(max-width:860px){
+    .svl-row,.svl-row7-inner{grid-template-columns:1fr!important;gap:26px!important}
+    .svl-efig{order:-1;padding:0!important}
+    .svl-imgwrap{min-height:240px}
+    .svl-ghostnum{font-size:92px;top:-48px}
+  }
+</style>
+
+  <div class="svl-wrap">
+  <div class="svl-head">
+    <span class="svl-eyebrow">Our Services</span>
+    <h2>Delivering Reliability at Every Level</h2>
+    <span class="svl-head-div"></span>
+  </div>
+  </div>
+
+<div id="wrap_services_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.services').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+  <div class="svl-wrap">
+  <div class="svl-rows">
+
+    <!-- Model-driven: Website > Content > Services (atlasco.service). Was 7
+         hand-written rows with no way to add an 8th (ClickUp 869f082c8). -->
+    <t t-foreach="services_list" t-as="svc">
+
+      <!-- Featured / closing dark panel (used today for Training / PrimeGear) -->
+      <div t-if="svc['is_dark_panel']" class="svl-row7">
+        <div class="svl-row7-grid"></div>
+        <div class="svl-row7-glow"></div>
+        <div class="svl-row7-inner">
+          <div class="svl-text">
+            <span class="svl-ghostnum svl-gn-l"><t t-esc="'%02d' % (svc_index + 1)"/></span>
+            <div class="svl-text-in">
+              <div class="svl-numrow"><span class="svl-numbadge svl-badge-c"><t t-esc="'%02d' % (svc_index + 1)"/></span><span class="svl-numline svl-line-c"></span></div>
+              <h3 t-esc="svc['name']"/>
+              <p t-esc="svc['card_description']"/>
+              <a t-att-href="svc['href']" class="svl-ulink svl-link-c">Learn More<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+          <div class="svl-efig">
+            <div class="svl-imgwrap">
+              <img t-if="svc['hero_image']" class="svl-imgz" t-att-src="svc['hero_image']" t-att-alt="svc['name']" loading="lazy"/>
+              <span class="svl-brk svl-brk-tl svl-brk-c"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Normal alternating editorial row -->
+      <div t-else="" class="svl-row">
+        <div t-if="svc_index % 2 == 0" class="svl-efig svl-media-l">
+          <span class="svl-frameback svl-fb-l svl-fb-green"></span>
+          <div class="svl-imgwrap">
+            <img t-if="svc['hero_image']" class="svl-imgz" t-att-src="svc['hero_image']" t-att-alt="svc['name']" loading="lazy"/>
+            <span class="svl-brk svl-brk-tl"></span>
+          </div>
+        </div>
+        <div class="svl-text">
+          <span t-att-class="'svl-ghostnum ' + ('svl-gn-l' if svc_index % 2 == 0 else 'svl-gn-r')"><t t-esc="'%02d' % (svc_index + 1)"/></span>
+          <div class="svl-text-in">
+            <div class="svl-numrow">
+              <span t-att-class="'svl-numbadge ' + ('svl-badge-a' if svc_index % 2 == 0 else 'svl-badge-b')"><t t-esc="'%02d' % (svc_index + 1)"/></span>
+              <span t-att-class="'svl-numline ' + ('svl-line-a' if svc_index % 2 == 0 else 'svl-line-b')"></span>
+            </div>
+            <h3 t-esc="svc['name']"/>
+            <p t-esc="svc['card_description']"/>
+            <a t-att-href="svc['href']" t-att-class="'svl-ulink ' + ('svl-link-a' if svc_index % 2 == 0 else 'svl-link-b')">Learn More<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+        <div t-if="svc_index % 2 != 0" class="svl-efig svl-media-r">
+          <span class="svl-frameback svl-fb-r svl-fb-dark"></span>
+          <div class="svl-imgwrap">
+            <img t-if="svc['hero_image']" class="svl-imgz" t-att-src="svc['hero_image']" t-att-alt="svc['name']" loading="lazy"/>
+            <span class="svl-brk svl-brk-tr"></span>
+          </div>
+        </div>
+      </div>
+
+    </t>
+
+  </div>
+  </div>
+
+<div id="wrap_services_gap_3" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.services').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[4]"/>
+
+  <!-- BOTTOM CTA (Services PDF page 3) -->
+  <section class="svl-cta-sec svl-wrap">
+    <div class="svl-cta-box">
+      <div class="svl-cta-grid"></div>
+      <div class="svl-cta-glow-a"></div>
+      <div class="svl-cta-glow-b"></div>
+      <div class="svl-cta-in">
+        <h2>Are you ready to move from reactive maintenance to total reliability?</h2>
+        <p>Join hundreds of industrial facilities optimizing their reliability today.</p>
+        <a href="/contact" class="svl-arrowbtn">Book A Reliability Audit<span class="svl-arrowcircle"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      </div>
+    </div>
+  </section>
+
+<div id="wrap_services_gap_4" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.services').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[5]"/>
+
+</div>
+
+</t>
+</template>
+</odoo>

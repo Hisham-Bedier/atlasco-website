@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Primegear Academy — Atlasco Egypt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+.expertise-tabs { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.expertise-tab { padding:20px 16px; background:var(--c-gray-100); border-radius:8px; cursor:pointer; border:2px solid transparent; transition:all .2s; text-align:center; }
+.expertise-tab.active-tab { background:var(--c-white); border-color:var(--c-green-light); }
+.expertise-tab:hover { background:var(--c-white); }
+  </style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-inner"><div class="topbar-left"><a href="contact.html">Contact Us</a><span class="topbar-sep">|</span><a href="tel:+20223581314">+20 2 2358 1314</a><span class="topbar-sep">|</span><a href="contact.html">Send Us Request</a><span class="topbar-sep">|</span><span>Egypt</span></div><div class="topbar-right"><select class="lang-select"><option>En</option><option>Ar</option></select><a href="#">Search</a></div></div></div>
+<nav class="navbar"><div class="navbar-inner"><a href="index.html" class="logo"><div class="logo-icon"><svg viewBox="0 0 28 28" fill="none"><path d="M4 24L10 8L14 18L18 8L24 24" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 18H21" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div><div class="logo-text"><strong>ATLASCO</strong><span>EGYPT</span></div></a><ul class="nav-links"><li><a href="about.html">About</a></li><li><a href="industries.html">Industries</a></li><li><a href="products.html">Products</a></li><li><a href="services.html">Services</a></li><li><a href="partners.html">Partners</a></li><li><a href="careers.html">Careers &amp; Culture</a></li><li><a href="contact.html">Contact Us</a></li></ul><div class="nav-right"><a href="#" class="social-icon si-fb"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="#" class="social-icon si-li"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a><a href="#" class="social-icon si-yt"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/></svg></a><button class="menu-btn"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>Menu</button></div></div></nav>
+<div class="mobile-menu"><button class="mobile-menu-close">&times;</button><a href="about.html">About</a><a href="industries.html">Industries</a><a href="products.html">Products</a><a href="services.html">Services</a><a href="partners.html">Partners</a><a href="careers.html">Careers &amp; Culture</a><a href="contact.html">Contact Us</a></div>
+
+<!-- ACADEMY HERO -->
+<section class="academy-hero">
+  <div class="page-hero-inner">
+    <span class="academy-badge">PRIMEGEAR ACADEMY</span>
+    <h1>Where Industry Expertise Meets<br>Certified Reliability Excellence</h1>
+    <p>With over 8 years of specialized experience, PrimeGear delivers ISO-aligned, globally accredited training programs developed in collaboration with international academic partners—equipping engineers with real-world expertise and internationally recognized certifications across key reliability disciplines.</p>
+    <div style="display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;">
+      <a href="#enroll" class="btn btn-teal">Discover PrimeGear &rarr;</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:40px;margin-top:40px;padding-top:32px;border-top:1px solid rgba(255,255,255,.1);">
+      <div>
+        <div style="font-size:2rem;font-weight:900;color:var(--c-white);line-height:1;">100+</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em;margin-top:4px;">Number Of Candidates</div>
+      </div>
+      <div style="width:1px;height:36px;background:rgba(255,255,255,.15);"></div>
+      <div>
+        <div style="font-size:2rem;font-weight:900;color:var(--c-white);line-height:1;">2025</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em;margin-top:4px;">Academy Establishment Year</div>
+      </div>
+      <div style="width:1px;height:36px;background:rgba(255,255,255,.15);"></div>
+      <div>
+        <div style="font-size:2rem;font-weight:900;color:var(--c-white);line-height:1;">ISO</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em;margin-top:4px;">18436 Certified</div>
+      </div>
+    </div>
+    <div class="breadcrumb" style="margin-top:24px;"><a href="index.html">Home</a><span class="bsep">/</span><span>Primegear Academy</span></div>
+  </div>
+</section>
+
+<!-- STATS MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee">
+    <span>Powered by Atlasco Egypt &nbsp;&#9679;&nbsp;</span>
+    <span>ISO-Certified &nbsp;&#9679;&nbsp;</span>
+    <span>Field-Tested &nbsp;&#9679;&nbsp;</span>
+    <span>Nationally Recognized &nbsp;&#9679;&nbsp;</span>
+    <span>Hands-On Lab Access &nbsp;&#9679;&nbsp;</span>
+    <span>Powered by Atlasco Egypt &nbsp;&#9679;&nbsp;</span>
+    <span>ISO-Certified &nbsp;&#9679;&nbsp;</span>
+    <span>Field-Tested &nbsp;&#9679;&nbsp;</span>
+    <span>Nationally Recognized &nbsp;&#9679;&nbsp;</span>
+    <span>Hands-On Lab Access &nbsp;&#9679;&nbsp;</span>
+  </div>
+</div>
+
+<!-- RELIABILITY FOUNDATION -->
+<section style="padding:56px 60px;background:var(--c-white);">
+  <div style="display:grid;grid-template-columns:1fr 340px;gap:60px;align-items:center;">
+    <div>
+      <h2 style="font-size:1.8rem;font-weight:900;color:var(--c-dark);margin:0 0 20px;line-height:1.25;">Reliability Is the Foundation of<br>Industrial Performance</h2>
+      <p style="color:var(--c-text-muted);line-height:1.8;font-size:.95rem;">More than a maintenance function, reliability represents a complete operational approach —enhancing equipment availability, optimizing costs, improving safety, and enabling organizations to operate with greater efficiency and control.</p>
+    </div>
+    <div style="height:280px;background:linear-gradient(145deg,#0d2010,#091408);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+      <svg viewBox="0 0 80 60" width="80" height="60" fill="none" stroke="rgba(74,222,128,.25)" stroke-width="1.5"><rect x="5" y="10" width="70" height="45" rx="4"/><path d="M5 28h70M25 10v45M55 10v45"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- GLOBALLY RECOGNIZED PARTNER -->
+<section style="padding:0 60px 56px;background:var(--c-white);">
+  <h2 style="font-size:1.8rem;font-weight:900;color:var(--c-dark);margin:0 0 16px;line-height:1.25;">PrimeGear is More Than Training,<br>Its A Globally Recognized Reliability Partner</h2>
+  <p style="color:var(--c-text-muted);line-height:1.8;max-width:860px;">Our programs are built on internationally accredited standards and strengthened by global academic partnerships, combining structured methodologies with hands-on industrial experience to deliver training that translates directly into measurable operational performance.</p>
+</section>
+
+<!-- ABOUT ACADEMY -->
+<section style="padding:56px 60px 20px;">
+  <div style="display:grid;grid-template-columns:1fr 340px;gap:60px;align-items:start;">
+    <div>
+      <span class="section-label">ABOUT PRIMEGEAR ACADEMY</span>
+      <h2 class="section-title">Where Industrial Knowledge Becomes Certified Skill.</h2>
+      <p style="color:var(--c-text-muted);line-height:1.8;margin-top:16px;">Founded in 2012 by Atlasco Egypt, Primegear Academy was established to address a critical skills gap in Egypt's industrial sector — the absence of formally certified, practically trained reliability engineers. Over the past twelve years, the Academy has grown into Egypt's most respected reliability training institution, certifying more than 1,200 engineers from over 200 companies.</p>
+      <p style="color:var(--c-text-muted);line-height:1.8;margin-top:12px;">All Primegear Academy courses are aligned with ISO 18436, the international standard for condition monitoring and diagnostics of machines. Our instructors are certified at Category III or higher and bring real-world field experience to every classroom session — making our training exceptionally practical and immediately applicable.</p>
+      <p style="color:var(--c-text-muted);line-height:1.8;margin-top:12px;">Training is available as open public courses at our El-Obour facility, or as dedicated in-company programs delivered at your site — customised to your equipment and operating environment.</p>
+    </div>
+    <div style="background:var(--c-teal-dark);border:1px solid rgba(45,212,191,.15);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:320px;padding:40px;text-align:center;">
+      <div style="width:88px;height:88px;background:rgba(45,212,191,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px;border:2px solid rgba(45,212,191,.3);">
+        <svg viewBox="0 0 50 40" fill="none" width="44" height="36"><path d="M5 35L15 5L25 22L35 5L45 35" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 22H40" stroke="#2dd4bf" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </div>
+      <div style="color:#2dd4bf;font-weight:800;font-size:1rem;letter-spacing:.08em;text-transform:uppercase;">Primegear Academy</div>
+      <div style="color:rgba(255,255,255,.35);font-size:.76rem;margin-top:8px;letter-spacing:.05em;">Est. 2012 &mdash; El-Obour, Egypt</div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses" style="padding:56px 60px 64px;background:var(--c-gray-50);">
+  <div style="text-align:center;margin-bottom:40px;">
+    <span class="section-label">CERTIFICATION PROGRAMS</span>
+    <h2 class="section-title" style="margin-top:8px;">Globally Recognized Certifications That Define Expertise</h2>
+    <p style="color:var(--c-text-muted);margin-top:12px;max-width:700px;margin-left:auto;margin-right:auto;">PrimeGear delivers internationally accredited certification programs across core reliability disciplines—combining ISO-aligned methodologies, real field application, and global best practices to develop highly specialized, industry-recognized professionals.</p>
+  </div>
+  <div class="courses-grid">
+
+    <div class="course-card foundation">
+      <div class="course-level lv-foundation">Foundation</div>
+      <div class="course-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <h3>Machinery Lubrication</h3>
+      <p style="color:var(--c-text-muted);font-size:.87rem;line-height:1.6;margin:12px 0;">Focuses on lubrication best practices, oil analysis, and contamination control to enhance equipment reliability, reduce wear, and extend asset life.</p>
+      <a href="#enroll" style="display:inline-flex;align-items:center;gap:6px;font-size:.84rem;font-weight:600;color:var(--c-green);text-decoration:none;margin-top:4px;">Learn More <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="course-card intermediate">
+      <div class="course-level lv-intermediate">Intermediate</div>
+      <div class="course-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <h3>Vibration Analysis</h3>
+      <p style="color:var(--c-text-muted);font-size:.87rem;line-height:1.6;margin:12px 0;">Develops diagnostic capabilities to detect, analyze, and prevent mechanical faults—supporting effective predictive maintenance and improved machine performance.</p>
+      <a href="#enroll" style="display:inline-flex;align-items:center;gap:6px;font-size:.84rem;font-weight:600;color:var(--c-green);text-decoration:none;margin-top:4px;">Learn More <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="course-card advanced">
+      <div class="course-level lv-advanced">Advanced</div>
+      <div class="course-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+      </div>
+      <h3>Ultrasound</h3>
+      <p style="color:var(--c-text-muted);font-size:.87rem;line-height:1.6;margin:12px 0;">Enables early detection of leaks, friction, and electrical issues using ultrasonic technology to support proactive maintenance and energy efficiency.</p>
+      <a href="#enroll" style="display:inline-flex;align-items:center;gap:6px;font-size:.84rem;font-weight:600;color:var(--c-green);text-decoration:none;margin-top:4px;">Learn More <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="course-card executive">
+      <div class="course-level lv-executive">Executive</div>
+      <div class="course-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      </div>
+      <h3>Infrared Thermography</h3>
+      <p style="color:var(--c-text-muted);font-size:.87rem;line-height:1.6;margin:12px 0;">Utilizes thermal imaging to identify temperature anomalies in mechanical and electrical systems, enabling early fault detection and preventive action.</p>
+      <a href="#enroll" style="display:inline-flex;align-items:center;gap:6px;font-size:.84rem;font-weight:600;color:var(--c-green);text-decoration:none;margin-top:4px;">Learn More <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+  </div>
+</section>
+
+<!-- 10 YEARS EXPERTISE -->
+<section style="padding:64px 60px;background:var(--c-white);">
+  <div style="text-align:center;margin-bottom:48px;">
+    <h2 style="font-size:1.9rem;font-weight:900;color:var(--c-dark);line-height:1.2;margin:0 0 16px;">Backed by 10 Years of Proven Engineering Expertise,<br>Global Standards, and Reliability Excellence</h2>
+  </div>
+  <div class="expertise-tabs">
+    <div class="expertise-tab active-tab" data-tab="field">
+      <div style="font-size:.93rem;font-weight:700;color:var(--c-dark);">Field-Driven Expertise</div>
+    </div>
+    <div class="expertise-tab" data-tab="iso">
+      <div style="font-size:.93rem;font-weight:700;color:var(--c-gray-500);">ISO-Aligned Training</div>
+    </div>
+    <div class="expertise-tab" data-tab="global">
+      <div style="font-size:.93rem;font-weight:700;color:var(--c-gray-500);">Globally Recognized Certifications</div>
+    </div>
+    <div class="expertise-tab" data-tab="intl">
+      <div style="font-size:.93rem;font-weight:700;color:var(--c-gray-500);">International Partnerships</div>
+    </div>
+  </div>
+  <div style="margin-top:32px;padding:32px;background:var(--c-gray-50);border-radius:12px;border:1px solid var(--c-gray-200);">
+    <div class="expertise-panel" id="panel-field" style="display:block;">
+      <p style="color:var(--c-text-muted);line-height:1.8;font-size:.95rem;">Hands-on, field-proven training designed for real industrial challenges.</p>
+    </div>
+    <div class="expertise-panel" id="panel-iso" style="display:none;">
+      <p style="color:var(--c-text-muted);line-height:1.8;font-size:.95rem;">ISO-aligned programs delivering consistency, quality, and global best practices.</p>
+    </div>
+    <div class="expertise-panel" id="panel-global" style="display:none;">
+      <p style="color:var(--c-text-muted);line-height:1.8;font-size:.95rem;">Internationally recognized credentials that elevate expertise and credibility.</p>
+    </div>
+    <div class="expertise-panel" id="panel-intl" style="display:none;">
+      <p style="color:var(--c-text-muted);line-height:1.8;font-size:.95rem;">Developed with leading global partners to deliver world-class knowledge.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE GRID -->
+<section style="padding:56px 60px 60px;background:var(--c-dark);">
+  <div style="text-align:center;margin-bottom:40px;">
+    <span class="section-label">The Primegear Promise</span>
+    <h2 class="section-title white" style="margin-top:8px;letter-spacing:.05em;text-transform:uppercase;">The Atlasco Guarantee</h2>
+  </div>
+  <div class="guarantee-grid">
+
+    <div style="text-align:center;padding:32px 24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;">
+      <div style="width:56px;height:56px;background:rgba(13,148,136,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#2dd4bf" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h4 style="margin:0 0 8px;font-size:.95rem;color:var(--c-white);">ISO-Certified Program</h4>
+      <p style="color:rgba(255,255,255,.55);font-size:.84rem;line-height:1.6;margin:0;">All vibration and thermography courses are aligned with ISO 18436 — the globally recognised standard for condition monitoring certification.</p>
+    </div>
+
+    <div style="text-align:center;padding:32px 24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;">
+      <div style="width:56px;height:56px;background:rgba(13,148,136,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#2dd4bf" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      </div>
+      <h4 style="margin:0 0 8px;font-size:.95rem;color:var(--c-white);">Hands-On Lab Access</h4>
+      <p style="color:rgba(255,255,255,.55);font-size:.84rem;line-height:1.6;margin:0;">Every course includes practical laboratory sessions using the same instruments our engineers use in the field — not just classroom theory.</p>
+    </div>
+
+    <div style="text-align:center;padding:32px 24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;">
+      <div style="width:56px;height:56px;background:rgba(13,148,136,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#2dd4bf" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h4 style="margin:0 0 8px;font-size:.95rem;color:var(--c-white);">Post-Training Support</h4>
+      <p style="color:rgba(255,255,255,.55);font-size:.84rem;line-height:1.6;margin:0;">Graduates receive ongoing support from Atlasco's technical team — including field guidance, certification renewal assistance, and alumni resources.</p>
+    </div>
+
+    <div style="text-align:center;padding:32px 24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;">
+      <div style="width:56px;height:56px;background:rgba(13,148,136,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#2dd4bf" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      </div>
+      <h4 style="margin:0 0 8px;font-size:.95rem;color:var(--c-white);">Real Factory Experience</h4>
+      <p style="color:rgba(255,255,255,.55);font-size:.84rem;line-height:1.6;margin:0;">All training is grounded in real industrial scenarios — using actual equipment from Atlasco's field operations for authentic hands-on learning.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ENROLLMENT FORM -->
+<section id="enroll" class="enrollment-section">
+  <div>
+    <span class="section-label">ENROLLMENT</span>
+    <h2 class="section-title">Ready to Certify Your Team?</h2>
+    <p style="color:var(--c-text-muted);line-height:1.8;margin-top:12px;">Complete the form and our Academy coordinator will contact you within one business day to confirm availability, pricing, and your scheduled intake date.</p>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-top:28px;">
+      <div style="display:flex;align-items:flex-start;gap:14px;">
+        <span style="color:var(--c-green-light);font-size:1.1rem;margin-top:2px;">&#10003;</span>
+        <div><strong style="font-size:.9rem;">Open Courses</strong><p style="color:var(--c-text-muted);font-size:.84rem;margin:4px 0 0;line-height:1.5;">Public intakes run monthly at our El-Obour Academy, with class sizes capped at 12 for maximum instructor attention.</p></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:14px;">
+        <span style="color:var(--c-green-light);font-size:1.1rem;margin-top:2px;">&#10003;</span>
+        <div><strong style="font-size:.9rem;">In-Company Delivery</strong><p style="color:var(--c-text-muted);font-size:.84rem;margin:4px 0 0;line-height:1.5;">We bring the training to your site — customised to your equipment and delivered in Arabic or English.</p></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:14px;">
+        <span style="color:var(--c-green-light);font-size:1.1rem;margin-top:2px;">&#10003;</span>
+        <div><strong style="font-size:.9rem;">Group Discounts</strong><p style="color:var(--c-text-muted);font-size:.84rem;margin:4px 0 0;line-height:1.5;">Groups of 5 or more receive a 15% discount. Enrol your whole maintenance team and certify your operation.</p></div>
+      </div>
+    </div>
+  </div>
+  <div style="background:var(--c-nav);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:40px;">
+    <h3 style="margin:0 0 6px;font-size:1.1rem;color:var(--c-white);">Submit Enrollment Request</h3>
+    <p style="color:rgba(255,255,255,.6);font-size:.85rem;margin:0 0 24px;">We'll confirm your place and send a course schedule within 24 hours.</p>
+    <form id="enrollForm">
+      <div class="form-group" style="margin-bottom:14px;">
+        <label class="form-label">Name *</label>
+        <input type="text" class="form-input" placeholder="Your full name" required/>
+      </div>
+      <div class="form-group" style="margin-bottom:14px;">
+        <label class="form-label">Company *</label>
+        <input type="text" class="form-input" placeholder="Your company name" required/>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input type="email" class="form-input" placeholder="you@company.com" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone *</label>
+          <input type="tel" class="form-input" placeholder="+20 1X XXXX XXXX" required/>
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:24px;">
+        <label class="form-label">Interested in</label>
+        <select class="form-input">
+          <option value="">Select a Course</option>
+          <option>Machinery Lubrication</option>
+          <option>Vibration Analysis</option>
+          <option>Ultrasound</option>
+          <option>Infrared Thermography</option>
+          <option>Multiple Courses (Group)</option>
+        </select>
+      </div>
+      <button type="submit" class="submit-btn" style="background:var(--c-teal);">Submit Enrollment Request &rarr;</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer"><div class="footer-wm">ATLASCO</div><div class="footer-grid"><div class="footer-brand"><h3>ATLASCO EGYPT</h3><p>Atlasco Egypt delivers integrated reliability solutions through advanced products, expert services, and specialized technologies—helping industries enhance performance, reduce downtime, and optimize asset efficiency.</p><div class="footer-socials"><a href="#" class="social-icon si-fb"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="#" class="social-icon si-li"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a><a href="#" class="social-icon si-yt"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/></svg></a></div></div><div><h4 class="footer-col">Quick Links</h4><ul class="footer-links"><li><a href="industries.html">Industries</a></li><li><a href="products.html">Products</a></li><li><a href="services.html">Services</a></li><li><a href="partners.html">Partners</a></li><li><a href="careers.html">Life At Atlasco</a></li><li><a href="team.html">Our Team</a></li><li><a href="history.html">Our History</a></li></ul></div><div><h4 class="footer-col">Head Office</h4><div class="footer-contact-item"><div class="fci-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><p>1st Industrial Zone, 11th Piece, Block 13027, Behind Gas Station, El-Obour City, Egypt</p></div><div class="footer-contact-item"><div class="fci-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.58 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.76a16 16 0 0 0 6.29 6.29l.96-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><p>+20 2 2358 1234</p></div><div class="footer-contact-item"><div class="fci-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><p>info@atlasco-egypt.com</p></div></div></div><div class="footer-bottom"><p>&copy; 2024 Atlasco Egypt. All rights reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Sitemap</a></div></div></footer>
+<script>
+document.querySelectorAll('.expertise-tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.expertise-tab').forEach(function(t) { t.classList.remove('active-tab'); t.querySelector('div').style.color = 'var(--c-gray-500)'; });
+    document.querySelectorAll('.expertise-panel').forEach(function(p) { p.style.display = 'none'; });
+    tab.classList.add('active-tab');
+    tab.querySelector('div').style.color = 'var(--c-dark)';
+    document.getElementById('panel-' + tab.dataset.tab).style.display = 'block';
+  });
+});
+</script>
+<script src="js/main.js"></script>
+</body>
+</html>

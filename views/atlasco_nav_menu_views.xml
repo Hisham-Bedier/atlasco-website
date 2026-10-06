@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Font-size-per-nav-item and the sidemenu's atlasco_sm_target already
+         exist on website.menu (models/website.py) and are already read by
+         the top nav template (views/atlasco_layout.xml line ~48) - this
+         just gives that existing mechanism a simple backend entry point,
+         scoped to the 7 top-level nav items, instead of only being reachable
+         through the generic Website > Menus editor. `url` is website.menu's
+         own native field - editing it here is the same edit the Website
+         Editor's "Edit Menu" dialog already makes; no separate URL storage. -->
+    <record id="view_atlasco_nav_menu_list" model="ir.ui.view">
+        <field name="name">atlasco.nav.menu.list</field>
+        <field name="model">website.menu</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" create="false" delete="false">
+                <field name="name" string="Label"/>
+                <field name="url" string="Link URL"/>
+                <field name="atlasco_font_size" string="Font Size (px)"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Base act_window: NO static domain here (a plain url/name filter would
+         also catch sidemenu sub-items and other-website duplicates that
+         happen to share the same values - see _get_top_nav_action's
+         docstring). The server action below computes the real domain fresh
+         on every open, scoped to the current website's actual root menu. -->
+    <record id="action_atlasco_nav_menu" model="ir.actions.act_window">
+        <field name="name">Nav Menu</field>
+        <field name="res_model">website.menu</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_atlasco_nav_menu_list"/>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p>The 7 top navigation labels — edit each one's link URL or font size (in px; leave at 0 for the site default) directly here.</p>
+        </field>
+    </record>
+
+    <record id="action_atlasco_nav_menu_open" model="ir.actions.server">
+        <field name="name">Nav Menu</field>
+        <field name="model_id" ref="website.model_website_menu"/>
+        <field name="state">code</field>
+        <field name="code">action = model._get_top_nav_action()</field>
+    </record>
+
+    <menuitem id="menu_atlasco_nav_menu"
+              name="Nav Menu"
+              parent="atlasco_website.menu_atlasco_group_content"
+              action="action_atlasco_nav_menu_open"
+              sequence="15"/>
+</odoo>

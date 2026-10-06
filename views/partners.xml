@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="partners" name="Partners">
+<t t-call="atlasco_website.atlasco_layout">
+<!-- Each font-editable block below gets its OWN atlasco.block.style record
+     (distinct key per block) rather than sharing one - an earlier version
+     of this page reused a single record for all 5 blocks, which meant
+     changing the font on any one of them silently changed all of them.
+     One key per block = independent, isolated font/size control. -->
+<t t-set="style_partners_banner" t-value="request.env['atlasco.block.style'].sudo()._get('partners_hero_banner')"/>
+<t t-set="style_partners_breadcrumb" t-value="request.env['atlasco.block.style'].sudo()._get('partners_breadcrumb')"/>
+<t t-set="style_partners_hero" t-value="request.env['atlasco.block.style'].sudo()._get('partners_hero')"/>
+<t t-set="style_partners_heading" t-value="request.env['atlasco.block.style'].sudo()._get('partners_heading')"/>
+<t t-set="style_partners_grid" t-value="request.env['atlasco.block.style'].sudo()._get('partners_grid')"/>
+<t t-set="hero_bg" t-value="request.env['atlasco.page.hero'].sudo()._image_url('partners')"/>
+<!-- The "atl-font-editable o_editable" classes below (and the matching
+     data-style-model/id attributes) are added directly on each top-level
+     block rather than one wrapper around the whole page: Odoo's own core
+     registers generic "Block" options (Background/Height/Visibility) for
+     any <section>, and the Website Editor's click-to-select always resolves
+     to the MOST NESTED matching element - so a wrapper placed OUTSIDE these
+     sections would never win and the Font option would never show. Putting
+     the classes on the sections themselves means our option attaches to the
+     same element Odoo's own "Block" options do, and both show together.
+     See the "font editing on static blocks" ticket / atlasco_snippet_options.xml. -->
+
+<!-- Page-scoped oe_structure (same pattern as /services, /about, /culture)
+     so Insert Blocks has a valid drop target on this page. Purely an outer
+     wrapper for block-insertion purposes — does not affect the font-editable
+     click-to-select logic described above (that's about which element wins
+     the "most nested match", unrelated to this div's presence). -->
+<div id="wrap_partners" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partners').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+     below are real Odoo-native Insert-Blocks drop targets - see the long
+     root-cause comment on wrap_about in atlasco_about_page.xml. -->
+<div id="wrap_partners_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partners').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<!-- v9 (2026-05-25): restore overlay heading on the partners banner.
+     Per Youssef: "there was writing on the banner here". Heavy LEFT
+     dark gradient pushes our title clear of the partner logo cards
+     baked into the banner. The "clean" modifier is dropped to
+     re-enable the gradient pseudo and the inner content block. -->
+<section class="atl-id-hero-v2 atl-partners-hero-banner atl-font-editable o_editable" t-att-data-style-model="'atlasco.block.style'" t-att-data-style-id="style_partners_banner.id"
+     t-attf-style="#{'--atl-dyn-font-family:' + style_partners_banner.font_family + ';' if style_partners_banner.font_family else ''}#{'--atl-dyn-font-size:' + style_partners_banner.font_size + ';' if style_partners_banner.font_size else ''}#{'background-image:url(%s);background-size:cover;background-position:center;' % hero_bg if hero_bg else ''}">
+    <div class="atl-id-hero-v2-accent"></div>
+    <div class="atl-id-hero-v2-inner atl-partners-hero-banner-inner">
+        <div class="atl-section-label">Our Partners</div>
+        <h1>Strategic Partnerships That Drive Performance</h1>
+        <p class="atl-partners-hero-subhead">Globally recognized manufacturers — one integrated industrial ecosystem.</p>
+    </div>
+</section>
+
+<!-- Breadcrumb row (moved out of hero per v4 — banner has no negative space) -->
+<div id="wrap_partners_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partners').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<nav class="atl-page-breadcrumb-row atl-font-editable o_editable" aria-label="Breadcrumb" t-att-data-style-model="'atlasco.block.style'" t-att-data-style-id="style_partners_breadcrumb.id"
+     t-attf-style="#{'--atl-dyn-font-family:' + style_partners_breadcrumb.font_family + ';' if style_partners_breadcrumb.font_family else ''}#{'--atl-dyn-font-size:' + style_partners_breadcrumb.font_size + ';' if style_partners_breadcrumb.font_size else ''}">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <span>Partners</span>
+</nav>
+
+<div id="wrap_partners_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partners').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+<section class="atl-partners-hero atl-font-editable o_editable" t-att-data-style-model="'atlasco.block.style'" t-att-data-style-id="style_partners_hero.id"
+     t-attf-style="#{'--atl-dyn-font-family:' + style_partners_hero.font_family + ';' if style_partners_hero.font_family else ''}#{'--atl-dyn-font-size:' + style_partners_hero.font_size + ';' if style_partners_hero.font_size else ''}">
+    <div class="atl-partners-hero-inner">
+        <div class="atl-partners-hero-body">
+            <h2 class="atl-partners-body-subheading">Backed by Global Leaders. Built for Reliable Performance.</h2>
+            <p>At Atlasco Egypt, our partners are more than suppliers — they are an extension of our commitment to reliability, performance, and long-term value. We collaborate with globally recognized manufacturers to deliver advanced industrial solutions that perform under the most demanding conditions.</p>
+            <p>Together, we don't just support industry — we strengthen it.</p>
+        </div>
+    </div>
+</section>
+
+<!-- OUR PARTNERS heading -->
+<div id="wrap_partners_gap_3" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partners').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[4]"/>
+
+<section class="atl-partners-heading atl-font-editable o_editable" t-att-data-style-model="'atlasco.block.style'" t-att-data-style-id="style_partners_heading.id"
+     t-attf-style="#{'--atl-dyn-font-family:' + style_partners_heading.font_family + ';' if style_partners_heading.font_family else ''}#{'--atl-dyn-font-size:' + style_partners_heading.font_size + ';' if style_partners_heading.font_size else ''}">
+    <h2 data-fx="fade-up">Our Partners</h2>
+    <div class="atl-partners-heading-divider" data-fx="fade-up" data-fx-delay="80"></div>
+</section>
+
+<!-- PARTNERS GRID — default `atl-partners-list-grid` (rectangular). Toggle hexagon variant by changing class to `atl-partners-list-grid atl-partners-hex` -->
+<div id="wrap_partners_gap_4" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partners').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[5]"/>
+
+<div class="atl-partners-list-grid-bg">
+<div class="atl-partners-list-grid atl-font-editable o_editable" t-att-data-style-model="'atlasco.block.style'" t-att-data-style-id="style_partners_grid.id"
+     t-attf-style="padding:32px 60px 80px;#{'--atl-dyn-font-family:' + style_partners_grid.font_family + ';' if style_partners_grid.font_family else ''}#{'--atl-dyn-font-size:' + style_partners_grid.font_size + ';' if style_partners_grid.font_size else ''}">
+
+    <!-- ClickUp 869eg533x: every partner (the original 23, migrated by
+         AtlascoPartner._seed_legacy_partners(), plus anything added since
+         through Website > Content > Partners) is a plain atlasco.partner
+         record now, so one loop renders all of them — no more separate
+         hand-authored cards that could silently omit a partner (5 of the
+         old 23 were missing here entirely before this migration; that's
+         no longer possible since this list is exhaustive by construction). -->
+    <t t-foreach="all_partners" t-as="ep">
+        <a t-att-href="ep.href()" class="atl-partner-card" data-fx="fade-up" style="text-decoration:none;">
+            <div class="logo-area">
+                <img t-att-src="ep.logo_url()" t-att-alt="ep.name" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+                <span style="display:none;font-size:18px;font-weight:800;color:#0d1f14;"><t t-esc="ep.name"/></span>
+            </div>
+            <h4><t t-esc="ep.name"/></h4>
+            <p><t t-esc="ep.category or ''"/></p>
+        </a>
+    </t>
+
+</div>
+</div>
+
+<div id="wrap_partners_gap_5" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.partners').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[6]"/>
+
+</div>
+
+</t>
+</template>
+</odoo>

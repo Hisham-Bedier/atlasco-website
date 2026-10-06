@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Registers this module's 3 custom snippets (s_lax_hero, s_lax_stats,
+     s_lax_cta - see the sibling files in this folder) into the Website
+     Editor's "Blocks" drawer, under the "Structure" panel (full-width,
+     reorderable section-level blocks, same category as Odoo's own
+     Banner/Numbers/Call to Action). Thumbnails reuse the closest-matching
+     core Odoo icons (Banner/Numbers/Call to Action) as a placeholder -
+     swap for custom artwork later if wanted; the snippets are fully
+     functional either way. -->
+<template id="snippets" inherit_id="website.snippets" name="Atlasco Snippets">
+    <xpath expr="//div[@id='snippet_structure']/div[hasclass('o_panel_body')]" position="inside">
+        <t t-snippet="atlasco_website.s_lax_hero" string="Atlasco Hero Band" t-thumbnail="/website/static/src/img/snippets_thumbs/s_banner.svg">
+            <keywords>hero, banner, culture</keywords>
+        </t>
+        <t t-snippet="atlasco_website.s_lax_stats" string="Atlasco Stat Row" t-thumbnail="/website/static/src/img/snippets_thumbs/s_numbers.svg">
+            <keywords>stats, numbers, figures</keywords>
+        </t>
+        <t t-snippet="atlasco_website.s_lax_cta" string="Atlasco CTA Band" t-thumbnail="/website/static/src/img/snippets_thumbs/s_call_to_action.svg">
+            <keywords>cta, call to action, banner</keywords>
+        </t>
+    </xpath>
+</template>
+</odoo>

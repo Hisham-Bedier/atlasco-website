@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Restore the client's recovered uploads into their slots. Idempotent:
+         skips any field that already has an image, so later edits survive. -->
+    <function model="atlasco.content" name="_seed_recovered_media"/>
+
+    <!-- Backfill the Industry Cards' and Timeline Milestones' new binary
+         'image' field from the bundled static file each card/milestone used
+         to point at via the old (now-removed-from-use) Char path field.
+         Idempotent — only fills records whose 'image' is still empty, so a
+         real upload made after this fix ships is never overwritten. -->
+    <function model="atlasco.home.industry" name="_seed_industry_card_images"/>
+    <function model="atlasco.history.milestone" name="_seed_milestone_images"/>
+    <function model="atlasco.team.member" name="_backfill_photo_from_static"/>
+
+    <!-- Backfill card_name/card_desc so the "Related Industries" cards on
+         /industries/<slug> become Website-Editor-editable without changing
+         the text currently shown. Idempotent — see
+         AtlascoHomeIndustry._seed_related_industry_cards. -->
+    <function model="atlasco.home.industry" name="_seed_related_industry_cards"/>
+
+    <!-- Pre-fill each industry's Related Industries picks with today's
+         default (first 5 others), so the backend list starts matching the
+         live site and removing a tag actually removes it from the page -
+         see AtlascoHomeIndustry._seed_default_related_industries. -->
+    <function model="atlasco.home.industry" name="_seed_default_related_industries"/>
+
+    <!-- Homepage solutions-tab checklists: one real record per bullet so
+         each is individually inline-editable on the live page - see
+         AtlascoHomeSolutionCheck._seed_solution_checks. -->
+    <function model="atlasco.home.solution.check" name="_seed_solution_checks"/>
+
+    <!-- One-time: /culture's 3 Google-Drive "Life Beyond the Workplace"
+         tiles become real self-hosted video tiles (real "Replace video"
+         upload button instead of raw Drive-URL page text). Idempotent —
+         see AtlascoCultureLife._migrate_iframe_tiles_to_video. -->
+    <function model="atlasco.culture.life" name="_migrate_iframe_tiles_to_video"/>
+
+    <!-- Give the 3 "Life Beyond the Workplace" photo tiles their previous
+         look back (the static fallback banner) instead of an empty
+         "add image" placeholder, now through the real editable `photo`
+         field. Idempotent — see
+         AtlascoCultureLife._backfill_photo_tile_images. -->
+    <function model="atlasco.culture.life" name="_backfill_photo_tile_images"/>
+
+    <!-- Backfill sidemenu_label so switching the mobile side-menu's Services
+         panel to read straight from atlasco.service (instead of separately
+         hand-authored website.menu records) is a no-visible-change upgrade.
+         Idempotent — see AtlascoService._seed_sidemenu_labels. -->
+    <function model="atlasco.service" name="_seed_sidemenu_labels"/>
+</odoo>

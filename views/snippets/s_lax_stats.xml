@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Culture-style 3-card stat row, matching /culture's own .lax-stats (see
+     views/atlasco_culture_page.xml). -->
+<template id="s_lax_stats" name="Atlasco Stat Row">
+    <section class="s_lax_stats lax" style="padding:20px 40px 46px;">
+        <div class="lax-stats">
+            <div class="lax-stat">
+                <div class="lax-stat-big">35+</div>
+                <div class="lax-stat-lbl">Short label describing this number</div>
+            </div>
+            <div class="lax-stat">
+                <div class="lax-stat-big">100%</div>
+                <div class="lax-stat-lbl">Short label describing this number</div>
+            </div>
+            <div class="lax-stat">
+                <div class="lax-stat-big">1st</div>
+                <div class="lax-stat-lbl">Short label describing this number</div>
+            </div>
+        </div>
+    </section>
+</template>
+</odoo>

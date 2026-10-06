@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Migrates the 7 top-nav links off the retired atlasco.nav.item model
+         and into native website.menu, so the client's own "Edit Menu"
+         dialog (Website > Site > Menu Editor) actually controls the real
+         header. Idempotent by url — see WebsiteMenu._migrate_atlasco_nav_items
+         in models/website.py for why hardcoding the 7 values here is safe. -->
+    <function model="website.menu" name="_migrate_atlasco_nav_items"/>
+
+    <!-- Same idea, one level deeper: migrates the hand-authored L2/L3
+         sidemenu drill-down panels (About/Industries/Products/Services/
+         Careers submenus + Products' 10 L3 category panels) into nested
+         website.menu children. Must run after the function above (needs
+         the L1 records it creates). -->
+    <function model="website.menu" name="_migrate_atlasco_sidemenu"/>
+</odoo>

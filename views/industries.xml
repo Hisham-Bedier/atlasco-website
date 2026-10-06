@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="industries" name="Industries We Serve">
+<t t-call="atlasco_website.atlasco_layout">
+
+<!-- Page-scoped oe_structure (same pattern as /about, /culture) so Insert
+     Blocks has a valid drop target between the sections below. -->
+<div id="wrap_industries" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industries').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+     below are real Odoo-native Insert-Blocks drop targets - see the long
+     root-cause comment on wrap_about in atlasco_about_page.xml. -->
+<div id="wrap_industries_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industries').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<t t-set="hero_bg" t-value="request.env['atlasco.page.hero'].sudo()._image_url('industries')"/>
+<t t-set="style_industries_hero" t-value="request.env['atlasco.block.style'].sudo()._get('industries_hero')"/>
+<section class="atl-page-hero atl-industries-hero atl-font-editable o_editable" t-att-data-style-model="'atlasco.block.style'" t-att-data-style-id="style_industries_hero.id" t-attf-style="#{'background-image:url(%s);background-size:cover;background-position:center;' % hero_bg if hero_bg else ''}--atl-dyn-font-family:#{style_industries_hero.font_family or ''};--atl-dyn-font-size:#{style_industries_hero.font_size or ''};">
+    <div class="atl-page-hero-inner">
+        <div class="atl-section-label">Industries We Serve</div>
+        <h1 style="font-size:var(--atl-dyn-font-size, 52px);font-weight:900;color:white;line-height:1.05;margin-bottom:16px;">Industries We Serve</h1>
+        <p>Providing specialized air, fluid, and reliability solutions across Egypt's most demanding industrial sectors.</p>
+        <div class="atl-breadcrumb">
+            <a href="/">Home</a>
+            <span class="sep">/</span>
+            <span>Industries We Serve</span>
+        </div>
+    </div>
+</section>
+
+<div id="wrap_industries_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industries').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<section class="atl-industries-intro">
+    <div class="atl-section-label">From Precision to Performance</div>
+    <h2 class="atl-section-title">Industrial Excellence</h2>
+</section>
+
+<div id="wrap_industries_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industries').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+<div class="atl-industry-list-grid">
+    <a href="/industries/oil-gas" class="atl-industry-card">
+        <img src="/atlasco_website/static/src/img/industries/cards/card-oil-gas.jpg" alt="Oil Gas industry" class="atl-industry-placeholder"/>
+        <div class="atl-industry-card-overlay"></div>
+        <div class="atl-industry-card-label">
+            <span class="tag">Industry</span>
+            <h3>OIL &amp; GAS</h3>
+            <p class="ind-desc">Atlasco Egypt delivers advanced air and reliability solutions for the toughest oil &amp; gas environments—ensuring safe and uninterrupted operations.</p>
+            <div class="ind-line"></div>
+        </div>
+    </a>
+    <a href="/industries/pharmaceutical" class="atl-industry-card">
+        <img src="/atlasco_website/static/src/img/industries/cards/card-pharmaceutical.jpg" alt="Pharmaceutical industry" class="atl-industry-placeholder"/>
+        <div class="atl-industry-card-overlay"></div>
+        <div class="atl-industry-card-label">
+            <span class="tag">Industry</span>
+            <h3>PHARMACEUTICAL</h3>
+            <p class="ind-desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding pharmaceutical environments—ensuring continuous uptime.</p>
+            <div class="ind-line"></div>
+        </div>
+    </a>
+    <a href="/industries/medical" class="atl-industry-card">
+        <img src="/atlasco_website/static/src/img/industries/cards/card-medical.jpg" alt="Medical industry" class="atl-industry-placeholder"/>
+        <div class="atl-industry-card-overlay"></div>
+        <div class="atl-industry-card-label">
+            <span class="tag">Industry</span>
+            <h3>MEDICAL</h3>
+            <p class="ind-desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding medical environments—ensuring continuous uptime.</p>
+            <div class="ind-line"></div>
+        </div>
+    </a>
+    <a href="/industries/steel" class="atl-industry-card">
+        <img src="/atlasco_website/static/src/img/industries/cards/card-steel.jpg" alt="Steel industry" class="atl-industry-placeholder"/>
+        <div class="atl-industry-card-overlay"></div>
+        <div class="atl-industry-card-label">
+            <span class="tag">Industry</span>
+            <h3>STEEL</h3>
+            <p class="ind-desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding steel environments—ensuring continuous uptime.</p>
+            <div class="ind-line"></div>
+        </div>
+    </a>
+    <a href="/industries/food-beverage" class="atl-industry-card">
+        <img src="/atlasco_website/static/src/img/industries/cards/card-food-beverage.jpg" alt="Food Beverage industry" class="atl-industry-placeholder"/>
+        <div class="atl-industry-card-overlay"></div>
+        <div class="atl-industry-card-label">
+            <span class="tag">Industry</span>
+            <h3>FOOD &amp;<br/>BEVERAGE</h3>
+            <p class="ind-desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding food &amp; beverage environments—ensuring continuous uptime.</p>
+            <div class="ind-line"></div>
+        </div>
+    </a>
+    <a href="/industries/textile" class="atl-industry-card">
+        <img src="/atlasco_website/static/src/img/industries/cards/card-textile.jpg" alt="Textile industry" class="atl-industry-placeholder"/>
+        <div class="atl-industry-card-overlay"></div>
+        <div class="atl-industry-card-label">
+            <span class="tag">Industry</span>
+            <h3>TEXTILE</h3>
+            <p class="ind-desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding textile environments—ensuring continuous uptime.</p>
+            <div class="ind-line"></div>
+        </div>
+    </a>
+    <a href="/industries/electronics" class="atl-industry-card">
+        <img src="/atlasco_website/static/src/img/industries/cards/card-electronics.jpg" alt="Electronics industry" class="atl-industry-placeholder"/>
+        <div class="atl-industry-card-overlay"></div>
+        <div class="atl-industry-card-label">
+            <span class="tag">Industry</span>
+            <h3>ELECTRONICS</h3>
+            <p class="ind-desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding electronics environments—ensuring continuous uptime.</p>
+            <div class="ind-line"></div>
+        </div>
+    </a>
+    <a href="/industries/cement" class="atl-industry-card">
+        <img src="/atlasco_website/static/src/img/industries/cards/card-cement.jpg" alt="Cement industry" class="atl-industry-placeholder"/>
+        <div class="atl-industry-card-overlay"></div>
+        <div class="atl-industry-card-label">
+            <span class="tag">Industry</span>
+            <h3>CEMENT</h3>
+            <p class="ind-desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding cement environments—ensuring continuous uptime.</p>
+            <div class="ind-line"></div>
+        </div>
+    </a>
+    <a href="/industries/construction" class="atl-industry-card">
+        <img src="/atlasco_website/static/src/img/industries/cards/card-construction.jpg" alt="Construction industry" class="atl-industry-placeholder"/>
+        <div class="atl-industry-card-overlay"></div>
+        <div class="atl-industry-card-label">
+            <span class="tag">Industry</span>
+            <h3>CONSTRUCTION</h3>
+            <p class="ind-desc">Atlasco Egypt delivers advanced air and reliability solutions for demanding construction environments—ensuring continuous uptime.</p>
+            <div class="ind-line"></div>
+        </div>
+    </a>
+</div>
+
+<div id="wrap_industries_gap_3" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industries').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[4]"/>
+
+</div>
+
+</t>
+</template>
+</odoo>

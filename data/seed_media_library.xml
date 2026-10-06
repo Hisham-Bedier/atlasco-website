@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ClickUp 869f082gg: register the module's static/src/img files as
+         ir.attachment records so they show up in the website editor's
+         media-picker "Images" tab (see models/content_media.py for why this
+         is required — the picker never scans static/ on disk). Idempotent,
+         safe to run on every upgrade. -->
+    <function model="atlasco.content" name="_seed_static_image_library"/>
+</odoo>

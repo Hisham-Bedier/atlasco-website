@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="product_detail" name="Products L3 — Product Detail">
+<t t-call="atlasco_website.atlasco_layout">
+
+<!-- HERO — prefer the client 877x269 product banner; fall back to product photo -->
+<t t-set="hero_img" t-value="request.env['atlasco.page.hero'].sudo()._image_url('product_' + category.get('slug', '') + '_' + item.get('slug', '')) or item.get('banner') or item.get('image')"/>
+<!-- Namespaced per-product oe_structure (same pattern as industry_detail.xml):
+     this template is shared across every /products/<category>/<leaf> page, so
+     a plain id="wrap" would make a block inserted while editing one product
+     appear on every other product sharing this template. -->
+<div t-attf-id="wrap_product_#{category.get('slug', '')}_#{item.get('slug', '')}" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.product_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+     below are real Odoo-native Insert-Blocks drop targets - see the long
+     root-cause comment on wrap_about in atlasco_about_page.xml. Namespaced
+     per-slug like the div above, for the same COW-safety reason. -->
+<div t-attf-id="wrap_product_#{category.get('slug', '')}_#{item.get('slug', '')}_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.product_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<section class="atl-products-l3-hero" t-att-style="hero_img and ('background-image:linear-gradient(90deg,rgba(13,20,25,.82) 0%,rgba(13,20,25,.45) 38%,rgba(13,20,25,.08) 68%,rgba(13,20,25,0) 100%),url(' + hero_img + ');background-size:cover;background-position:center;') or ''">
+    <div class="atl-products-l3-hero-inner">
+        <p class="atl-products-l3-breadcrumb">
+            <a t-att-href="'/products/' + category['slug']" style="color:#ccf2de;text-decoration:none;">
+                <t t-esc="category['name'].upper()"/>
+            </a>
+        </p>
+        <h1><t t-esc="item['name']"/></h1>
+        <p class="atl-products-l3-subtitle"><t t-esc="item.get('tagline','') or item.get('intro','')"/></p>
+    </div>
+</section>
+
+<!-- DYNAMIC SECTIONS -->
+<t t-if="item.get('sections')">
+    <t t-if="item.get('intro')">
+        <section class="atl-products-l3-block atl-products-l3-block-white">
+            <div class="atl-products-l3-block-inner"><p class="atl-products-l3-lead"><t t-esc="item['intro']"/></p></div>
+        </section>
+    </t>
+    <t t-foreach="item['sections']" t-as="sec" t-with="sec_zebra=sec_index%2">
+        <section t-attf-class="atl-products-l3-block #{'atl-products-l3-block-gray' if sec_zebra else 'atl-products-l3-block-white'}">
+            <div class="atl-products-l3-block-inner">
+                <h2 t-if="sec.get('heading')"><t t-esc="sec['heading']"/></h2>
+                <t t-foreach="sec.get('paragraphs',[])" t-as="para">
+                    <p><t t-esc="para"/></p>
+                </t>
+                <t t-if="sec.get('bullets')">
+                    <ul class="atl-products-l3-bullets">
+                        <t t-foreach="sec['bullets']" t-as="b"><li t-esc="b"/></t>
+                    </ul>
+                </t>
+                <t t-foreach="sec.get('outro',[])" t-as="o">
+                    <p><t t-esc="o"/></p>
+                </t>
+                <t t-if="sec.get('groups')">
+                    <div class="atl-products-l3-groups">
+                        <t t-foreach="sec['groups']" t-as="g">
+                            <div class="atl-products-l3-group">
+                                <h3><t t-esc="g['name']"/></h3>
+                                <ul class="atl-products-l3-bullets"><t t-foreach="g['lines']" t-as="ln"><li t-esc="ln"/></t></ul>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </div>
+        </section>
+    </t>
+</t>
+
+<!-- FALLBACK GENERIC BLOCKS when no sections defined -->
+<t t-if="not item.get('sections')">
+    <section class="atl-products-l3-block atl-products-l3-block-white">
+        <div class="atl-products-l3-block-inner">
+            <h2>Overview</h2>
+            <p><t t-esc="item.get('intro','')"/></p>
+        </div>
+    </section>
+</t>
+
+<!-- CTA -->
+<div t-attf-id="wrap_product_#{category.get('slug', '')}_#{item.get('slug', '')}_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.product_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<section class="atl-products-l3-cta">
+    <h2>Need the right <t t-esc="item['name']"/> for your operation?</h2>
+    <p>Atlasco can support you with selection, installation, commissioning, genuine spare parts, and complete after-sales service.</p>
+    <a href="/contact" class="atl-products-l3-cta-btn">Talk to a Specialist &#8594;</a>
+</section>
+
+<div t-attf-id="wrap_product_#{category.get('slug', '')}_#{item.get('slug', '')}_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.product_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+</div>
+
+</t>
+</template>
+</odoo>

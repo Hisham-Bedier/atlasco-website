@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="atlasco_layout" name="Atlasco Layout">
+    <t t-call="website.layout">
+        <t t-set="no_header" t-value="True"/>
+        <t t-set="no_footer" t-value="True"/>
+
+<!-- Google Fonts site-wide: Pinyon Script + Petit Formal Script -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&amp;family=Petit+Formal+Script&amp;display=swap" rel="stylesheet"/>
+
+<!-- TOP BAR -->
+<div class="atl-topbar">
+    <div class="container-fluid">
+        <div class="atl-topbar-left">
+            <a href="/contact">Contact Us</a>
+            <span class="sep">|</span>
+            <a href="tel:+201220215000">(+2) 012 20215000</a>
+            <span class="sep">|</span>
+            <a href="mailto:info_obor@atlascoegypt.com">info_obor@atlascoegypt.com</a>
+            <span class="sep">|</span>
+            <span>Egypt</span>
+        </div>
+        <div class="atl-topbar-right">
+        </div>
+    </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="atl-navbar">
+  <div class="atl-navbar-inner">
+    <a href="/" class="atl-logo">
+        <img src="/atlasco_website/static/src/img/logo/ate-monogram.png" alt="Atlasco Egypt" class="atl-logo-mark"/>
+        <div class="atl-logo-text">
+            <span>ATLASCO</span>
+            <span>EGYPT</span>
+        </div>
+    </a>
+
+    <!-- Native website.menu (Website > Site > Menu Editor), NOT the old
+         custom atlasco.nav.item model — see the "migrate nav to native
+         menu editor" fix: the client's own native "Edit Menu" dialog was a
+         dead end (edited website.menu, which this navbar never read), so
+         this now reads the exact same tree that dialog manages. -->
+    <ul class="atl-nav-links">
+        <t t-foreach="request.website.menu_id.child_id" t-as="nav_item">
+            <li><a t-att-href="nav_item.url" t-att-data-sm-open="nav_item.atlasco_sm_target or None"
+                   t-attf-style="#{'font-size:%spx;' % nav_item.atlasco_font_size if nav_item.atlasco_font_size else ''}"><t t-esc="nav_item.name"/></a></li>
+        </t>
+    </ul>
+
+    <div class="atl-nav-right">
+        <div class="atl-nav-social-cluster">
+        <a href="https://www.facebook.com/AtlascoEgypt/" class="atl-social-icon atl-social-fb" target="_blank">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V6.8c0-.7.5-.9.8-.9H16V3.5h-2.2C11.3 3.5 11 5.4 11 6.6v1.9H9V11h2v9.5h3V11h2l.5-2.5H14Z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/atlasco-egypt/" class="atl-social-icon atl-social-li" target="_blank">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5A1.94 1.94 0 1 1 3.06 5a1.94 1.94 0 0 1 3.88 0ZM7 8.48H3V21h4V8.48Zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.68-2.91V8.48Z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@AtlascoEgypt" class="atl-social-icon atl-social-yt" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C19.2 5 12 5 12 5s-7.2 0-8.8.5A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C4.8 19 12 19 12 19s7.2 0 8.8-.5a2.5 2.5 0 0 0 1.8-1.8C23 15.2 23 12 23 12ZM9.75 15.5v-7L15.5 12l-5.75 3.5Z"/></svg>
+        </a>
+        </div>
+        <div class="atl-nav-divider"></div>
+        <button class="atl-menu-btn">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            Menu
+        </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MULTI-PANEL CASCADING SIDEMENU (Figma 4300:1039) -->
+<div class="atl-sidemenu">
+    <div class="atl-sidemenu-overlay"></div>
+    <nav class="atl-sidemenu-panels">
+
+        <!-- L1 + L2 are dynamic now — was 2 of the 3 hand-authored panel
+             levels (About/Industries/Products/Services/Careers submenus),
+             migrated to nested website.menu records (see
+             WebsiteMenu._migrate_atlasco_sidemenu in models/website.py) so
+             the native Menu Editor actually controls the burger menu too,
+             not just the top navbar. The JS (atlasco.js initSideMenu) only
+             ever queries by class/data attribute at runtime, so it needed
+             zero changes — this just has to keep emitting the same markup
+             shape it always has.
+
+             L3 (Products' 10 categories -> specific product types) stays
+             hand-authored below: website.menu hard-caps at 2 levels of
+             hierarchy ("Menus cannot have more than two levels of
+             hierarchy" — a real Odoo core constraint, confirmed by hitting
+             it directly), so a 3rd level structurally cannot live there.
+             "Has a sub-panel" is checked via atlasco_sm_target, not
+             child_id, for exactly this reason: Products' 10 L2 category
+             items DO open a sub-panel but have no website.menu children
+             (their L3 is the hardcoded panels further down). -->
+        <t t-set="sm_root" t-value="request.website.menu_id"/>
+
+        <!-- PANEL 1 — L1 -->
+        <div class="atl-sm-panel atl-sm-l1">
+            <div class="atl-sm-logo">ATLASCO EGYPT</div>
+            <t t-foreach="sm_root.child_id" t-as="l1">
+                <a t-attf-class="atl-sm-item#{'' if l1.atlasco_sm_target else ' atl-sm-item-leaf'}"
+                   t-att-data-sm-target="l1.atlasco_sm_target or None" t-att-href="l1.url">
+                    <span t-esc="l1.atlasco_sidemenu_label or l1.name"/>
+                    <t t-if="l1.atlasco_sm_target"><span class="atl-sm-chev">&#8250;</span></t>
+                </a>
+            </t>
+        </div>
+
+        <!-- PANEL 2 — L2 -->
+        <t t-foreach="sm_root.child_id" t-as="l1">
+            <t t-if="l1.atlasco_sm_target">
+                <div class="atl-sm-panel atl-sm-l2" t-att-data-sm-panel="l1.atlasco_sm_target">
+                    <div class="atl-sm-title" t-esc="l1.atlasco_sidemenu_label or l1.name"/>
+                    <!-- Services: read straight from atlasco.service instead of
+                         separately-maintained website.menu children, so a
+                         service added via Website > Content > Services shows up
+                         here immediately with no extra menu-editing step. -->
+                    <t t-if="l1.url == '/services'">
+                        <t t-foreach="request.env['atlasco.service'].sudo().search([], order='sequence, id')" t-as="svc">
+                            <a class="atl-sm-item atl-sm-item-leaf" t-att-href="svc.href()">
+                                <span t-esc="svc.sidemenu_label or svc.name"/>
+                            </a>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <t t-foreach="l1.child_id" t-as="l2">
+                            <a t-attf-class="atl-sm-item#{'' if l2.atlasco_sm_target else ' atl-sm-item-leaf'}"
+                               t-att-data-sm-target="l2.atlasco_sm_target or None" t-att-href="l2.url">
+                                <span t-esc="l2.name"/>
+                                <t t-if="l2.atlasco_sm_target"><span class="atl-sm-chev">&#8250;</span></t>
+                            </a>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </t>
+
+        <!-- PANEL 3 — L3 (Air Compressors) -->
+        <div class="atl-sm-panel atl-sm-l3" data-sm-panel="air-compressors">
+            <div class="atl-sm-title">Air Compressors</div>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/air-compressors/oil-screw-compressors"><span>Oil Screw Compressors</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/air-compressors/oil-free-air-compressors"><span>Oil-Free Air Compressors</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/air-compressors/portable-air-compressors"><span>Portable Air Compressors</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/air-compressors/high-pressure-compressors"><span>High-Pressure Compressors</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/air-compressors/compressed-air-packages"><span>Compressed Air Packages</span></a>
+        </div>
+
+        <!-- PANEL 3 — L3 (Gas Generation) -->
+        <div class="atl-sm-panel atl-sm-l3" data-sm-panel="gas-generation">
+            <div class="atl-sm-title">Gas Generation</div>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/gas-generation/psa-nitrogen-generation-systems"><span>PSA Nitrogen Generation Systems</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/gas-generation/psa-oxygen-generation-systems"><span>PSA Oxygen Generation Systems</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/gas-generation/oxygen-filling-systems"><span>Oxygen Filling Systems</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/gas-generation/marine-specialized-gas-systems"><span>Marine &amp; Specialized Gas Systems</span></a>
+        </div>
+
+        <!-- PANEL 3 — L3 (Air Treatment) -->
+        <div class="atl-sm-panel atl-sm-l3" data-sm-panel="air-treatment">
+            <div class="atl-sm-title">Air Treatment</div>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/air-treatment/refrigerant-air-dryers"><span>Refrigerant Air Dryers</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/air-treatment/desiccant-air-dryers"><span>Desiccant Air Dryers</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/air-treatment/compressed-air-filters"><span>Compressed Air Filters</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/air-treatment/condensate-management-systems"><span>Condensate Management Systems</span></a>
+        </div>
+
+        <!-- PANEL 3 — L3 (Vacuum &amp; Blowers) -->
+        <div class="atl-sm-panel atl-sm-l3" data-sm-panel="vacuum-blowers">
+            <div class="atl-sm-title">Vacuum &amp; Blowers</div>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/vacuum-blowers/centrifugal-blowers"><span>Centrifugal Blowers</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/vacuum-blowers/multi-stage-blowers"><span>Multi-Stage Blowers</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/vacuum-blowers/vacuum-systems"><span>Vacuum Systems</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/vacuum-blowers/axial-fans"><span>Axial Fans</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/vacuum-blowers/process-heavy-duty-fans"><span>Process &amp; Heavy-Duty Fans</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/vacuum-blowers/gas-boosters"><span>Gas Boosters</span></a>
+        </div>
+
+        <!-- PANEL 3 — L3 (Industrial Filtration) -->
+        <div class="atl-sm-panel atl-sm-l3" data-sm-panel="industrial-filtration">
+            <div class="atl-sm-title">Industrial Filtration</div>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/industrial-filtration/air-filtration-systems"><span>Air Filtration Systems</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/industrial-filtration/oil-hydraulic-filtration"><span>Oil &amp; Hydraulic Filtration</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/industrial-filtration/fuel-filtration-systems"><span>Fuel Filtration Systems</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/industrial-filtration/dust-collection-filtration"><span>Dust Collection &amp; Filtration</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/industrial-filtration/vacuum-compressor-filters"><span>Vacuum &amp; Compressor Filters</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/industrial-filtration/filtration-units-systems"><span>Filtration Units &amp; Systems</span></a>
+        </div>
+
+        <!-- PANEL 3 — L3 (Lubrication &amp; Oil Systems) -->
+        <div class="atl-sm-panel atl-sm-l3" data-sm-panel="lubrication-oil">
+            <div class="atl-sm-title">Lubrication &amp; Oil Systems</div>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/lubrication-oil/oil-filtration-purification-systems"><span>Oil Filtration &amp; Purification Systems</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/lubrication-oil/contamination-control-solutions"><span>Contamination Control Solutions</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/lubrication-oil/breathers-desiccant-systems"><span>Breathers &amp; Desiccant Systems</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/lubrication-oil/lubricant-inspection-monitoring"><span>Lubricant Inspection &amp; Monitoring Tools</span></a>
+        </div>
+
+        <!-- PANEL 3 — L3 (Air &amp; Gas Storage) -->
+        <div class="atl-sm-panel atl-sm-l3" data-sm-panel="gas-storage">
+            <div class="atl-sm-title">Air &amp; Gas Storage</div>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/gas-storage/air-receivers"><span>Air Receivers</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/gas-storage/pressure-vessels"><span>Pressure Vessels</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/gas-storage/cryogenic-storage-tanks"><span>Cryogenic Storage Tanks</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/gas-storage/gas-storage-distribution-systems"><span>Gas Storage &amp; Distribution Systems</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/gas-storage/vaporizers-gas-handling-equipment"><span>Vaporizers &amp; Gas Handling Equipment</span></a>
+        </div>
+
+        <!-- PANEL 3 — L3 (Fluid Analysis) -->
+        <div class="atl-sm-panel atl-sm-l3" data-sm-panel="fluid-analysis">
+            <div class="atl-sm-title">Fluid Analysis</div>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/fluid-analysis/oil-analysis-instruments"><span>Oil Analysis Instruments</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/fluid-analysis/particle-counting-systems"><span>Particle Counting Systems</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/fluid-analysis/wear-debris-analysis-systems"><span>Wear Debris Analysis Systems</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/fluid-analysis/portable-fluid-analysis-devices"><span>Portable Fluid Analysis Devices</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/fluid-analysis/laboratory-analysis-systems"><span>Laboratory Analysis Systems</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/fluid-analysis/fluid-monitoring-software"><span>Fluid Monitoring Software</span></a>
+        </div>
+
+        <!-- PANEL 3 — L3 (Control &amp; Automation) -->
+        <div class="atl-sm-panel atl-sm-l3" data-sm-panel="control-automation">
+            <div class="atl-sm-title">Control &amp; Automation</div>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/control-automation/compressor-controllers"><span>Compressor Controllers</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/control-automation/system-control-panels"><span>System Control Panels</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/control-automation/sensors-transmitters"><span>Sensors &amp; Transmitters</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/control-automation/remote-monitoring-hardware"><span>Remote Monitoring Hardware</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/control-automation/flow-pressure-control-equipment"><span>Flow &amp; Pressure Control Equipment</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/control-automation/integrated-control-systems"><span>Integrated Control Systems</span></a>
+        </div>
+
+        <!-- PANEL 3 — L3 (Industrial Tools) -->
+        <div class="atl-sm-panel atl-sm-l3" data-sm-panel="industrial-tools">
+            <div class="atl-sm-title">Industrial Tools</div>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/industrial-tools/bearing-mounting-dismounting-tools"><span>Bearing Mounting &amp; Dismounting Tools</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/industrial-tools/induction-heaters"><span>Induction Heaters</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/industrial-tools/hydraulic-tools-equipment"><span>Hydraulic Tools &amp; Equipment</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/industrial-tools/alignment-tools"><span>Alignment Tools</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/industrial-tools/pullers-mechanical-tools"><span>Pullers &amp; Mechanical Tools</span></a>
+            <a class="atl-sm-item atl-sm-item-leaf" href="/products/industrial-tools/maintenance-tool-kits"><span>Maintenance Tool Kits</span></a>
+        </div>
+
+        <button class="atl-sm-back" aria-label="Back">&#8249; Back</button>
+        <button class="atl-sm-close" aria-label="Close menu">&#215;</button>
+    </nav>
+</div>
+
+<!-- PAGE CONTENT -->
+<div id="wrap">
+    <t t-out="0"/>
+</div>
+
+<!-- FOOTER -->
+<footer class="atl-footer">
+    <div class="atl-footer-watermark">ATLASCO</div>
+    <div class="atl-footer-grid">
+        <div class="atl-footer-brand">
+            <h3>ATLASCO EGYPT</h3>
+            <p>Atlasco Egypt delivers integrated reliability solutions through advanced products, expert services, and specialized technologies—helping industries enhance performance, reduce downtime, and optimize asset efficiency.</p>
+            <div class="atl-footer-socials">
+                <a href="https://www.facebook.com/AtlascoEgypt/" class="atl-social-icon atl-social-fb" target="_blank">
+                    <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/atlasco-egypt/" class="atl-social-icon atl-social-li" target="_blank">
+                    <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+                <a href="https://www.youtube.com/@AtlascoEgypt" class="atl-social-icon atl-social-yt" target="_blank">
+                    <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="atl-footer-col">
+            <h4>Quick Links</h4>
+            <ul class="atl-footer-links">
+                <li><a href="/industries">Industries</a></li>
+                <li><a href="/products">Products</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/partners">Partners</a></li>
+                <li><a href="/careers">Careers &amp; Culture</a></li>
+            </ul>
+        </div>
+
+        <div class="atl-footer-col">
+            <h4>Head Office</h4>
+            <div class="atl-footer-contact-item">
+                <div class="icon">
+                    <svg width="12" height="12" fill="none" stroke="#4ade80" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <p>1st Industrial Zone, 11th Piece, Block 13027, Behind Gas Station, El-Obour City, Egypt</p>
+            </div>
+            <div class="atl-footer-contact-item">
+                <div class="icon">
+                    <svg width="12" height="12" fill="none" stroke="#4ade80" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.58 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.76a16 16 0 0 0 6.29 6.29l.96-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+                <p>(+2) 012 20215000</p>
+            </div>
+            <div class="atl-footer-contact-item">
+                <div class="icon">
+                    <svg width="12" height="12" fill="none" stroke="#4ade80" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <p>info_obor@atlascoegypt.com</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="atl-footer-bottom">
+        <p>&#169; 2024 Atlasco Egypt. All Rights Reserved.</p>
+    </div>
+</footer>
+
+    </t>
+</template>
+</odoo>

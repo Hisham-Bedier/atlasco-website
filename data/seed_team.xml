@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Singleton lives in seed_000_singleton.xml (xmlid content_singleton). -->
+
+    <!-- ============ BOARD OF DIRECTORS (in order) ============ -->
+    <record id="team_member_nabil_soliman" model="atlasco.team.member">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">10</field>
+        <field name="section">board</field>
+        <field name="name">Nabil Soliman</field>
+        <field name="role">Chairman</field>
+        <field name="photo_legacy_path">/atlasco_website/static/src/img/team/nabil-soliman.png</field>
+        <field name="fx_delay">0</field>
+    </record>
+    <record id="team_member_george_soliman" model="atlasco.team.member">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">20</field>
+        <field name="section">board</field>
+        <field name="name">George Soliman</field>
+        <field name="role">Deputy Chairman</field>
+        <field name="photo_legacy_path">/atlasco_website/static/src/img/team/george-soliman.png</field>
+        <field name="fx_delay">80</field>
+    </record>
+
+    <!-- ============ LEADERSHIP TEAM (in order) ============ -->
+    <record id="team_member_naguib_maher" model="atlasco.team.member">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">30</field>
+        <field name="section">team</field>
+        <field name="name">Naguib Maher</field>
+        <field name="role">Financial Director</field>
+        <field name="photo_legacy_path">/atlasco_website/static/src/img/team/naguib-maher.png</field>
+        <field name="fx_delay">0</field>
+    </record>
+    <record id="team_member_raafat_henry" model="atlasco.team.member">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">40</field>
+        <field name="section">team</field>
+        <field name="name">Raafat Henry</field>
+        <field name="role">Sales Director</field>
+        <field name="photo_legacy_path">/atlasco_website/static/src/img/team/raafat-henry.png</field>
+        <field name="fx_delay">60</field>
+    </record>
+    <record id="team_member_reham_dorry" model="atlasco.team.member">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">50</field>
+        <field name="section">team</field>
+        <field name="name">Reham Dorry</field>
+        <field name="role">IT Manager</field>
+        <field name="photo_legacy_path">/atlasco_website/static/src/img/team/reham-dorry-20260615.jpg</field>
+        <field name="fx_delay">120</field>
+    </record>
+    <record id="team_member_saied_elgamal" model="atlasco.team.member">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">60</field>
+        <field name="section">team</field>
+        <field name="name">Saied El Gamal</field>
+        <field name="role">Maintenance Director</field>
+        <field name="photo_legacy_path">/atlasco_website/static/src/img/team/saied-elgamal.png</field>
+        <field name="fx_delay">180</field>
+    </record>
+    <record id="team_member_mina_ibrahim" model="atlasco.team.member">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">70</field>
+        <field name="section">team</field>
+        <field name="name">Mina Ibrahim</field>
+        <field name="role">Maintenance Manager</field>
+        <field name="photo_legacy_path">/atlasco_website/static/src/img/team/mina-ibrahim.png</field>
+        <field name="fx_delay">0</field>
+    </record>
+    <record id="team_member_emad_guindy" model="atlasco.team.member">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">80</field>
+        <field name="section">team</field>
+        <field name="name">Emad Guindy</field>
+        <field name="role">Marketing Manager</field>
+        <field name="photo_legacy_path">/atlasco_website/static/src/img/team/emad-guindy.png</field>
+        <field name="fx_delay">60</field>
+    </record>
+    <record id="team_member_ahmed_tawhid" model="atlasco.team.member">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">90</field>
+        <field name="section">team</field>
+        <field name="name">Ahmed Tawhid</field>
+        <field name="role">After Market Manager</field>
+        <field name="photo_legacy_path">/atlasco_website/static/src/img/team/ahmed-tawhid.png</field>
+        <field name="fx_delay">120</field>
+    </record>
+    <record id="team_member_mina_samir" model="atlasco.team.member">
+        <field name="content_id" ref="content_singleton"/>
+        <field name="sequence">100</field>
+        <field name="section">team</field>
+        <field name="name">Mina Samir</field>
+        <field name="role">HR Manager</field>
+        <field name="photo_legacy_path">/atlasco_website/static/src/img/team/mina-samir.jpg</field>
+        <field name="fx_delay">180</field>
+    </record>
+</odoo>

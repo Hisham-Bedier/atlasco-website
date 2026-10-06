@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_atlasco_content_form" model="ir.ui.view">
+        <field name="name">atlasco.content.form</field>
+        <field name="model">atlasco.content</field>
+        <field name="arch" type="xml">
+            <form string="Atlasco Website Content">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <notebook>
+                        <page string="Home" name="home">
+                            <group>
+                                <group string="Hero">
+                                    <field name="home_hero_established"/>
+                                    <field name="home_hero_line1"/>
+                                    <field name="home_hero_highlight"/>
+                                    <field name="home_hero_subtitle"/>
+                                    <field name="home_hero_btn"/>
+                                </group>
+                                <group string="Solutions Header">
+                                    <field name="home_solutions_label"/>
+                                    <field name="home_solutions_title"/>
+                                </group>
+                            </group>
+                            <group string="Solutions · Tab Buttons">
+                                <field name="home_tab_btn_ca"/>
+                                <field name="home_tab_btn_gas"/>
+                                <field name="home_tab_btn_oil"/>
+                                <field name="home_tab_btn_fluid"/>
+                                <field name="home_tab_btn_cm"/>
+                            </group>
+                            <group>
+                                <group string="Solutions · Compressed Air">
+                                    <field name="home_sol_ca_title"/>
+                                    <field name="home_sol_ca_sub"/>
+                                    <field name="home_sol_ca_body"/>
+                                    <field name="home_sol_ca_link"/>
+                                    <field name="home_sol_ca_image"/>
+                                    <field name="home_sol_ca_image_alt"/>
+                                    <field name="home_solution_check_ids" nolabel="1"
+                                           context="{'default_tab': 'ca'}" domain="[('tab', '=', 'ca')]">
+                                        <tree editable="bottom">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="text"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group string="Solutions · Gas Generation">
+                                    <field name="home_sol_gas_title"/>
+                                    <field name="home_sol_gas_sub"/>
+                                    <field name="home_sol_gas_body"/>
+                                    <field name="home_sol_gas_link"/>
+                                    <field name="home_sol_gas_image"/>
+                                    <field name="home_sol_gas_image_alt"/>
+                                    <field name="home_solution_check_ids" nolabel="1"
+                                           context="{'default_tab': 'gas'}" domain="[('tab', '=', 'gas')]">
+                                        <tree editable="bottom">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="text"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Solutions · Oil Filtration">
+                                    <field name="home_sol_oil_title"/>
+                                    <field name="home_sol_oil_sub"/>
+                                    <field name="home_sol_oil_body"/>
+                                    <field name="home_sol_oil_link"/>
+                                    <field name="home_sol_oil_image"/>
+                                    <field name="home_sol_oil_image_alt"/>
+                                    <field name="home_solution_check_ids" nolabel="1"
+                                           context="{'default_tab': 'oil'}" domain="[('tab', '=', 'oil')]">
+                                        <tree editable="bottom">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="text"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group string="Solutions · Fluid Analysis">
+                                    <field name="home_sol_fluid_title"/>
+                                    <field name="home_sol_fluid_sub"/>
+                                    <field name="home_sol_fluid_body"/>
+                                    <field name="home_sol_fluid_link"/>
+                                    <field name="home_sol_fluid_image"/>
+                                    <field name="home_sol_fluid_image_alt"/>
+                                    <field name="home_solution_check_ids" nolabel="1"
+                                           context="{'default_tab': 'fluid'}" domain="[('tab', '=', 'fluid')]">
+                                        <tree editable="bottom">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="text"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </group>
+                            <group string="Solutions · Condition Monitoring">
+                                <field name="home_sol_cm_title"/>
+                                <field name="home_sol_cm_sub"/>
+                                <field name="home_sol_cm_body"/>
+                                <field name="home_sol_cm_link"/>
+                                <field name="home_sol_cm_image"/>
+                                <field name="home_sol_cm_image_alt"/>
+                                <field name="home_solution_check_ids" nolabel="1"
+                                       context="{'default_tab': 'cm'}" domain="[('tab', '=', 'cm')]">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="text"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Stats (counters)">
+                                <field name="home_stat_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="target"/>
+                                        <field name="suffix"/>
+                                        <field name="label"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group>
+                                <group string="Industries Header">
+                                    <field name="home_industries_label"/>
+                                    <field name="home_industries_title"/>
+                                    <field name="home_industries_viewall"/>
+                                    <field name="home_industries_viewall_url"/>
+                                </group>
+                            </group>
+                            <group string="Industry Cards">
+                                <field name="home_industry_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="href"/>
+                                        <field name="image" widget="image" options="{'size': [64, 64]}"/>
+                                        <field name="image_alt"/>
+                                        <field name="fx_delay"/>
+                                        <field name="title"/>
+                                        <field name="desc"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Partners (editorial)">
+                                <field name="home_partners_eyebrow"/>
+                                <field name="home_partners_h2_1"/>
+                                <field name="home_partners_h2_2"/>
+                                <field name="home_partners_h2_3"/>
+                                <field name="home_partners_h2_4"/>
+                                <field name="home_partners_lead"/>
+                                <field name="home_partners_lead_bold"/>
+                                <field name="home_partners_lead_tail"/>
+                                <field name="home_partners_cta"/>
+                                <field name="home_partners_showall_url"/>
+                            </group>
+                            <group string="Separator">
+                                <field name="home_sep_logo_image"/>
+                                <field name="home_sep_logo_alt"/>
+                            </group>
+                            <group string="Separator Product Cards">
+                                <field name="home_sepcard_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="column"/>
+                                        <field name="number"/>
+                                        <field name="category"/>
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group>
+                                <group string="Careers CTA">
+                                    <field name="home_careers_label"/>
+                                    <field name="home_careers_h2_1"/>
+                                    <field name="home_careers_h2_2"/>
+                                    <field name="home_careers_h2_3"/>
+                                    <field name="home_careers_body"/>
+                                    <field name="home_careers_btn"/>
+                                    <field name="home_careers_bg_image"/>
+                                    <field name="home_careers_bg_alt"/>
+                                </group>
+                                <group string="PrimeGear Academy">
+                                    <field name="home_primegear_label"/>
+                                    <field name="home_primegear_title"/>
+                                    <field name="home_primegear_body"/>
+                                    <field name="home_primegear_btn"/>
+                                    <field name="home_primegear_bg_image"/>
+                                    <field name="home_primegear_bg_alt"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="About" name="about">
+                            <group>
+                                <group string="Hero">
+                                    <field name="about_hero_alt"/>
+                                </group>
+                                <group string="Intro — Logo Card">
+                                    <field name="about_logo_image"/>
+                                    <field name="about_logo_alt"/>
+                                    <field name="about_logo_name"/>
+                                    <field name="about_logo_tagline"/>
+                                </group>
+                            </group>
+                            <group string="Intro">
+                                <field name="about_intro_title_line1"/>
+                                <field name="about_intro_title_line2"/>
+                                <field name="about_intro_p1"/>
+                                <field name="about_intro_p2"/>
+                                <field name="about_intro_p3"/>
+                            </group>
+                            <group>
+                                <group string="Vision">
+                                    <field name="about_vision_eyebrow"/>
+                                    <field name="about_vision_title"/>
+                                    <field name="about_vision_p1"/>
+                                    <field name="about_vision_p2"/>
+                                </group>
+                                <group string="Mission">
+                                    <field name="about_mission_eyebrow"/>
+                                    <field name="about_mission_title"/>
+                                    <field name="about_mission_p1"/>
+                                    <field name="about_mission_p2"/>
+                                </group>
+                            </group>
+                            <group string="Mission / Vision Section">
+                                <field name="about_mv_label"/>
+                                <field name="about_video_src"/>
+                                <field name="about_video_aria"/>
+                            </group>
+                            <group string="What Sets Us Apart">
+                                <field name="about_diff_label"/>
+                                <field name="about_diff_title"/>
+                                <field name="about_differentiator_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="title"/>
+                                        <field name="body"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Team" name="team">
+                            <group>
+                                <group string="Hero">
+                                    <field name="team_hero_label"/>
+                                    <field name="team_hero_title"/>
+                                </group>
+                                <group string="Section Headings">
+                                    <field name="team_board_eyebrow"/>
+                                    <field name="team_board_title"/>
+                                    <field name="team_team_eyebrow"/>
+                                    <field name="team_team_title"/>
+                                    <field name="team_team_lead"/>
+                                </group>
+                            </group>
+                            <field name="team_member_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="section"/>
+                                    <field name="name"/>
+                                    <field name="role"/>
+                                    <field name="photo" widget="image" options="{'size': [64, 64]}"/>
+                                    <field name="fx_delay"/>
+                                    <field name="bio"/>
+                                    <field name="social_linkedin"/>
+                                    <field name="social_twitter"/>
+                                    <field name="social_email"/>
+                                </tree>
+                            </field>
+                            <group string="Chairman Message (Team page)">
+                                <field name="team_cmsg_portrait"/>
+                                <field name="team_cmsg_portrait_alt"/>
+                                <field name="team_cmsg_name"/>
+                                <field name="team_cmsg_role"/>
+                                <field name="team_cmsg_kicker"/>
+                                <field name="team_cmsg_p1"/>
+                                <field name="team_cmsg_p2"/>
+                                <field name="team_cmsg_p3"/>
+                                <field name="team_cmsg_p4"/>
+                                <field name="team_cmsg_p5"/>
+                            </group>
+                        </page>
+                        <page string="History" name="history">
+                            <group>
+                                <group string="Hero">
+                                    <field name="history_hero_label"/>
+                                    <field name="history_hero_title"/>
+                                    <field name="history_hero_sub"/>
+                                </group>
+                                <group string="Meta / CTA">
+                                    <field name="history_meta_text"/>
+                                    <field name="history_cta_title"/>
+                                    <field name="history_cta_sub"/>
+                                    <field name="history_rail_start_year"/>
+                                    <field name="history_photo_placeholder_1"/>
+                                    <field name="history_photo_placeholder_2"/>
+                                </group>
+                            </group>
+                            <group string="Timeline Milestones">
+                                <field name="history_milestone_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="year"/>
+                                        <field name="variant"/>
+                                        <field name="reverse"/>
+                                        <field name="title"/>
+                                        <field name="body_1"/>
+                                        <field name="body_2"/>
+                                        <field name="body_3"/>
+                                        <field name="body_4"/>
+                                        <field name="body_5"/>
+                                        <field name="image" widget="image" options="{'size': [64, 64]}"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Green Stats">
+                                <field name="history_stat_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="number"/>
+                                        <field name="label"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Careers" name="careers">
+                            <group>
+                                <group string="Hero">
+                                    <field name="careers_hero_banner_alt"/>
+                                    <field name="careers_hero_badge"/>
+                                    <field name="careers_hero_title"/>
+                                    <field name="careers_hero_title_hl"/>
+                                    <field name="careers_hero_title_end"/>
+                                    <field name="careers_hero_body"/>
+                                    <field name="careers_hero_cta1"/>
+                                    <field name="careers_hero_cta2"/>
+                                    <field name="careers_hero_video"/>
+                                    <field name="careers_hero_float_title"/>
+                                    <field name="careers_hero_float_sub"/>
+                                </group>
+                                <group string="Hero Stats">
+                                    <field name="careers_stat1_num"/>
+                                    <field name="careers_stat1_label"/>
+                                    <field name="careers_stat2_num"/>
+                                    <field name="careers_stat2_label"/>
+                                    <field name="careers_stat3_num"/>
+                                    <field name="careers_stat3_label"/>
+                                </group>
+                                <group string="Trust Pills">
+                                    <field name="careers_pill1"/>
+                                    <field name="careers_pill2"/>
+                                    <field name="careers_pill3"/>
+                                    <field name="careers_pill4"/>
+                                    <field name="careers_pill5"/>
+                                </group>
+                                <group string="Section Headers">
+                                    <field name="careers_why_eyebrow"/>
+                                    <field name="careers_why_title"/>
+                                    <field name="careers_ben_eyebrow"/>
+                                    <field name="careers_ben_title"/>
+                                    <field name="careers_open_eyebrow"/>
+                                    <field name="careers_open_title"/>
+                                    <field name="careers_job_desc_label"/>
+                                    <field name="careers_job_cta"/>
+                                    <field name="careers_apply_eyebrow"/>
+                                    <field name="careers_apply_title"/>
+                                </group>
+                            </group>
+                            <group string="Why Build Cards">
+                                <field name="careers_why_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="title"/>
+                                        <field name="body"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Employee Benefits">
+                                <field name="careers_benefit_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="title"/>
+                                        <field name="body"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Current Openings">
+                                <field name="careers_opening_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="title"/>
+                                        <field name="department"/>
+                                        <field name="location"/>
+                                        <field name="job_type"/>
+                                        <field name="blurb"/>
+                                        <field name="points" optional="hide"/>
+                                        <field name="description" optional="hide"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Culture" name="culture">
+                            <group>
+                                <group string="Hero">
+                                    <field name="culture_hero_badge"/>
+                                    <field name="culture_hero_title"/>
+                                    <field name="culture_hero_title_hl"/>
+                                    <field name="culture_hero_title_end"/>
+                                    <field name="culture_hero_body"/>
+                                    <field name="culture_hero_cta1"/>
+                                    <field name="culture_hero_cta2"/>
+                                    <field name="culture_hero_video"/>
+                                    <field name="culture_hero_float_title"/>
+                                    <field name="culture_hero_float_sub"/>
+                                </group>
+                                <group string="Overview">
+                                    <field name="culture_ov_eyebrow"/>
+                                    <field name="culture_ov_title"/>
+                                    <field name="culture_ov_body"/>
+                                    <field name="culture_ov_tag1"/>
+                                    <field name="culture_ov_tag2"/>
+                                    <field name="culture_ov_tag3"/>
+                                    <field name="culture_ov_tag4"/>
+                                    <field name="culture_ov_image"/>
+                                    <field name="culture_ov_image_alt"/>
+                                    <field name="culture_ov_badge_num"/>
+                                    <field name="culture_ov_badge_text1"/>
+                                    <field name="culture_ov_badge_text2"/>
+                                </group>
+                                <group string="Section Headers">
+                                    <field name="culture_val_eyebrow"/>
+                                    <field name="culture_val_title"/>
+                                    <field name="culture_life_eyebrow"/>
+                                    <field name="culture_life_title"/>
+                                    <field name="culture_life_body"/>
+                                    <field name="culture_aw_eyebrow"/>
+                                    <field name="culture_aw_title"/>
+                                </group>
+                                <group string="CTA Band">
+                                    <field name="culture_cta_title"/>
+                                    <field name="culture_cta_body"/>
+                                    <field name="culture_cta_btn1"/>
+                                    <field name="culture_cta_btn2"/>
+                                </group>
+                            </group>
+                            <group string="Core Values">
+                                <field name="culture_value_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="title"/>
+                                        <field name="body"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Life Beyond the Workplace (Video &amp; Photo Tiles)">
+                                <div class="text-muted mb-2" style="font-size:12px;">
+                                    Set Tile Type to <b>photo</b> and upload a Photo to make a
+                                    gallery tile a real, replaceable image. Set it to <b>video</b>
+                                    and use Upload Video to attach a real mp4 file directly here.
+                                </div>
+                                <field name="culture_life_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="label"/>
+                                        <field name="vtype"/>
+                                        <field name="video_file" filename="video_filename" widget="binary" string="Upload Video"/>
+                                        <field name="video_filename" invisible="1"/>
+                                        <field name="vsrc" string="Video Source (advanced)" optional="hide"/>
+                                        <field name="poster" optional="hide"/>
+                                        <field name="photo" widget="image" options="{'size': [64, 64]}"/>
+                                        <field name="photo_alt"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Awards / Recognition">
+                                <field name="culture_award_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="title"/>
+                                        <field name="body"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Why Our People Stay (Voices)">
+                                <field name="culture_voice_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="avatar" widget="image" options="{'size': [50, 50]}"/>
+                                        <field name="person_role"/>
+                                        <field name="years_label"/>
+                                        <field name="quote"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Open the singleton content record directly -->
+    <record id="action_atlasco_content_open" model="ir.actions.server">
+        <field name="name">Website Content</field>
+        <field name="model_id" ref="model_atlasco_content"/>
+        <field name="state">code</field>
+        <field name="code">action = model._get().get_formview_action()</field>
+    </record>
+
+    <menuitem id="menu_atlasco_content_root"
+              name="Atlasco Website"
+              parent="website.menu_website_configuration"
+              sequence="5"/>
+    <!-- Grouped into 3 submenus (Content / Media / Catalog) instead of 9
+         flat items directly under "Atlasco Website" — matches the nested
+         pattern Odoo's own Site menu uses (Content > Pages). Each leaf
+         menuitem below is reparented to one of these three groups instead
+         of menu_atlasco_content_root directly. -->
+    <menuitem id="menu_atlasco_group_content" name="Content" parent="menu_atlasco_content_root" sequence="10"/>
+    <menuitem id="menu_atlasco_group_media" name="Media" parent="menu_atlasco_content_root" sequence="20"/>
+    <menuitem id="menu_atlasco_group_catalog" name="Catalog" parent="menu_atlasco_content_root" sequence="30"/>
+    <menuitem id="menu_atlasco_content"
+              name="Website Content"
+              parent="menu_atlasco_group_content"
+              action="action_atlasco_content_open"
+              sequence="10"/>
+
+</odoo>

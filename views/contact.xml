@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="contact" name="Contact - Expert Consultation">
+<t t-call="atlasco_website.atlasco_layout">
+
+<!-- Page-scoped oe_structure (same pattern as /services, /about, /culture)
+     so Insert Blocks has a valid drop target on this page. -->
+<div id="wrap_contact" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.contact').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+     below are real Odoo-native Insert-Blocks drop targets - see the long
+     root-cause comment on wrap_about in atlasco_about_page.xml. -->
+<div id="wrap_contact_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.contact').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<t t-set="hero_bg" t-value="request.env['atlasco.page.hero'].sudo()._image_url('contact')"/>
+<t t-set="style_contact_hero" t-value="request.env['atlasco.block.style'].sudo()._get('contact_hero')"/>
+<section class="atl-contact-hero atl-font-editable o_editable" t-att-data-style-model="'atlasco.block.style'" t-att-data-style-id="style_contact_hero.id" t-attf-style="#{'background-image:url(%s);background-size:cover;background-position:center;' % hero_bg if hero_bg else ''}--atl-dyn-font-family:#{style_contact_hero.font_family or ''};--atl-dyn-font-size:#{style_contact_hero.font_size or ''};">
+    <div class="atl-contact-hero-inner">
+        <div class="atl-contact-badge">GET IN TOUCH</div>
+        <h1>Expert Consultation &amp;<br/>Technical Support</h1>
+        <p>Empowering Egyptian industries with world-class engineering solutions. Reach out to our technical team for tailored machinery, maintenance, and system integration.</p>
+    </div>
+</section>
+
+<div id="wrap_contact_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.contact').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<section class="atl-contact-section">
+    <!-- FORM -->
+    <div class="atl-contact-form-wrap">
+        <h2>Request a Consultation</h2>
+        <t t-if="error">
+            <div class="atl-form-alert atl-form-alert-error"><t t-esc="error"/></div>
+        </t>
+        <t t-if="submitted and not error">
+            <div class="atl-form-alert atl-form-alert-success">Thank you — your request has been received. Our team will contact you shortly.</div>
+        </t>
+        <form id="atl-contact-form" action="/contact/submit" method="post">
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+            <div class="atl-form-row">
+                <div class="atl-form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="full_name" placeholder="John Doe" required="required" t-att-value="values and values.get('full_name')"/>
+                </div>
+                <div class="atl-form-group">
+                    <label>Company Name</label>
+                    <input type="text" name="company" placeholder="Industrial Corp" t-att-value="values and values.get('company')"/>
+                </div>
+            </div>
+            <div class="atl-form-row">
+                <div class="atl-form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="john@company.com" required="required" t-att-value="values and values.get('email')"/>
+                </div>
+                <div class="atl-form-group">
+                    <label>Phone</label>
+                    <input type="tel" name="phone" placeholder="+20 12 20215000" t-att-value="values and values.get('phone')"/>
+                </div>
+            </div>
+            <div class="atl-form-row">
+                <div class="atl-form-group">
+                    <label>Industry</label>
+                    <select name="industry">
+                        <option>Oil &amp; Gas</option>
+                        <option>Steel</option>
+                        <option>Pharmaceutical</option>
+                        <option>Medical</option>
+                        <option>Food &amp; Beverage</option>
+                        <option>Textile</option>
+                        <option>Electronics</option>
+                        <option>Construction</option>
+                        <option>Cement</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="atl-form-group">
+                    <label>Inquiry Type</label>
+                    <select name="inquiry_type">
+                        <option>Technical Support</option>
+                        <option>Product Inquiry</option>
+                        <option>Service Request</option>
+                        <option>Partnership</option>
+                        <option>Training</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="atl-form-group">
+                <label>How can we help?</label>
+                <textarea name="message" placeholder="Describe your technical requirements..." rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Submit Request &#9654;</button>
+        </form>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="atl-contact-sidebar">
+        <div class="atl-contact-info-card">
+            <h3>El-Obour Headquarters</h3>
+            <div class="atl-contact-info-item">
+                <div class="icon-wrap">📍</div>
+                <div>
+                    <strong>Address</strong>
+                    <p>1st Industrial Zone, 11th Piece, Block 13027, Behind Gas Station, El-Obour City, Egypt</p>
+                </div>
+            </div>
+            <div class="atl-contact-info-item">
+                <div class="icon-wrap">✉️</div>
+                <div>
+                    <strong>Email</strong>
+                    <p>info_obor@atlascoegypt.com</p>
+                </div>
+            </div>
+            <div class="atl-contact-info-item">
+                <div class="icon-wrap">📞</div>
+                <div>
+                    <strong>Call us</strong>
+                    <p>(+2) 012 20215000</p>
+                </div>
+            </div>
+            <div class="atl-contact-info-item">
+                <div class="icon-wrap">📱</div>
+                <div>
+                    <strong>Hotline</strong>
+                    <p>01220215000</p>
+                </div>
+            </div>
+            <div class="atl-contact-info-item">
+                <div class="icon-wrap">📠</div>
+                <div>
+                    <strong>Fax</strong>
+                    <p>(+2) 44814443</p>
+                </div>
+            </div>
+
+            <div class="atl-map-embed">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3448.5956642339434!2d31.4571348119317!3d30.191542111479926!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14581a85cc8c8e7f%3A0x5dca3095e918478b!2sAtlasco%20Egypt!5e0!3m2!1sen!2seg!4v1779046642394!5m2!1sen!2seg" width="100%" height="320" style="border:0;border-radius:8px;" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade"/>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<div id="wrap_contact_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.contact').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+</div>
+
+</t>
+</template>
+</odoo>

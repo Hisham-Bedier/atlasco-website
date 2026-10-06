@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="homepage" name="Homepage">
+<t t-call="atlasco_website.atlasco_layout">
+
+<!-- This page's OWN oe_structure (its arch literally contains it, unlike
+     atlasco_layout's shared #wrap which every page nests inside) — matches
+     the fix already applied on /culture (views/atlasco_culture_page.xml)
+     and /services, for ticket 869f082az ("cannot add a new section BETWEEN
+     existing customized sections"). Without a page-owned oe_structure, the
+     Website Editor has no valid drop target to save a new mid-page section
+     into on THIS page specifically — the only oe_structure in scope was
+     the one shared by every page (the layout's #wrap), so Odoo refused the
+     drop rather than let a homepage edit silently write into every page's
+     shared chrome. Wrapping the homepage's own top-level sections below in
+     <div id="wrap" class="oe_structure"> gives / its own independent,
+     page-scoped drop target, so "Insert Blocks" can now drop a new
+     snippet between any two of the sections below (hero, stats, solutions
+     tabs, industries, partners, separator, careers/primegear cinematic
+     block). -->
+<div id="wrap_homepage" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.homepage').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+     below are real Odoo-native Insert-Blocks drop targets - see the long
+     root-cause comment on wrap_about in atlasco_about_page.xml. -->
+<div id="wrap_homepage_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.homepage').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<!-- HERO -->
+<!-- Model-backed (atlasco.home.slide) carousel with any number of slides;
+     falls back to the original single static hero if no slides exist. -->
+<t t-if="home_slides">
+<section class="atl-hero atl-hero--carousel" data-carousel="hero">
+    <div class="atl-hero-track">
+        <t t-foreach="home_slides" t-as="s">
+        <div t-attf-class="atl-hero-slide#{' is-active' if s_index == 0 else ''}" t-att-data-index="s_index" t-att-data-slide-id="s.id">
+            <span class="atl-hero-slide-media"
+                  t-field="s.image"
+                  t-options='{"widget": "image", "max_width": 1920, "max_height": 1080, "alt-field": "image_alt", "qweb_img_responsive": false}'/>
+            <t t-set="has_text" t-value="s.established or s.line1 or s.highlight or s.subtitle or s.btn_label"/>
+            <t t-if="s.show_overlay or has_text or editable">
+                <div t-if="s.show_overlay or has_text" t-attf-class="atl-hero-scrim atl-hero-scrim--#{s.text_theme}"/>
+                <div class="atl-hero-align">
+                <div t-attf-class="atl-hero-content atl-hero-content--#{s.text_theme}">
+                    <div t-if="s.established or editable" class="atl-hero-established" t-field="s.established"/>
+                    <h1 t-if="s.line1 or s.highlight or editable" class="atl-hero-title">
+                        <span t-if="s.line1 or editable" class="atl-hero-line1" t-field="s.line1"/>
+                        <span t-if="s.highlight or editable" class="highlight" t-field="s.highlight"/>
+                    </h1>
+                    <p t-if="s.subtitle or editable" class="atl-hero-subtitle" t-field="s.subtitle"/>
+                    <a t-if="s.btn_label or editable" t-att-href="s.btn_url or '/about'" class="btn-hero" t-field="s.btn_label"/>
+                </div>
+                </div>
+            </t>
+        </div>
+        </t>
+    </div>
+    <t t-if="len(home_slides) &gt; 1">
+        <button type="button" class="atl-hero-nav atl-hero-nav--prev" aria-label="Previous slide"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <button type="button" class="atl-hero-nav atl-hero-nav--next" aria-label="Next slide"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        <div class="atl-hero-dots">
+            <t t-foreach="home_slides" t-as="s">
+                <button type="button" class="atl-hero-dot" t-att-data-index="s_index"
+                        t-attf-aria-label="Go to slide #{s_index + 1}"/>
+            </t>
+        </div>
+    </t>
+</section>
+</t>
+<t t-else="">
+<section class="atl-hero" data-parallax="hero">
+    <t t-set="hero_bg" t-value="request.env['atlasco.page.hero'].sudo()._image_url('home')"/>
+    <div class="atl-hero-bg" t-attf-style="#{'background-image:url(%s);background-size:cover;background-position:center;' % hero_bg if hero_bg else ''}"></div>
+    <div class="atl-hero-overlay"></div>
+    <div class="atl-hero-align">
+    <div class="atl-hero-content">
+        <div class="atl-hero-established" data-fx="fade-up" t-field="content.home_hero_established"/>
+        <h1 class="atl-hero-title" data-fx="fade-up" data-fx-delay="80">
+            <span class="atl-hero-line1" t-field="content.home_hero_line1"/>
+            <span class="highlight" t-field="content.home_hero_highlight"/>
+        </h1>
+        <p class="atl-hero-subtitle" data-fx="fade-up" data-fx-delay="160" t-field="content.home_hero_subtitle"/>
+        <a href="/about" class="btn-hero" data-fx="fade-up" data-fx-delay="240" t-field="content.home_hero_btn"/>
+    </div>
+    </div>
+</section>
+</t>
+
+<div id="wrap_homepage_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.homepage').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<!-- STATS -->
+<div class="atl-stats">
+  <div class="atl-stats-inner">
+    <t t-foreach="content.home_stat_ids" t-as="s">
+    <div class="atl-stat-item">
+        <div class="atl-stat-number" t-att-data-target="s.target" t-att-data-suffix="s.suffix">0</div>
+        <div class="atl-stat-label" t-field="s.label"/>
+    </div>
+    </t>
+  </div>
+</div>
+
+<div id="wrap_homepage_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.homepage').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+<!-- SOLUTIONS TABS -->
+<section class="atl-solutions" data-scrollx="categories">
+    <div class="atl-solutions-label" data-fx="fade-up" t-field="content.home_solutions_label"/>
+    <h2 class="atl-solutions-title" data-fx="fade-up" data-fx-delay="80" t-field="content.home_solutions_title"/>
+    <div class="atl-solutions-inner" data-fx="fade-up" data-fx-delay="160">
+        <div class="atl-tab-list">
+            <button class="atl-tab-btn active" data-tab="compressed-air">
+                <span t-field="content.home_tab_btn_ca"/>
+                <span class="tab-arrow">&#8594;</span>
+            </button>
+            <button class="atl-tab-btn" data-tab="gas-generation" t-field="content.home_tab_btn_gas"/>
+            <button class="atl-tab-btn" data-tab="oil-lubrication" t-field="content.home_tab_btn_oil"/>
+            <button class="atl-tab-btn" data-tab="fluid-analysis" t-field="content.home_tab_btn_fluid"/>
+            <button class="atl-tab-btn" data-tab="condition-monitoring" t-field="content.home_tab_btn_cm"/>
+        </div>
+
+        <div class="atl-tab-content active" data-tab-content="compressed-air">
+            <div class="atl-tab-text">
+                <h3 t-field="content.home_sol_ca_title"/>
+                <p class="atl-tab-sub" t-field="content.home_sol_ca_sub"/>
+                <p t-field="content.home_sol_ca_body"/>
+                <ul class="atl-tab-checks">
+                    <t t-foreach="content.home_solution_check_ids.filtered(lambda c: c.tab == 'ca')" t-as="chk">
+                    <li><span t-field="chk.text"/></li>
+                    </t>
+                </ul>
+                <a href="/products/air-compressors" class="atl-tab-link" t-field="content.home_sol_ca_link"/>
+            </div>
+            <div class="atl-tab-image">
+                <img src="/atlasco_website/static/src/img/solutions/compressed-air-system.jpg" alt="Compressed Air Systems"/>
+            </div>
+        </div>
+
+        <div class="atl-tab-content" data-tab-content="gas-generation">
+            <div class="atl-tab-text">
+                <h3 t-field="content.home_sol_gas_title"/>
+                <p class="atl-tab-sub" t-field="content.home_sol_gas_sub"/>
+                <p t-field="content.home_sol_gas_body"/>
+                <ul class="atl-tab-checks">
+                    <t t-foreach="content.home_solution_check_ids.filtered(lambda c: c.tab == 'gas')" t-as="chk">
+                    <li><span t-field="chk.text"/></li>
+                    </t>
+                </ul>
+                <a href="/products/gas-generation" class="atl-tab-link" t-field="content.home_sol_gas_link"/>
+            </div>
+            <div class="atl-tab-image">
+                <img src="/atlasco_website/static/src/img/solutions/gas-generation-system.jpg" alt="Gas Generation Systems"/>
+            </div>
+        </div>
+
+        <div class="atl-tab-content" data-tab-content="oil-lubrication">
+            <div class="atl-tab-text">
+                <h3 t-field="content.home_sol_oil_title"/>
+                <p class="atl-tab-sub" t-field="content.home_sol_oil_sub"/>
+                <p t-field="content.home_sol_oil_body"/>
+                <ul class="atl-tab-checks">
+                    <t t-foreach="content.home_solution_check_ids.filtered(lambda c: c.tab == 'oil')" t-as="chk">
+                    <li><span t-field="chk.text"/></li>
+                    </t>
+                </ul>
+                <a href="/products/lubrication-oil" class="atl-tab-link" t-field="content.home_sol_oil_link"/>
+            </div>
+            <div class="atl-tab-image">
+                <img src="/atlasco_website/static/src/img/solutions/oil-filtration-lubrication.jpg" alt="Oil Filtration &amp; Lubrication Management"/>
+            </div>
+        </div>
+
+        <div class="atl-tab-content" data-tab-content="fluid-analysis">
+            <div class="atl-tab-text">
+                <h3 t-field="content.home_sol_fluid_title"/>
+                <p class="atl-tab-sub" t-field="content.home_sol_fluid_sub"/>
+                <p t-field="content.home_sol_fluid_body"/>
+                <ul class="atl-tab-checks">
+                    <t t-foreach="content.home_solution_check_ids.filtered(lambda c: c.tab == 'fluid')" t-as="chk">
+                    <li><span t-field="chk.text"/></li>
+                    </t>
+                </ul>
+                <a href="/products/fluid-analysis" class="atl-tab-link" t-field="content.home_sol_fluid_link"/>
+            </div>
+            <div class="atl-tab-image">
+                <img src="/atlasco_website/static/src/img/solutions/fluid-lubrication-analysis.jpg" alt="Fluid &amp; Lubrication Analysis"/>
+            </div>
+        </div>
+
+        <div class="atl-tab-content" data-tab-content="condition-monitoring">
+            <div class="atl-tab-text">
+                <h3 t-field="content.home_sol_cm_title"/>
+                <p class="atl-tab-sub" t-field="content.home_sol_cm_sub"/>
+                <p t-field="content.home_sol_cm_body"/>
+                <ul class="atl-tab-checks">
+                    <t t-foreach="content.home_solution_check_ids.filtered(lambda c: c.tab == 'cm')" t-as="chk">
+                    <li><span t-field="chk.text"/></li>
+                    </t>
+                </ul>
+                <a href="/services/arms" class="atl-tab-link" t-field="content.home_sol_cm_link"/>
+            </div>
+            <div class="atl-tab-image">
+                <img src="/atlasco_website/static/src/img/solutions/condition-monitoring-predictive.jpg" alt="Condition Monitoring &amp; Predictive Maintenance"/>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- INDUSTRIES WE SERVE (pinned vertical→horizontal scroll - Hazem #5) -->
+<div id="wrap_homepage_gap_3" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.homepage').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[4]"/>
+
+<section class="atl-industries atl-industries-pinned" data-pinned-h-scroll="1">
+  <div class="atl-industries-pinned-inner">
+    <div class="atl-industries-header">
+        <div>
+            <div class="atl-section-label" data-fx="fade-up" t-field="content.home_industries_label"/>
+            <h2 class="atl-section-title" style="margin-bottom:0;" data-fx="fade-up" data-fx-delay="80" t-field="content.home_industries_title"/>
+        </div>
+        <a t-att-href="content.home_industries_viewall_url or '/industries'" class="atl-view-all" t-field="content.home_industries_viewall"/>
+    </div>
+    <div class="atl-industries-scroller" data-industries-scroller="1">
+        <button type="button" class="atl-ind-nav prev" aria-label="Previous industries">&#8592;</button>
+        <div class="atl-industries-track">
+            <t t-foreach="content.home_industry_ids" t-as="ind">
+            <a t-att-href="ind.href" class="atl-industry-card atl-ind-snap" data-fx="fade-up" t-att-data-fx-delay="ind.fx_delay">
+                <img t-attf-src="/web/image/atlasco.home.industry/#{ind.id}/image" t-att-alt="ind.image_alt" class="atl-industry-placeholder"/>
+                <div class="atl-industry-card-overlay"></div>
+                <div class="atl-industry-card-label">
+                    <span class="tag">Industry</span>
+                    <!-- ind.title is a plain Char field that intentionally stores a literal
+                         "<br/>" for 2-line card titles (see atlasco.home.industry.title help
+                         text, and the FOOD/POWER seed rows in data/seed_home.xml). t-out
+                         escapes plain Python strings, so that "<br/>" was rendering as
+                         visible "&lt;br/&gt;" text on the homepage instead of a line break
+                         (ClickUp 869f03htx). ind.title is admin/CMS-controlled only (backend
+                         + Website Editor), never public/portal user input, so rendering it
+                         unescaped here is safe. -->
+                    <h3 t-raw="ind.title"/>
+                    <p class="ind-desc" t-field="ind.desc"/>
+                    <div class="ind-line"></div>
+                </div>
+            </a>
+            </t>
+        </div>
+        <button type="button" class="atl-ind-nav next" aria-label="Next industries">&#8594;</button>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS — editorial dark-green honeycomb matrix v8 (design: Claude Design 2026-06-05) -->
+<div id="wrap_homepage_gap_4" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.homepage').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[5]"/>
+
+<section class="atl-partners-editorial">
+    <!-- Side rails + footline removed per Youssef 2026-06-07 (Yasmine-AI) -->
+
+    <!-- Faint field texture overlay -->
+    <div class="atl-pe-field-texture"></div>
+
+    <div class="atl-pe-inner">
+        <!-- LEFT — editorial lede -->
+        <div class="atl-pe-lede">
+            <div class="atl-pe-eyebrow">
+                <span class="atl-pe-eyebrow-bar"></span>
+                <span t-field="content.home_partners_eyebrow"/>
+            </div>
+            <h2 class="atl-pe-h2">
+                <span class="atl-pe-h2-row" t-field="content.home_partners_h2_1"/>
+                <span class="atl-pe-h2-row" t-field="content.home_partners_h2_2"/>
+                <span class="atl-pe-h2-row atl-pe-h2-italic" t-field="content.home_partners_h2_3"/>
+                <span class="atl-pe-h2-row atl-pe-h2-italic" t-field="content.home_partners_h2_4"/>
+            </h2>
+            <p class="atl-pe-lead"><t t-out="content.home_partners_lead"/><strong><t t-out="content.home_partners_lead_bold"/></strong><t t-out="content.home_partners_lead_tail"/></p>
+            <div class="atl-pe-caps">
+                <a href="/products/air-compressors" class="atl-pe-cap">Compressed Air</a>
+                <a href="/products/gas-generation" class="atl-pe-cap">Specialty Gases O&#8322; / N&#8322;</a>
+                <a href="/products/lubrication-oil" class="atl-pe-cap">Oil Filtration &amp; Lubrication Management</a>
+                <a href="/products" class="atl-pe-cap">Industrial Solutions</a>
+                <a href="/products/fluid-analysis" class="atl-pe-cap">Fluid Analysis &amp; Condition Monitoring</a>
+                <a href="/services/condition-monitoring" class="atl-pe-cap">Predictive Maintenance</a>
+            </div>
+        </div>
+
+        <!-- RIGHT — comb-wrap honeycomb -->
+        <div class="atl-pe-comb-wrap">
+            <div class="atl-pe-comb o_editable" id="atlPartnerComb"
+                 t-att-data-showall-url="content.home_partners_showall_url or '/partners'"
+                 t-att-data-link-model="content._name" t-att-data-link-id="content.id"
+                 data-link-field="home_partners_showall_url"
+                 t-att-data-partners="home_partners_json"></div>
+        </div>
+    </div>
+
+    <!-- Footer line removed per Youssef 2026-06-07 (Yasmine-AI) -->
+</section>
+
+
+<!-- CHAIRMAN MESSAGE BANNER removed per Youssef 2026-05-14 — kept content on /about page only -->
+
+<!-- SEPARATOR — flank (Separator improvement handoff 12-7) -->
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+  .asep{--accent:#2fa85a;font-family:Manrope,system-ui,sans-serif;color:#17251c;background:#f4f1e8}
+  .asep-band{position:relative;height:92px;background:#f4f1e8;overflow:hidden}
+  .asep-band svg{position:absolute;left:0;top:0;width:100%;height:92px;display:block}
+  .asep-hex{position:absolute;background:var(--accent);clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)}
+  .asep-hex.h1{left:23%;top:30px;width:18px;height:20px;opacity:.13;animation:asepdrift 8s ease-in-out infinite alternate}
+  .asep-hex.h2{left:50%;top:22px;width:22px;height:25px;opacity:.12;animation:asepdrift 10s ease-in-out infinite alternate-reverse}
+  .asep-hex.h3{left:77%;top:30px;width:16px;height:18px;opacity:.13;animation:asepdrift 9s ease-in-out infinite alternate}
+  .asep-line{position:absolute;left:50%;bottom:20px;width:240px;height:2px;transform:translateX(-50%);background:linear-gradient(90deg,rgba(47,168,90,0),var(--accent),rgba(47,168,90,0))}
+  .asep-body{position:relative;background:#f4f1e8;padding:20px clamp(18px,4vw,56px) 58px;overflow:hidden;max-width:var(--atl-content-max-width);margin:0 auto;box-sizing:border-box}
+  .asep-heading{position:relative;z-index:2;text-align:center;margin:0 auto 26px;max-width:520px}
+  .asep-eyebrow{font:700 11px Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  .asep-title{font:800 clamp(26px,3.4vw,36px) Archivo,sans-serif;color:#17251c;margin-top:8px}
+  .asep-content{position:relative}
+  .asep-logo{position:absolute;left:50%;top:calc(50% + 10px);transform:translate(-50%,-50%);width:min(372px,52vw);z-index:1}
+  .asep-logo img{width:100%;display:block;animation:asepfloat 6s ease-in-out infinite}
+  .asep-grid{position:relative;z-index:2;display:grid;grid-template-columns:1fr min(372px,40vw) 1fr;gap:22px;align-items:center}
+  .asep-col{display:flex;flex-direction:column;gap:12px}
+  .asep-card{position:relative;background:#fbfaf3;border:1px solid #e6e1d2;border-radius:11px;padding:14px 16px;overflow:hidden;box-shadow:0 8px 20px rgba(15,50,30,.06);transition:border-color .16s,transform .16s}
+  .asep-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .asep-card .n{position:absolute;right:12px;top:6px;font:800 22px Archivo,sans-serif;color:var(--accent);opacity:.15}
+  .asep-card .cat{font:700 10px Manrope,sans-serif;letter-spacing:.12em;color:#8a8471;text-transform:uppercase}
+  .asep-card .nm{font:700 15.5px Archivo,sans-serif;color:#18251d;margin-top:6px;line-height:1.14}
+  .asep-col--right .asep-card{text-align:right}
+  .asep-col--right .asep-card .n{left:12px;right:auto}
+  @keyframes asepfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  @keyframes asepdrift{0%{transform:translateX(0)}100%{transform:translateX(22px)}}
+  @media(max-width:820px){
+    .asep-logo{position:static;transform:none;width:170px;margin:4px auto 22px}
+    .asep-grid{grid-template-columns:1fr 1fr;gap:12px}
+    .asep-spacer{display:none}
+    .asep-col--right .asep-card{text-align:left}
+    .asep-col--right .asep-card .n{left:auto;right:12px}
+  }
+  @media(max-width:520px){.asep-grid{grid-template-columns:1fr}}
+</style>
+<div id="wrap_homepage_gap_5" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.homepage').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[6]"/>
+
+<section class="asep">
+    <div class="asep-band">
+        <svg viewBox="0 0 1280 92" preserveAspectRatio="none"><path d="M0,0 H1280 V50 C 940,28 340,28 0,50 Z" fill="#0a2c18"/><path d="M0,50 C 340,28 940,28 1280,50" fill="none" stroke="#2fa85a" stroke-width="1.5" opacity=".5"/></svg>
+        <span class="asep-hex h1"></span>
+        <span class="asep-hex h2"></span>
+        <span class="asep-hex h3"></span>
+        <div class="asep-line"></div>
+    </div>
+    <div class="asep-body">
+        <div class="asep-heading">
+            <div class="asep-eyebrow" t-field="content.home_sep_eyebrow"/>
+            <h2 class="asep-title" t-field="content.home_sep_heading"/>
+        </div>
+        <div class="asep-content">
+            <div class="asep-logo"><img src="/atlasco_website/static/src/img/logo/ate-monogram.png" alt="ATLASCO EGYPT"/></div>
+            <div class="asep-grid">
+                <div class="asep-col asep-col--left">
+                    <t t-foreach="content.home_sepcard_ids.filtered(lambda c: c.column == 'left')" t-as="sc">
+                    <div class="asep-card"><span class="n" t-field="sc.number"/><div class="cat" t-field="sc.category"/><div class="nm" t-field="sc.name"/></div>
+                    </t>
+                </div>
+                <div class="asep-spacer"></div>
+                <div class="asep-col asep-col--right">
+                    <t t-foreach="content.home_sepcard_ids.filtered(lambda c: c.column == 'right')" t-as="sc">
+                    <div class="asep-card"><span class="n" t-field="sc.number"/><div class="cat" t-field="sc.category"/><div class="nm" t-field="sc.name"/></div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ============ CINEMATIC SECTIONS (Careers + PrimeGear) — full-bleed redesign 2026-07-12 ============ -->
+<div id="atl-cine" style="position:relative;width:100%;overflow:hidden;font-family:'Manrope',system-ui,sans-serif;">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+  #atl-cine *{ box-sizing:border-box; }
+  #atl-cine .cine-btn{ transition:transform .28s,box-shadow .28s,background .28s; }
+  #atl-cine .cine-btn--green:hover{ transform:translateY(-3px); box-shadow:0 20px 40px rgba(31,154,81,.48); background:#1c8a49; }
+  #atl-cine .cine-btn--dark:hover{ transform:translateY(-3px); box-shadow:0 22px 44px rgba(21,150,176,.5); background:#11809a; }
+  #atl-cine .cine-copy{ position:relative;width:100%;max-width:1240px;margin:0 auto;display:flex; }
+  @media(max-width:760px){ #atl-cine .cine-copy{ justify-content:flex-start !important; } #atl-cine .cine-block{ max-width:100% !important; } }
+</style>
+
+<!-- CAREERS CTA -->
+<div id="wrap_homepage_gap_6" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.homepage').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[7]"/>
+
+<section class="atl-careers-section" data-screen-label="Careers &amp; Culture" style="position:relative;z-index:2;aspect-ratio:16/6;min-height:440px;display:flex;align-items:center;padding:clamp(44px,6vw,74px) clamp(16px,4vw,54px) clamp(104px,13vw,156px);background:#06130c;overflow:hidden;">
+    <img src="/atlasco_website/static/src/img/careers-culture-bg-v2.jpg" alt="Atlasco engineering team" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;"/>
+    <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,rgba(4,12,7,.94) 0%,rgba(6,19,12,.82) 34%,rgba(6,19,12,.45) 62%,rgba(6,19,12,.16) 100%);"></div>
+    <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(6,19,12,.35) 0%,transparent 22%,transparent 60%,rgba(4,12,7,.6) 100%);"></div>
+    <div data-parallax="1" data-speed="0.12" style="position:absolute;top:-140px;left:-100px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(31,154,81,.28),transparent 65%);pointer-events:none;z-index:1;"></div>
+    <div data-parallax="1" data-speed="-0.08" style="position:absolute;bottom:-160px;right:6%;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(20,120,63,.2),transparent 68%);pointer-events:none;z-index:1;"></div>
+
+    <div class="cine-copy" style="z-index:2;justify-content:flex-start;">
+        <div class="atl-careers-text cine-block" style="max-width:560px;background:none;padding:0;">
+            <div data-reveal="up" data-delay="0" class="section-label" style="font-size:13px;font-weight:800;letter-spacing:4px;color:#35c46e;margin-bottom:20px;text-transform:uppercase;" t-field="content.home_careers_label"/>
+            <h2 style="margin:0;font-size:clamp(34px,4.6vw,60px);font-weight:800;line-height:1.04;color:#fff;letter-spacing:-.5px;text-shadow:0 2px 24px rgba(0,0,0,.5);">
+                <span data-reveal="up" data-delay="80" style="display:inline-block;" t-field="content.home_careers_h2_1"/><br/>
+                <span data-reveal="up" data-delay="170" style="display:inline-block;" t-field="content.home_careers_h2_2"/><br/>
+                <span data-reveal="up" data-delay="260" style="display:inline-block;color:#35c46e;" t-field="content.home_careers_h2_3"/>
+            </h2>
+            <p data-reveal="up" data-delay="360" style="margin:26px 0 0;max-width:480px;font-size:17px;font-weight:500;line-height:1.65;color:#dce6e0;text-shadow:0 1px 12px rgba(0,0,0,.6);" t-field="content.home_careers_body"/>
+            <div data-reveal="up" data-delay="460" style="margin-top:34px;">
+                <!-- Bug 869eg53ep: "Meet The Team" button reported as duplicated while the
+                     page is open in the website builder's edit mode. This <a> mixes a
+                     t-field (the editable label) with a plain decorative sibling (the arrow
+                     glyph) inside the same editable root — the same shape of problem already
+                     solved elsewhere in this codebase (see the t-ignore usage on
+                     .atl-video-select-overlay in atlasco_about_page.xml / atlasco_careers_page.xml)
+                     where a non-field sibling sitting next to editable content gets swept up
+                     by the editor's generic raw-HTML/contenteditable normalization and can be
+                     re-inserted alongside the field, reading as a duplicated block. Marking the
+                     arrow t-ignore keeps it out of the editable/normalizable area entirely so
+                     only the single t-field span is ever treated as editable content; no visual
+                     or behavioral change for normal visitors. -->
+                <a href="/careers" class="cine-btn cine-btn--green" style="display:inline-flex;align-items:center;gap:10px;background:#1f9a51;color:#fff;border:none;border-radius:12px;padding:16px 30px;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 14px 30px rgba(31,154,81,.34);"><span t-field="content.home_careers_btn"/> <span t-ignore="1" contenteditable="false" style="font-size:19px;">&#8594;</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRIMEGEAR ACADEMY -->
+<div id="wrap_homepage_gap_7" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.homepage').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[8]"/>
+
+<section class="atl-primegear-section" data-screen-label="Reliability Leaders" style="position:relative;z-index:3;margin-top:-72px;aspect-ratio:16/9;min-height:560px;display:flex;align-items:center;padding:clamp(90px,10vw,120px) clamp(16px,4vw,54px) clamp(48px,6vw,80px);background:#071626;clip-path:polygon(0 0,100% 72px,100% 100%,0 100%);overflow:hidden;">
+    <!-- Client's "Prime Gear Home page Banner" (uploaded 2026-07-16, lost in
+         the 07-22 COW reset, recovered from the filestore). Model-backed. -->
+    <span t-if="content.home_primegear_bg" class="atl-bg-cover"
+          t-field="content.home_primegear_bg"
+          t-options='{"widget": "image", "max_width": 1672, "max_height": 941, "alt-field": "home_primegear_bg_alt", "qweb_img_responsive": false}'/>
+    <img t-else="" src="/atlasco_website/static/src/img/primegear/prime-gear-home.png" alt="PrimeGear Academy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;"/>
+    <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(255deg,rgba(6,17,26,.95) 0%,rgba(7,26,38,.85) 34%,rgba(7,26,38,.5) 62%,rgba(7,26,38,.2) 100%);"></div>
+    <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,22,38,.4) 0%,transparent 22%,transparent 58%,rgba(6,17,26,.62) 100%);"></div>
+    <div data-parallax="1" data-speed="0.14" style="position:absolute;top:-120px;right:-120px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(37,180,220,.26),transparent 66%);pointer-events:none;z-index:1;"></div>
+    <div data-parallax="1" data-speed="-0.09" style="position:absolute;bottom:-160px;left:6%;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(20,90,140,.3),transparent 68%);pointer-events:none;z-index:1;"></div>
+
+    <div class="cine-copy" style="z-index:2;justify-content:flex-end;">
+        <div class="atl-primegear-text cine-block" style="max-width:560px;background:none;padding:0;">
+            <div data-reveal="up" data-delay="80" class="academy-label" style="font-size:13px;font-weight:800;letter-spacing:4px;color:#35c8e0;margin-bottom:18px;text-transform:uppercase;" t-field="content.home_primegear_label"/>
+            <h2 data-reveal="up" data-delay="150" style="margin:0;font-size:clamp(30px,3.6vw,48px);font-weight:800;line-height:1.05;color:#fff;letter-spacing:-.5px;text-shadow:0 2px 24px rgba(0,0,0,.55);" t-field="content.home_primegear_title"/>
+            <p data-reveal="up" data-delay="240" style="margin:24px 0 0;font-size:16px;font-weight:500;line-height:1.72;color:#d3e4ea;text-shadow:0 1px 12px rgba(0,0,0,.6);" t-field="content.home_primegear_body"/>
+            <div class="atl-primegear-btns" data-reveal="up" data-delay="340" style="margin-top:32px;">
+                <a href="/primegear" class="cine-btn cine-btn--dark" style="display:inline-flex;align-items:center;gap:10px;background:#1596b0;color:#fff;border:none;border-radius:12px;padding:16px 30px;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 16px 34px rgba(21,150,176,.4);"><span t-field="content.home_primegear_btn"/> <span style="font-size:19px;">&#8594;</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+(function(){
+  var root=document.getElementById('atl-cine');
+  if(!root||root.dataset.cineInit)return; root.dataset.cineInit='1';
+  var reduce=window.matchMedia&amp;&amp;window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reveals=[].slice.call(root.querySelectorAll('[data-reveal]'));
+  function hide(el){
+    var dl=parseFloat(el.getAttribute('data-delay'))||0;
+    el.style.transitionProperty='opacity, transform';
+    el.style.transitionTimingFunction='cubic-bezier(.16,.84,.34,1)';
+    el.style.transitionDuration='0s'; el.style.transitionDelay=dl+'ms';
+    el.style.willChange='opacity, transform'; el.style.opacity='0';
+    el.style.transform='translate3d(0,42px,0)';
+  }
+  function show(el){ el.style.transitionDuration='0.9s'; el.style.opacity='1'; el.style.transform='none'; }
+  if(reduce){reveals.forEach(function(el){el.style.opacity='1';el.style.transform='none';});}
+  else{
+    reveals.forEach(hide);
+    function revTick(){var vh=window.innerHeight||800;reveals.forEach(function(el){if(!el.dataset.shown&amp;&amp;el.getBoundingClientRect().top&lt;vh*0.92){el.dataset.shown='1';show(el);}});}
+    window.addEventListener('scroll',revTick,{passive:true});window.addEventListener('resize',revTick,{passive:true});setInterval(revTick,80);revTick();
+    var pxEls=[].slice.call(root.querySelectorAll('[data-parallax]')); var raf=0;
+    function onScroll(){ if(raf)return; raf=requestAnimationFrame(function(){ raf=0;
+      var vh=window.innerHeight;
+      pxEls.forEach(function(el){ var r=el.getBoundingClientRect(); var rel=(r.top+r.height/2-vh/2)/vh;
+        var sp=parseFloat(el.getAttribute('data-speed'))||0.1;
+        el.style.transform='translate3d(0,'+(-rel*sp*150).toFixed(1)+'px,0)'; }); }); }
+    /* Odoo's website layout scrolls #wrapwrap, not window (html/body are
+       overflow:hidden) — without this the parallax below never updated
+       past its initial frame. */
+    (document.getElementById('wrapwrap')||window).addEventListener('scroll',onScroll,{passive:true});
+    window.addEventListener('resize',onScroll,{passive:true}); onScroll();
+  }
+})();
+</script>
+
+<div id="wrap_homepage_gap_8" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.homepage').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[9]"/>
+
+</div>
+
+</div>
+
+</t>
+</template>
+</odoo>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Themed starter page: fix for "no way to create a page reusing the site theme". -->
+    <!-- Real website.page (see record below) - appears in Website > Site > Pages and -->
+    <!-- can be Duplicated there. Uses atlasco_layout for header/menu/footer. Unpublished. -->
+    <!-- Content sits inside id="wrap" (Odoo's standard content wrapper), which is why it -->
+    <!-- can safely be flagged is_new_page_template below: Odoo's own "+New" page dialog -->
+    <!-- (website/controllers/main.py get_new_page_templates) looks up website.page records -->
+    <!-- with is_new_page_template=True and renders their #wrap content as a "Custom" -->
+    <!-- category template, so this page now shows up there pre-styled with the theme -->
+    <!-- without the client needing to know it exists or how to find/duplicate it manually. -->
+
+    <template id="page_template_atlasco" name="Page Template (Atlasco Theme)">
+        <t t-call="atlasco_website.atlasco_layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <section class="s_text_block pt64 pb64">
+                    <div class="container">
+                        <h1>Atlasco Themed Page</h1>
+                        <p class="lead">
+                            This starter page already uses the real Atlasco Egypt
+                            theme (header, menu, and footer above and below).
+                            Edit this text or drag in new blocks from the editor,
+                            then rename the page and set its URL from the page
+                            properties panel.
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <record id="page_template_atlasco_page" model="website.page">
+        <field name="url">/page-template-atlasco</field>
+        <field name="view_id" ref="atlasco_website.page_template_atlasco"/>
+        <field name="is_published">False</field>
+        <field name="website_indexed">False</field>
+        <field name="is_in_menu">False</field>
+    </record>
+
+    <!-- Real root cause of "the new page doesn't look themed": Odoo's own -->
+    <!-- "+New Page" flow (both the blank option and any "Custom" template -->
+    <!-- card, including the one above) always builds the new page by copying -->
+    <!-- the RAW arch of website.default_page (website.new_page() reads -->
+    <!-- ir.ui.view.arch directly, which is a view's own stored XML only - -->
+    <!-- it does NOT include inherit_id/xpath overrides, those only apply -->
+    <!-- when a template is actually rendered via t-call). That's why an -->
+    <!-- inherit_id override on website.default_page (the first fix tried -->
+    <!-- here) never worked, no matter how many times the module was -->
+    <!-- upgraded: new_page() never renders that template, it just copies -->
+    <!-- its raw arch_db verbatim, so the override was never even read. -->
+    <!--
+         Fix: give new_page() a same-shaped base template that already
+         calls atlasco_layout, then redirect it there in Python
+         (see models/website.py's Website.new_page override) whenever the
+         caller would otherwise use the stock default. This is a straight
+         copy of website.default_page's own arch (compare to
+         website/views/website_templates.xml's <template id="default_page">)
+         with only the t-call target changed.
+    -->
+    <template id="default_page_atlasco" name="Default New Page (Atlasco Theme)">
+        <t t-call="atlasco_website.atlasco_layout">
+            <div id="wrap" class="oe_structure oe_empty"/>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Culture-style dark hero band, matching /culture's own .lax-hero (see
+     views/atlasco_culture_page.xml). Styled the same everywhere it's
+     dropped (the .lax-* rules it depends on live in atlasco.css, not just
+     the Culture page's own inline <style>) so it stays on-theme regardless
+     of which page an editor drops it into. Generic placeholder text, no
+     t-field bindings - meant to be edited directly like any other Odoo
+     snippet. -->
+<template id="s_lax_hero" name="Atlasco Hero Band">
+    <section class="s_lax_hero lax-hero lax">
+        <img class="lax-hero-bg" src="/atlasco_website/static/src/img/careers-culture-bg-v2.jpg" alt="Atlasco Egypt" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;"/>
+        <div class="lax-hero-scrim"/>
+        <div class="lax-hero-wrap">
+            <div class="lax-badge">35 YEARS OF CUSTOMER-CENTERED APPROACH</div>
+            <h1>Your headline goes here.<br/><span class="g">Make it count.</span></h1>
+            <p class="lax-hero-sub">A short supporting sentence that explains what this section is about, styled to match the rest of the site.</p>
+            <div class="lax-hero-ctas">
+                <a href="#" class="lax-btn">Call to Action →</a>
+            </div>
+        </div>
+    </section>
+</template>
+</odoo>

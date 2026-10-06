@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--
+  History — /about/history.
+  Hero label/title/subtitle, the meta-bar text, the scroll-rail start year,
+  the entire milestone timeline, the green stats, and the legacy CTA are all
+  bound to the atlasco.content singleton (Website Content > History tab),
+  the same way every other content page in this module works:
+    - scalar copy  -> t-field="content.history_*"
+    - milestones    -> t-foreach="content.history_milestone_ids" t-as="m"
+    - stats         -> t-foreach="content.history_stat_ids" t-as="s"
+  Editing those fields, or adding/reordering/editing atlasco.history.milestone
+  / atlasco.history.stat records from the backend, updates this page
+  directly with no template change needed. Each existing milestone's exact
+  visual markup/CSS (standard row / row-reverse, parallax full-bleed, and the
+  image-less dashed placeholder) is preserved verbatim, branching only on
+  m.variant / m.reverse / m.image, so the rendered page is pixel-identical to
+  before for all current content.
+-->
+<template id="history" name="35 Years of Excellence">
+<t t-call="atlasco_website.atlasco_layout">
+<t t-set="content" t-value="request.env['atlasco.content'].sudo()._get()"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+
+<!-- Page-scoped oe_structure (same pattern as /about, /culture) so Insert
+     Blocks has a valid drop target between the sections below - without it
+     the Website Editor has nowhere valid to save a mid-page block into on
+     this route. -->
+<div id="wrap_history" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.history').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+     below are real Odoo-native Insert-Blocks drop targets - see the long
+     root-cause comment on wrap_about in atlasco_about_page.xml. -->
+<div id="wrap_history_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.history').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<!-- ============ HERO ============ -->
+<t t-set="hero_bg" t-value="request.env['atlasco.page.hero'].sudo()._image_url('history')"/>
+<section class="atl-history-hero" t-attf-style="#{'background-image:url(%s);background-size:cover;background-position:center;' % hero_bg if hero_bg else ''}">
+    <div class="atl-history-hero-inner">
+        <div>
+            <div class="atl-section-label" data-fx="fade-up" t-field="content.history_hero_label"/>
+            <h1 data-fx="fade-up" data-fx-delay="80" t-field="content.history_hero_title"/>
+        </div>
+        <p class="atl-history-hero-sub" data-fx="fade-up" data-fx-delay="160" t-field="content.history_hero_sub"/>
+    </div>
+</section>
+
+<div id="wrap_history_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.history').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<div class="atl-history-meta">
+  <div class="atl-history-meta-inner">
+    <span t-field="content.history_meta_text"/>
+  </div>
+</div>
+
+<!-- ============ TIMELINE ============ -->
+<div id="wrap_history_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.history').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+<div id="atl-story2" style="position:relative;">
+  <style>#atl-story2{font-family:'IBM Plex Sans',system-ui,sans-serif;color:#111813;background:#F4F6F2;overflow-x:hidden;}#atl-story2 *{box-sizing:border-box;}
+  #atl-story2 .atl-hist-parallax-media,#atl-story2 .atl-hist-parallax-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;display:block;}
+  #atl-story2 .atl-hist-scene-media,#atl-story2 .atl-hist-scene-media img{width:100%;height:100%;object-fit:cover;display:block;}</style>
+
+  <!-- scroll rail -->
+  <div data-vrail="1" style="position:fixed;top:0;right:22px;bottom:0;z-index:40;pointer-events:none;display:flex;align-items:center;opacity:0;transition:opacity .35s ease;">
+    <div style="position:relative;height:min(560px,64vh);width:2px;background:rgba(15,45,26,.16);border-radius:2px;">
+      <div data-vrail-fill="1" style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:4px;height:0;background:linear-gradient(#0E4D2A,#34B368);box-shadow:0 0 14px rgba(52,179,104,.85);border-radius:4px;transition:height .12s linear;"></div>
+      <div data-vrail-head="1" style="position:absolute;left:50%;top:0;transform:translate(-50%,-50%);transition:top .12s linear;">
+        <span style="position:relative;display:block;width:16px;height:16px;border-radius:50%;background:#34B368;border:3px solid #F4F6F2;box-shadow:0 0 0 4px rgba(52,179,104,.22),0 0 14px rgba(52,179,104,.9);"></span>
+        <span data-vrail-year="1" style="position:absolute;right:26px;top:50%;transform:translateY(-50%);font:700 16px/1 'Space Grotesk',sans-serif;color:#0E4D2A;background:#FFFFFF;border:1px solid #D6DED3;padding:7px 11px;border-radius:9px;box-shadow:0 10px 24px -12px rgba(11,20,15,.5);white-space:nowrap;"><t t-esc="content.history_rail_start_year"/></span>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:relative;">
+
+    <t t-foreach="content.history_milestone_ids" t-as="m">
+
+      <!-- ===== parallax scene (editable background photo) ===== -->
+      <div t-if="m.variant == 'parallax'" t-att-data-year="m.year" style="position:relative;min-height:82vh;display:flex;align-items:center;overflow:hidden;background:#0B140F;margin:clamp(24px,4vw,56px) 0;">
+        <span class="atl-hist-parallax-media" t-field="m.image" t-options="{'widget': 'image'}"/>
+        <div style="position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(90deg,rgba(9,17,12,.92) 0%,rgba(9,17,12,.6) 55%,rgba(9,17,12,.4) 100%);"></div>
+        <div data-reveal="1" style="opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1);position:relative;z-index:2;max-width:var(--atl-content-max-width);margin:0 auto;padding:clamp(48px,7vw,110px) 32px;width:100%;">
+          <div aria-hidden="true" style="font:700 clamp(70px,12vw,170px)/0.9 'Space Grotesk',sans-serif;color:#EAF1EB;opacity:.1;letter-spacing:-.04em;margin-bottom:-6px;" t-field="m.year"/>
+          <h3 style="margin:16px 0 0;max-width:22ch;font:700 clamp(26px,3.6vw,48px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-.02em;color:#F3F7F3;" t-field="m.title"/>
+          <p t-if="m.body_1" style="margin:22px 0 0;max-width:60ch;font:400 clamp(15px,1.3vw,18px)/1.7 'IBM Plex Sans',system-ui,sans-serif;color:#C6D2C9;" t-field="m.body_1"/>
+          <p t-if="m.body_2" style="margin:14px 0 0;max-width:60ch;font:400 clamp(15px,1.3vw,18px)/1.7 'IBM Plex Sans',system-ui,sans-serif;color:#C6D2C9;" t-field="m.body_2"/>
+          <p t-if="m.body_3" style="margin:14px 0 0;max-width:60ch;font:400 clamp(15px,1.3vw,18px)/1.7 'IBM Plex Sans',system-ui,sans-serif;color:#C6D2C9;" t-field="m.body_3"/>
+          <p t-if="m.body_4" style="margin:14px 0 0;max-width:60ch;font:400 clamp(15px,1.3vw,18px)/1.7 'IBM Plex Sans',system-ui,sans-serif;color:#C6D2C9;" t-field="m.body_4"/>
+          <p t-if="m.body_5" style="margin:14px 0 0;max-width:60ch;font:400 clamp(15px,1.3vw,18px)/1.7 'IBM Plex Sans',system-ui,sans-serif;color:#C6D2C9;" t-field="m.body_5"/>
+          <div style="display:flex;align-items:center;gap:11px;margin-top:26px;"><span style="width:26px;height:2px;background:#34B368;"></span><span style="font:600 13px/1 'IBM Plex Sans',system-ui,sans-serif;letter-spacing:.18em;color:#7FE0A6;" t-field="m.year"/></div>
+        </div>
+      </div>
+
+      <!-- ===== standard scene (light two-column, row / row-reverse) ===== -->
+      <div t-if="m.variant != 'parallax'" data-scene="1" t-att-data-year="m.year" t-attf-style="max-width:var(--atl-content-max-width);margin:0 auto;padding:clamp(30px,4.5vw,64px) 32px;display:flex;flex-wrap:wrap;flex-direction:#{'row-reverse' if m.reverse else 'row'};gap:clamp(30px,4.5vw,72px);align-items:center;">
+        <div data-reveal="1" style="opacity:0;transform:translateY(38px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1);flex:1 1 400px;position:relative;">
+          <div aria-hidden="true" style="position:absolute;left:-6px;top:clamp(-70px,-7vw,-40px);font:700 clamp(96px,17vw,240px)/1 'Space Grotesk',sans-serif;color:#177A43;opacity:.07;letter-spacing:-.045em;pointer-events:none;user-select:none;" t-field="m.year"/>
+          <div style="position:relative;">
+            <h3 style="margin:0 0 20px;font:600 clamp(21px,2.2vw,32px)/1.22 'Space Grotesk',sans-serif;letter-spacing:-.015em;color:#111813;" t-field="m.title"/>
+            <p t-if="m.body_1" style="margin:0 0 14px;font:400 clamp(15px,1.15vw,17px)/1.7 'IBM Plex Sans',system-ui,sans-serif;color:#3f4a42;" t-field="m.body_1"/>
+            <p t-if="m.body_2" style="margin:0 0 14px;font:400 clamp(15px,1.15vw,17px)/1.7 'IBM Plex Sans',system-ui,sans-serif;color:#3f4a42;" t-field="m.body_2"/>
+            <p t-if="m.body_3" style="margin:0 0 14px;font:400 clamp(15px,1.15vw,17px)/1.7 'IBM Plex Sans',system-ui,sans-serif;color:#3f4a42;" t-field="m.body_3"/>
+            <p t-if="m.body_4" style="margin:0 0 14px;font:400 clamp(15px,1.15vw,17px)/1.7 'IBM Plex Sans',system-ui,sans-serif;color:#3f4a42;" t-field="m.body_4"/>
+            <p t-if="m.body_5" style="margin:0 0 14px;font:400 clamp(15px,1.15vw,17px)/1.7 'IBM Plex Sans',system-ui,sans-serif;color:#3f4a42;" t-field="m.body_5"/>
+            <div style="display:flex;align-items:center;gap:11px;margin-top:6px;"><span style="width:26px;height:2px;background:#34B368;"></span><span style="font:600 13px/1 'IBM Plex Sans',system-ui,sans-serif;letter-spacing:.16em;color:#177A43;" t-field="m.year"/></div>
+          </div>
+        </div>
+        <div data-reveal="1" style="opacity:0;transform:translateY(38px);transition:opacity .95s cubic-bezier(.22,.61,.36,1),transform .95s cubic-bezier(.22,.61,.36,1);flex:1 1 400px;">
+          <div t-if="m.image" style="position:relative;aspect-ratio:4/3;border-radius:20px;overflow:hidden;border:1px solid #E3E7E0;box-shadow:0 26px 60px -34px rgba(11,20,15,.5);">
+            <span class="atl-hist-scene-media" t-field="m.image" t-options="{'widget': 'image'}"/>
+          </div>
+          <div t-if="not m.image" style="aspect-ratio:4/3;border-radius:20px;border:1.5px dashed #C4CFC7;background:#EEF2EC;display:flex;align-items:center;justify-content:center;font:500 14px/1.5 'IBM Plex Sans',system-ui,sans-serif;color:#8A938C;text-align:center;padding:20px;"><t t-esc="content.history_photo_placeholder_1"/><br/><t t-esc="content.history_photo_placeholder_2"/></div>
+        </div>
+      </div>
+
+    </t>
+
+  </div>
+
+  <script>
+(function(){var root=document.getElementById('atl-story2');if(!root||root.dataset.st2)return;root.dataset.st2='1';
+function tick(){var vh=window.innerHeight||800;
+root.querySelectorAll('[data-reveal]:not([data-shown])').forEach(function(el){if(el.getBoundingClientRect().top&lt;vh*0.9){el.setAttribute('data-shown','1');el.style.transitionDuration='1.2s';el.style.opacity='1';el.style.transform='none';}});
+var rr=root.getBoundingClientRect();var top=window.scrollY+rr.top;var h=rr.height;var st=window.scrollY||window.pageYOffset||0;
+var prog=h&gt;vh?Math.min(1,Math.max(0,(st-top+vh*0.5)/(h-vh*0.5))):0;
+var fill=root.querySelector('[data-vrail-fill]');var head=root.querySelector('[data-vrail-head]');
+if(fill)fill.style.height=(prog*100)+'%';if(head)head.style.top=(prog*100)+'%';
+var yEl=root.querySelector('[data-vrail-year]');if(yEl){var cur='';root.querySelectorAll('[data-year]').forEach(function(el){if(el.getBoundingClientRect().top&lt;vh*0.55)cur=el.getAttribute('data-year')||cur;});if(cur&amp;&amp;yEl.textContent!==cur)yEl.textContent=cur;}
+var rail=root.querySelector('[data-vrail]');if(rail){rail.style.opacity=(rr.top&lt;vh*0.4&amp;&amp;rr.bottom&gt;vh*0.8)?'1':'0';}}
+window.addEventListener('scroll',tick,{passive:true});window.addEventListener('resize',tick,{passive:true});setInterval(tick,60);tick();
+})();
+  </script>
+</div>
+
+<!-- ============ STATS ============ -->
+<div id="wrap_history_gap_3" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.history').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[4]"/>
+
+<div class="atl-green-stats">
+  <div class="atl-green-stats-inner">
+    <t t-foreach="content.history_stat_ids" t-as="s">
+    <div class="atl-green-stat">
+        <div class="number" t-field="s.number"/>
+        <div class="label" t-field="s.label"/>
+    </div>
+    </t>
+  </div>
+</div>
+
+<!-- ============ LEGACY CTA ============ -->
+<div id="wrap_history_gap_4" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.history').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[5]"/>
+
+<section class="atl-legacy-cta">
+    <h2 data-fx="fade-up" t-field="content.history_cta_title"/>
+    <p data-fx="fade-up" data-fx-delay="120" t-field="content.history_cta_sub"/>
+</section>
+
+<div id="wrap_history_gap_5" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.history').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[6]"/>
+
+</div>
+
+</t>
+</template>
+</odoo>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- ClickUp Recruitment integration ticket: hr.job becomes the source of
+         truth for the /careers "Current Openings" cards (previously the
+         atlasco.career.opening records seeded below in seed_careers.xml,
+         which stay installed/dormant for rollback - see AtlascoCareerOpening
+         in models/content_careers.py). These 5 departments and 3 offices
+         don't exist in a fresh hr install (only "Administration" ships by
+         default), so they're seeded here as the minimum real HR structure
+         the 7 recreated job positions need. -->
+
+    <record id="atl_dept_service" model="hr.department">
+        <field name="name">Service</field>
+    </record>
+    <record id="atl_dept_sales" model="hr.department">
+        <field name="name">Sales</field>
+    </record>
+    <record id="atl_dept_engineering" model="hr.department">
+        <field name="name">Engineering</field>
+    </record>
+    <record id="atl_dept_logistics" model="hr.department">
+        <field name="name">Logistics</field>
+    </record>
+    <record id="atl_dept_people" model="hr.department">
+        <field name="name">People</field>
+    </record>
+
+    <!-- Office addresses (hr.job.address_id requires a partner that is
+         either the company itself or a child contact of it - see
+         Job._address_id_domain() in hr_recruitment/models/hr_job.py). -->
+    <record id="atl_office_cairo" model="res.partner">
+        <field name="name">Atlasco Egypt - Cairo</field>
+        <field name="city">Cairo</field>
+        <field name="type">other</field>
+        <field name="parent_id" ref="base.main_partner"/>
+    </record>
+    <record id="atl_office_alexandria" model="res.partner">
+        <field name="name">Atlasco Egypt - Alexandria</field>
+        <field name="city">Alexandria</field>
+        <field name="type">other</field>
+        <field name="parent_id" ref="base.main_partner"/>
+    </record>
+    <record id="atl_office_suez" model="res.partner">
+        <field name="name">Atlasco Egypt - Suez</field>
+        <field name="city">Suez</field>
+        <field name="type">other</field>
+        <field name="parent_id" ref="base.main_partner"/>
+    </record>
+
+    <!-- hr/hr_recruitment ship demo hr.job records that install already
+         published. Unpublishing them has to happen AFTER their demo data
+         loads - Odoo loads every module's 'data' files first, then every
+         module's 'demo' files in a second pass, so calling this from here
+         (a 'data' file) would run before hr's own demo records even exist
+         yet. See post_init_hook in __init__.py, which runs after the whole
+         load (data + demo) completes. -->
+
+    <!-- The 7 job positions recreated 1:1 from atlasco.career.opening
+         (title -> name, department -> department_id, location -> address_id,
+         job_type -> contract_type_id, blurb -> website_description,
+         description -> description [falls back to blurb when the original
+         record had none], points -> requirements). -->
+    <record id="atl_job_senior_service_engineer" model="hr.job">
+        <field name="name">Senior Service Engineer</field>
+        <field name="department_id" ref="atl_dept_service"/>
+        <field name="address_id" ref="atl_office_cairo"/>
+        <field name="contract_type_id" ref="hr.contract_type_full_time"/>
+        <field name="website_published">True</field>
+        <field name="website_description"><![CDATA[<p>Technical lead for on-site installation, maintenance, and complex troubleshooting of industrial systems.</p>]]></field>
+        <field name="description"><![CDATA[<p>As a Senior Service Engineer, you will be the technical lead for on-site installation, maintenance, and complex troubleshooting of industrial systems</p>]]></field>
+        <field name="requirements">Lead installation &amp; commissioning of industrial systems
+Diagnose and resolve complex technical issues on-site
+Mentor junior service engineers
+Own customer relationships through reliable support</field>
+    </record>
+
+    <record id="atl_job_sales_manager_air_systems" model="hr.job">
+        <field name="name">Sales Manager - Air Systems</field>
+        <field name="department_id" ref="atl_dept_sales"/>
+        <field name="address_id" ref="atl_office_alexandria"/>
+        <field name="contract_type_id" ref="hr.contract_type_full_time"/>
+        <field name="website_published">True</field>
+        <field name="website_description"><![CDATA[<p>Drive the strategic growth of our industrial air solutions — HVAC, compressed air, and pneumatic systems.</p>]]></field>
+        <field name="description"><![CDATA[<p>As the Sales Manager for Air Systems, you will lead the strategic growth of our industrial air solutions (HVAC, compressed air, or pneumatic systems)</p>]]></field>
+        <field name="requirements">Grow the air-systems portfolio across the region
+Build long-term relationships with industrial clients
+Translate technical needs into reliable solutions
+Consistently hit and exceed revenue targets</field>
+    </record>
+
+    <record id="atl_job_logistics_coordinator" model="hr.job">
+        <field name="name">Logistics Coordinator</field>
+        <field name="department_id" ref="atl_dept_logistics"/>
+        <field name="address_id" ref="atl_office_suez"/>
+        <field name="contract_type_id" ref="hr.contract_type_full_time"/>
+        <field name="website_published">True</field>
+        <field name="website_description"><![CDATA[<p>The backbone of the supply chain — the seamless movement of goods from our Suez facility to destinations worldwide.</p>]]></field>
+        <field name="description"><![CDATA[<p>You will be the backbone of the supply chain, ensuring the seamless movement of goods from our Suez facility to regional and international destinations</p>]]></field>
+        <field name="requirements">Coordinate shipments, documentation &amp; customs
+Optimize routes and delivery timelines
+Liaise with suppliers and internal teams
+Keep the flow moving, on time, every time</field>
+    </record>
+
+    <record id="atl_job_mechanical_design_engineer" model="hr.job">
+        <field name="name">Mechanical Design Engineer</field>
+        <field name="department_id" ref="atl_dept_engineering"/>
+        <field name="address_id" ref="atl_office_cairo"/>
+        <field name="contract_type_id" ref="hr.contract_type_full_time"/>
+        <field name="website_published">True</field>
+        <field name="website_description"><![CDATA[<p>Design and refine the mechanical systems that power Egypt's leading industrial facilities.</p>]]></field>
+        <field name="description"><![CDATA[<p>Design and refine the mechanical systems that power Egypt's leading industrial facilities.</p>]]></field>
+        <field name="requirements">Develop mechanical designs &amp; technical drawings
+Run analysis, tolerancing &amp; validation
+Collaborate closely with service and sales teams
+Take ideas from concept to commissioning</field>
+    </record>
+
+    <record id="atl_job_field_maintenance_technician" model="hr.job">
+        <field name="name">Field Maintenance Technician</field>
+        <field name="department_id" ref="atl_dept_service"/>
+        <field name="address_id" ref="atl_office_suez"/>
+        <field name="contract_type_id" ref="hr.contract_type_full_time"/>
+        <field name="website_published">True</field>
+        <field name="website_description"><![CDATA[<p>Keep critical equipment running with preventive and corrective maintenance across customer sites.</p>]]></field>
+        <field name="description"><![CDATA[<p>Keep critical equipment running with preventive and corrective maintenance across customer sites.</p>]]></field>
+        <field name="requirements">Perform preventive &amp; corrective maintenance
+Troubleshoot mechanical &amp; electrical faults
+Document accurate service reports
+Represent Atlasco on the ground</field>
+    </record>
+
+    <record id="atl_job_procurement_specialist" model="hr.job">
+        <field name="name">Procurement Specialist</field>
+        <field name="department_id" ref="atl_dept_logistics"/>
+        <field name="address_id" ref="atl_office_cairo"/>
+        <field name="contract_type_id" ref="hr.contract_type_full_time"/>
+        <field name="website_published">True</field>
+        <field name="website_description"><![CDATA[<p>Source the right parts and partners to keep projects moving and costs smart.</p>]]></field>
+        <field name="description"><![CDATA[<p>Source the right parts and partners to keep projects moving and costs smart.</p>]]></field>
+        <field name="requirements">Manage sourcing &amp; supplier negotiations
+Track orders and manage inventory levels
+Ensure quality and compliance
+Support engineering and service demand</field>
+    </record>
+
+    <record id="atl_job_hr_business_partner" model="hr.job">
+        <field name="name">HR Business Partner</field>
+        <field name="department_id" ref="atl_dept_people"/>
+        <field name="address_id" ref="atl_office_cairo"/>
+        <field name="contract_type_id" ref="hr.contract_type_full_time"/>
+        <field name="website_published">True</field>
+        <field name="website_description"><![CDATA[<p>Help our people grow — from hiring great talent to nurturing an environment where they thrive.</p>]]></field>
+        <field name="description"><![CDATA[<p>Help our people grow — from hiring great talent to nurturing an environment where they thrive.</p>]]></field>
+        <field name="requirements">Partner with teams on hiring &amp; development
+Own onboarding and employee experience
+Champion culture, recognition &amp; wellbeing
+Turn people strategy into everyday practice</field>
+    </record>
+</odoo>

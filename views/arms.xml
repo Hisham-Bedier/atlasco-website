@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- Generic Service Detail template (ports Figma Service_L2 4831:901) -->
+<template id="service_detail" name="Service Detail">
+<t t-call="atlasco_website.atlasco_layout">
+
+<!-- HERO — unchanged banner -->
+<t t-set="hero_bg" t-value="request.env['atlasco.page.hero'].sudo()._image_url('service_' + service.get('slug', '')) or service.get('hero_image')"/>
+<!-- Namespaced per-slug oe_structure (same pattern as industry_detail.xml):
+     this template is shared across every /services/<slug> page, so a plain
+     id="wrap" would make a block inserted while editing one service appear
+     on every other service sharing this template. -->
+<div t-attf-id="wrap_service_#{service.get('slug', '')}" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.service_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+     below are real Odoo-native Insert-Blocks drop targets - see the long
+     root-cause comment on wrap_about in atlasco_about_page.xml. Namespaced
+     per-slug like the div above, for the same COW-safety reason. -->
+<div t-attf-id="wrap_service_#{service.get('slug', '')}_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.service_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<section class="atl-page-hero atl-service-detail-hero" t-att-style="hero_bg and ('background-image:linear-gradient(rgba(11,15,17,.12),rgba(11,15,17,.15)),url(' + hero_bg + ');background-size:cover;background-position:center;') or ''">
+    <div class="atl-page-hero-inner">
+        <div class="atl-section-label" style="color:#4ade80;letter-spacing:3px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:12px;">Reliability Engineering Services</div>
+        <h1><t t-out="service.get('name','')"/></h1>
+        <p style="font-weight:600;color:rgba(255,255,255,.85);margin-bottom:8px;"><t t-esc="service.get('subtitle','')"/></p>
+        <p><t t-esc="service.get('intro','')"/></p>
+        <div style="display:flex;gap:12px;margin-top:8px;">
+            <a href="/contact" class="btn-green">Request a Consultation &#8594;</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== SERVICE DETAIL REDESIGN (12-7 Gas Generation design language) ===== -->
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  .svd-wrap{font-family:'IBM Plex Sans',system-ui,sans-serif}
+  .svd-wrap h2,.svd-wrap h3,.svd-wrap h4{font-family:'Oswald',sans-serif}
+  .svd-offer{background:#F3F4F5;padding:clamp(48px,7vw,88px) clamp(18px,4vw,56px)}
+  .svd-inner{max-width:var(--atl-content-max-width);margin:0 auto}
+  .svd-head{margin-bottom:44px}
+  .svd-eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;color:#1B7A3D;text-transform:uppercase}
+  .svd-head h2{font-weight:700;font-size:clamp(28px,4.4vw,44px);letter-spacing:.5px;color:#141a1c;margin:10px 0 0}
+  .svd-rule{width:64px;height:4px;background:#1B7A3D;border-radius:2px;margin:16px 0 0}
+  .svd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+  .svd-card{position:relative;background:#fff;border:1px solid #e6e1d2;border-radius:14px;padding:26px 24px 24px;overflow:hidden;box-shadow:0 10px 26px rgba(15,50,30,.06);transition:border-color .18s,transform .18s,box-shadow .18s}
+  .svd-card:hover{border-color:#1B7A3D;transform:translateY(-4px);box-shadow:0 20px 40px rgba(15,50,30,.12)}
+  .svd-card-num{position:absolute;right:18px;top:8px;font-family:'Oswald',sans-serif;font-weight:800;font-size:42px;color:#1B7A3D;opacity:.12}
+  .svd-card-ic{width:44px;height:44px;border-radius:10px;background:rgba(27,122,61,.1);display:grid;place-items:center;color:#1B7A3D;margin-bottom:16px}
+  .svd-card h4{font-weight:700;font-size:19px;line-height:1.16;color:#18251d;margin:0;max-width:88%}
+  .svd-card p{font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.6;color:#6b7175;margin:10px 0 0}
+  .svd-process{background:#0F1314;padding:clamp(48px,7vw,88px) clamp(18px,4vw,56px)}
+  .svd-process-head{text-align:center;margin-bottom:60px}
+  .svd-process-head h2{font-weight:700;font-size:clamp(26px,4vw,40px);letter-spacing:.5px;color:#fff;margin:0}
+  .svd-process-rule{width:64px;height:4px;background:#1B7A3D;margin:20px auto 0;border-radius:2px}
+  .svd-steps{display:grid;grid-template-columns:repeat(4,1fr);max-width:var(--atl-content-max-width);margin:0 auto}
+  .svd-step{padding:0 26px;border-right:1px solid rgba(255,255,255,.1)}
+  .svd-step:last-child{border-right:none}
+  .svd-step-num{font-family:'Oswald',sans-serif;font-weight:700;font-size:58px;line-height:1;color:#1B7A3D}
+  .svd-step h4{font-size:20px;font-weight:700;color:#fff;margin:18px 0 0}
+  .svd-step p{font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.65;color:#9aa0a2;margin:12px 0 0}
+  .svd-cta{background:linear-gradient(120deg,#1C7A3D 0%,#12622F 100%)}
+  .svd-cta-in{max-width:var(--atl-content-max-width);margin:0 auto;padding:clamp(44px,6vw,72px) clamp(18px,4vw,24px);display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap}
+  .svd-cta-copy{max-width:640px}
+  .svd-cta-copy h2{font-weight:700;font-size:clamp(28px,4.6vw,46px);line-height:1.02;color:#fff;margin:0 0 14px}
+  .svd-cta-copy p{font-family:'IBM Plex Sans',sans-serif;font-size:18px;line-height:1.6;color:rgba(255,255,255,.9);margin:0}
+  .svd-cta-btn{flex:none;background:#fff;color:#12622F;font-weight:700;font-size:15px;letter-spacing:.5px;padding:19px 34px;border-radius:8px;text-transform:uppercase}
+  @media(max-width:820px){.svd-steps{grid-template-columns:1fr 1fr;gap:40px 0}.svd-step{padding:0 20px}.svd-step:nth-child(2){border-right:none}}
+  @media(max-width:520px){.svd-steps{grid-template-columns:1fr}.svd-step{border-right:none;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:24px;margin-bottom:24px}.svd-step:last-child{border-bottom:none;margin-bottom:0}}
+</style>
+
+  <!-- OUR DETAILED SERVICE OFFERINGS -->
+  <div t-attf-id="wrap_service_#{service.get('slug', '')}_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.service_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+  <section class="svd-offer svd-wrap">
+    <div class="svd-inner">
+      <div class="svd-head">
+        <div class="svd-eyebrow"><t t-esc="service.get('name','')"/></div>
+        <h2>OUR DETAILED SERVICE OFFERINGS</h2>
+        <div class="svd-rule"></div>
+      </div>
+      <div class="svd-grid">
+        <t t-foreach="service.get('sub_offerings', [])" t-as="sub">
+          <div class="svd-card">
+            <div class="svd-card-num"><t t-esc="'%02d' % (sub_index + 1)"/></div>
+            <div class="svd-card-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M5 13l4 4 10-11"/></svg>
+            </div>
+            <h4 t-out="sub.get('name','')"/>
+            <p t-esc="sub.get('desc','')"/>
+          </div>
+        </t>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR DELIVERY PROCESS -->
+  <div t-attf-id="wrap_service_#{service.get('slug', '')}_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.service_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+  <section class="svd-process svd-wrap">
+    <div class="svd-process-head">
+      <h2>OUR DELIVERY PROCESS</h2>
+      <div class="svd-process-rule"></div>
+    </div>
+    <div class="svd-steps">
+      <t t-foreach="process_steps" t-as="ps">
+        <div class="svd-step">
+          <div class="svd-step-num"><t t-esc="ps.get('step','').zfill(2)"/></div>
+          <h4 t-esc="ps.get('name','')"/>
+          <p t-esc="ps.get('desc','')"/>
+        </div>
+      </t>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <div t-attf-id="wrap_service_#{service.get('slug', '')}_gap_3" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.service_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[4]"/>
+
+  <section class="svd-cta svd-wrap">
+    <div class="svd-cta-in">
+      <div class="svd-cta-copy">
+        <h2>Ready to reduce unplanned downtime?</h2>
+        <p>Join hundreds of industrial facilities optimizing their reliability today.</p>
+      </div>
+      <a href="/contact" class="svd-cta-btn">Talk to an Expert</a>
+    </div>
+  </section>
+
+  <div t-attf-id="wrap_service_#{service.get('slug', '')}_gap_4" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.service_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[5]"/>
+
+</div>
+
+</t>
+</template>
+
+
+<!-- Back-compat alias: legacy template id `arms` still resolves and renders the generic detail with the ARMS service. -->
+<template id="arms" name="A.R.M.S. (legacy alias)">
+<t t-call="atlasco_website.service_detail">
+    <t t-set="service" t-value="{
+        'slug': 'arms',
+        'name': 'Reliability &amp; Asset Management (ARMS)',
+        'subtitle': 'A.R.M.S. — Predictive Maintenance &amp; Reliability',
+        'intro': 'Minimizing downtime through advanced vibration and oil analysis. We engineer reliability to protect your most critical industrial assets with Scandinavian precision.',
+        'sub_offerings': [
+            {'name': 'Vibration Analysis', 'desc': 'Detecting early mechanical failures in rotating equipment using high-frequency data acquisition and spectral analysis.'},
+            {'name': 'Infrared Thermography', 'desc': 'Thermal imaging to identify electrical hotspots, insulation voids, and bearing friction before critical failure.'},
+            {'name': 'Laser Alignment', 'desc': 'Precision laser-guided shaft and pulley alignment to eliminate energy loss and premature mechanical wear.'},
+            {'name': 'Oil Analysis', 'desc': 'Comprehensive laboratory testing of lubricants to monitor wear debris, contamination, and chemical degradation.'},
+            {'name': 'Ultrasound Inspection', 'desc': 'High-frequency sound detection for identifying compressed air leaks, bearing friction, and electrical arcing.'},
+            {'name': 'Structural Integrity', 'desc': 'Assessing the physical health of industrial structures to ensure safety and long-term operational viability.'},
+        ],
+    }"/>
+    <t t-set="process_steps" t-value="[
+        {'step': '1', 'name': 'Assess',         'desc': 'On-site baseline assessment of all critical rotary and electrical assets.'},
+        {'step': '2', 'name': 'Diagnose',       'desc': 'Data interpretation using specialized AI and engineering expertise.'},
+        {'step': '3', 'name': 'Implementation', 'desc': 'Precise alignment, lubrication, and correction of identified faults.'},
+        {'step': '4', 'name': 'Monitor',        'desc': 'Continuous remote monitoring and scheduled periodic site check-ups.'},
+    ]"/>
+    <t t-set="services_index" t-value="{}"/>
+</t>
+</template>
+
+</odoo>

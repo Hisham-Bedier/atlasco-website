@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        BUG-13 (ClickUp 869f03wub): the stock Odoo "Odoo Information" page
+        (route /website/info, core module `website`) is publicly reachable
+        by design and dumps the company name as "<db name> — Information
+        about the <db name> instance of Odoo" plus the full list of
+        installed apps. On some instances the database is named in a way that identifies the
+        customer or vendor, so the page can literally advertise that
+        information and leaks the installed-app list to anyone who guesses
+        the URL.
+
+        The core template itself says how to turn it off ("To hide this
+        page, uncheck it from the Customize tab in edit mode" - see
+        addons/website/views/website_templates.xml, template
+        website.show_website_info). We do that from data so it ships
+        disabled by default instead of relying on someone remembering to
+        toggle it in the editor.
+
+        We only deactivate website.show_website_info, the inherited view
+        that renders the actual company-name/app-list/version content.
+        That empties #wrap entirely (verified locally: renders as
+        `<div id="wrap" class="o_website_info"></div>`, no company name,
+        no app list, no version string, no "demo" wording anywhere in the
+        response body) and makes controller sitemap_website_info()
+        exclude /website/info from /sitemap.xml, satisfying the ticket's
+        "shows production-appropriate information" acceptance criterion.
+
+        We deliberately do NOT also deactivate the base website.website_info
+        view. Tried that first locally: with both views inactive, Odoo's
+        `_get_view_id` raises `ValueError: View 'website.website_info' in
+        website 1 not found`, which the frontend turns into a bare
+        Odoo/werkzeug 500 error page instead of a 404 - worse for a
+        production site than a normal blank page (spurious entries in
+        error monitoring/logs for a URL that isn't even linked anywhere).
+        Leaving website.website_info active keeps /website/info returning
+        a normal 200 page using the site's own header/footer/theme, just
+        with nothing inside it - no information disclosure, no error noise.
+    -->
+    <record id="website.show_website_info" model="ir.ui.view">
+        <field name="active">False</field>
+    </record>
+</odoo>

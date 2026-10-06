@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- =====================================================================
+     ABOUT — editable Website page (Path A, content-model bound 2026-07-22).
+     Served by website=True /about route → Website Editor toolbar active.
+     Copy is inline-editable via t-field on the atlasco.content singleton
+     (upgrade-safe, shared with backend form). Hero + logo images render
+     from editable Char path fields. The "Atlasco Edge" VIDEO src is bound
+     to an editable Char field (content.about_video_src) so the editor can
+     change / replace / link the video by editing the URL line; the custom
+     autoplay/muted/loop styling is preserved verbatim.
+     ===================================================================== -->
+<template id="about" name="About Atlasco">
+<t t-call="atlasco_website.atlasco_layout">
+
+<!-- This page's OWN oe_structure (same pattern as /services, /culture,
+     / — see those files' comments): without a page-scoped drop target the
+     Website Editor has nowhere valid to save a new mid-page block into, so
+     "Insert Blocks" is refused between any of the sections below. -->
+<div id="wrap_about" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.about').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<!-- ROOT CAUSE (found via live DOM/console investigation, not guessing):
+     Odoo's own branding-distribution pass (ir_ui_view.py distribute_branding())
+     pops a node's data-oe-model/id/field/xpath and pushes them down onto its
+     children whenever the node "contains a branded element"
+     (_contains_branded(): true for any descendant carrying ANY t-* QWEB
+     directive attribute - t-set/t-if/t-esc/t-field/t-foreach/t-att-* etc).
+     Every section below is QWEB-templated (t-field bound to editable
+     content, t-foreach over records, ...), so this div's own branding
+     attributes above NEVER survive rendering in edit mode - they cascade
+     down, section by section, until they land on the deepest qualifying
+     leaf nodes instead. That's why stamping data-oe-model directly on this
+     div (this project's earlier fix) looked right in the raw view arch but
+     never actually made Odoo treat this div as a valid oe_structure drop
+     target: it never gets the editor's `.o_editable` class, so Structure
+     snippets show "No location to drop in" no matter what.
+     Restructuring the real content out into a separate inheriting view
+     does NOT fix this either (tried and confirmed via direct testing) -
+     Odoo combines inherited content into this same node before branding
+     runs, so the combined tree looks identical either way.
+     The only way a container keeps its own branding is if it has zero
+     QWEB-directive descendants - true for a genuinely empty div, and
+     (importantly) still true after a real block gets inserted through the
+     editor, because Odoo saves an inserted block as plain static HTML with
+     no t-* attributes at all. So: small, genuinely empty oe_structure
+     "gap" divs between/around the sections below give real, permanent,
+     Odoo-native insertion points, without touching any existing section's
+     own content, styling, or its own (unrelated, unaffected) t-field
+     editability. -->
+<div id="wrap_about_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.about').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<!-- HERO IMAGE -->
+<t t-set="hero_bg" t-value="request.env['atlasco.page.hero'].sudo()._image_url('about')"/>
+<div class="atl-about-hero atl-about-hero--about">
+    <img t-att-src="hero_bg or '/atlasco_website/static/src/img/banners/about-hero.jpg'"
+         t-att-alt="content.about_hero_alt or 'Atlasco Egypt'" class="atl-about-hero-img"/>
+</div>
+
+<div id="wrap_about_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.about').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<!-- INTRO -->
+<t t-set="style_about_intro" t-value="request.env['atlasco.block.style'].sudo()._get('about_intro')"/>
+<section class="atl-about-intro atl-font-editable o_editable" t-att-data-style-model="'atlasco.block.style'" t-att-data-style-id="style_about_intro.id" t-attf-style="--atl-dyn-font-family:#{style_about_intro.font_family or ''};--atl-dyn-font-size:#{style_about_intro.font_size or ''};">
+  <div class="atl-about-intro-inner">
+    <div>
+        <h2>
+            <span t-field="content.about_intro_title_line1" style="display:block"/>
+            <span t-field="content.about_intro_title_line2" style="display:block"/>
+        </h2>
+        <p t-field="content.about_intro_p1"/>
+        <p t-field="content.about_intro_p2"/>
+        <p t-field="content.about_intro_p3"/>
+    </div>
+    <div class="atl-about-logo-card">
+        <img src="/atlasco_website/static/src/img/logo/ate-monogram.png"
+             alt="Atlasco Egypt — ATE Monogram" class="atl-about-logo-img"/>
+        <div class="atl-about-logo-name" t-field="content.about_logo_name"/>
+        <div class="atl-about-logo-tagline" t-field="content.about_logo_tagline"/>
+    </div>
+  </div>
+</section>
+
+<div id="wrap_about_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.about').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+<!-- MISSION / VISION / VIDEO -->
+<section class="atl-mission-vision">
+  <div class="atl-mission-vision-inner">
+    <div class="atl-section-label" style="margin-bottom:24px;" t-field="content.about_mv_label"/>
+    <div class="atl-mv-grid">
+        <div class="atl-mv-col-left">
+            <div class="atl-mv-card">
+                <div class="atl-mv-eyebrow" t-field="content.about_vision_eyebrow"/>
+                <h3 t-field="content.about_vision_title"/>
+                <p t-field="content.about_vision_p1"/>
+                <p t-field="content.about_vision_p2"/>
+            </div>
+            <div class="atl-mv-card">
+                <div class="atl-mv-eyebrow" t-field="content.about_mission_eyebrow"/>
+                <h3 t-field="content.about_mission_title"/>
+                <p t-field="content.about_mission_p1"/>
+                <p t-field="content.about_mission_p2"/>
+            </div>
+        </div>
+        <!-- The "o_editable" class here is required, not cosmetic: the Website Editor's
+             click-to-select logic only matches a custom snippet-option selector (see
+             AtlascoVideoReplace in atlasco_snippet_options.xml) against elements that sit
+             inside its recognized "editable area" (getEditableArea(), built from
+             .o_editable-classed elements). This block has no data-oe-model of its own (that
+             would make it directly raw-HTML/contenteditable instead), so without a static
+             .o_editable class here the custom "Replace video" option never appears no matter
+             what is clicked inside it. -->
+        <div class="atl-mv-video o_editable" t-att-data-video-model="content._name" t-att-data-video-id="content.id" data-video-field="about_video_src">
+            <video class="atl-mv-video-el"
+                   t-att-src="content.about_video_src"
+                   autoplay="autoplay" muted="muted" loop="loop" playsinline="playsinline"
+                   controls="controls" preload="metadata" t-att-aria-label="content.about_video_aria">
+                <source t-att-src="content.about_video_src" type="video/mp4"/>
+            </video>
+            <!-- Invisible in normal browsing; shown only in edit mode, as a defensive
+                 click-catcher in case a click lands on the native video controls.
+                 t-ignore keeps this leaf div from being individually swept up by Odoo's
+                 generic raw-HTML branding (data-oe-model/contenteditable), which would
+                 otherwise compete with the click reaching the option above. -->
+            <div class="atl-video-select-overlay" t-ignore="1"></div>
+            <!-- Editor: select this video block, then use the "Replace video" button in the
+                 snippet options panel to upload/replace the mp4 (persists to about_video_src). -->
+        </div>
+    </div>
+  </div>
+</section>
+
+<div id="wrap_about_gap_3" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.about').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[4]"/>
+
+<!-- WHAT SETS US APART — seed_about differentiators (editable per-item) -->
+<section class="atl-differentiators">
+  <div class="atl-differentiators-inner">
+    <div class="atl-section-label" style="text-align:center;margin-bottom:8px;" t-field="content.about_diff_label"/>
+    <h2 class="atl-diff-title" t-field="content.about_diff_title"/>
+    <div class="atl-diff-grid">
+        <t t-foreach="content.about_differentiator_ids" t-as="d">
+        <div class="atl-diff-item">
+            <div class="diff-line"></div>
+            <h4 t-field="d.title"/>
+            <p t-field="d.body"/>
+        </div>
+        </t>
+    </div>
+  </div>
+</section>
+
+<div id="wrap_about_gap_4" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.about').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[5]"/>
+
+</div>
+
+</t>
+</template>
+</odoo>

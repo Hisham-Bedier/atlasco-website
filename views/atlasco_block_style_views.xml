@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- No backend list/menu for atlasco.block.style anymore (removed per
+         request - "Nav Menu" covers the actual ask, editing the top nav
+         labels). The model, its font_family/font_size/cta_url fields, and
+         the per-page wiring in views/*.xml (about/industries/products/
+         services/careers/contact heroes + the 5 pre-existing partners
+         blocks) all still work exactly as before - font is still editable
+         live from the Website Editor's Customize panel on each page
+         (AtlascoFontStyle, static/src/js/atlasco_font_option.js). The one
+         thing this removal takes away is a UI for cta_url: Products/
+         Services/Careers hero CTA buttons still read
+         style_x.cta_url or '<default>' in their templates, but there is no
+         in-editor widget for that field (only this now-removed backend
+         list edited it) - so those 3 buttons are effectively pinned to
+         their original hardcoded link again until a new UI is added. -->
+    <function model="atlasco.block.style" name="_seed_blocks"/>
+</odoo>

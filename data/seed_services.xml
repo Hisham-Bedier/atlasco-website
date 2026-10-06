@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+  <!-- 01 Condition Monitoring -->
+  <record id="service_condition_monitoring" model="atlasco.service">
+    <field name="sequence">10</field>
+    <field name="name">Machine Condition Monitoring Services</field>
+    <field name="slug">condition-monitoring</field>
+    <field name="subtitle">Advanced Predictive Maintenance &amp; Reliability Solutions</field>
+    <field name="card_description">Applying predictive and proactive maintenance methodology through vibration analysis, thermography, and ultrasound techniques to reach zero breakdown of any equipment in the facility.</field>
+    <field name="intro">Comprehensive condition monitoring services designed to detect failures at an early stage, reduce unplanned downtime, and support data-driven maintenance strategies.</field>
+  </record>
+  <record id="service_condition_monitoring_off_1" model="atlasco.service.offering">
+    <field name="service_id" ref="service_condition_monitoring"/>
+    <field name="sequence">10</field>
+    <field name="name">Vibration Measurement &amp; Analysis</field>
+    <field name="desc">Advanced diagnostics for rotating equipment; early detection of imbalance, misalignment, and bearing faults; trend analysis for condition-based maintenance planning.</field>
+  </record>
+  <record id="service_condition_monitoring_off_2" model="atlasco.service.offering">
+    <field name="service_id" ref="service_condition_monitoring"/>
+    <field name="sequence">20</field>
+    <field name="name">Infrared Thermography</field>
+    <field name="desc">Thermal inspection of electrical and mechanical systems; identification of overheating, insulation issues, and abnormal loads — preventive action before failure occurs.</field>
+  </record>
+  <record id="service_condition_monitoring_off_3" model="atlasco.service.offering">
+    <field name="service_id" ref="service_condition_monitoring"/>
+    <field name="sequence">30</field>
+    <field name="name">Ultrasonic Inspection &amp; Detection</field>
+    <field name="desc">Leak detection in compressed air and gas systems, bearing condition monitoring and lubrication assessment, steam trap and valve inspection.</field>
+  </record>
+  <record id="service_condition_monitoring_off_4" model="atlasco.service.offering">
+    <field name="service_id" ref="service_condition_monitoring"/>
+    <field name="sequence">40</field>
+    <field name="name">Routine Condition Monitoring Programs</field>
+    <field name="desc">Periodic inspection and data collection, asset health tracking and performance trending, maintenance planning based on real operating conditions.</field>
+  </record>
+  <record id="service_condition_monitoring_off_5" model="atlasco.service.offering">
+    <field name="service_id" ref="service_condition_monitoring"/>
+    <field name="sequence">50</field>
+    <field name="name">Precision Maintenance &amp; Reliability Engineering</field>
+    <field name="desc">Laser shaft alignment and dynamic balancing, electric motor diagnostics and testing, root cause failure analysis (RCFA).</field>
+  </record>
+  <record id="service_condition_monitoring_off_6" model="atlasco.service.offering">
+    <field name="service_id" ref="service_condition_monitoring"/>
+    <field name="sequence">60</field>
+    <field name="name">Engineering Reporting &amp; Technical Support</field>
+    <field name="desc">Detailed condition reports with severity assessment, actionable recommendations and corrective plans, implementation support and follow-up.</field>
+  </record>
+
+  <!-- 02 After-Sales Support -->
+  <record id="service_after_sales_support" model="atlasco.service">
+    <field name="sequence">20</field>
+    <field name="name">After-Sales Services</field>
+    <field name="slug">after-sales-support</field>
+    <field name="subtitle">Lifecycle Support for Continuous Performance</field>
+    <field name="card_description">Applying structured maintenance and technical support programs through preventive and corrective maintenance, using genuine spare parts to extend equipment lifetime, and service contracts to ensure continuous operation and eliminate unexpected downtime.</field>
+    <field name="intro">Customer-focused service solutions ensuring equipment reliability, operational continuity, and sustained performance.</field>
+  </record>
+  <record id="service_after_sales_support_off_1" model="atlasco.service.offering">
+    <field name="service_id" ref="service_after_sales_support"/>
+    <field name="sequence">10</field>
+    <field name="name">Preventive &amp; Corrective Maintenance</field>
+    <field name="desc">Scheduled maintenance programs to minimize downtime, rapid corrective interventions and fault resolution, lifecycle-based maintenance strategies.</field>
+  </record>
+  <record id="service_after_sales_support_off_2" model="atlasco.service.offering">
+    <field name="service_id" ref="service_after_sales_support"/>
+    <field name="sequence">20</field>
+    <field name="name">Spare Parts Management</field>
+    <field name="desc">Supply of certified OEM spare parts, optimized spare parts availability and planning, extended equipment service life.</field>
+  </record>
+  <record id="service_after_sales_support_off_3" model="atlasco.service.offering">
+    <field name="service_id" ref="service_after_sales_support"/>
+    <field name="sequence">30</field>
+    <field name="name">Maintenance Contracts (AMC / FMC)</field>
+    <field name="desc">Comprehensive preventive and corrective maintenance coverage, dedicated service teams and priority response, continuous performance monitoring.</field>
+  </record>
+  <record id="service_after_sales_support_off_4" model="atlasco.service.offering">
+    <field name="service_id" ref="service_after_sales_support"/>
+    <field name="sequence">40</field>
+    <field name="name">Field Services &amp; Technical Support</field>
+    <field name="desc">On-site troubleshooting and diagnostics, equipment inspection and system health checks, installation support, upgrades and retrofits.</field>
+  </record>
+  <record id="service_after_sales_support_off_5" model="atlasco.service.offering">
+    <field name="service_id" ref="service_after_sales_support"/>
+    <field name="sequence">50</field>
+    <field name="name">Emergency &amp; Rapid Response Services</field>
+    <field name="desc">24/7 service support for critical operations, immediate intervention to restore system performance.</field>
+  </record>
+
+  <!-- 03 Oil Analysis & Filtration -->
+  <record id="service_oil_analysis_filtration" model="atlasco.service">
+    <field name="sequence">30</field>
+    <field name="name">Oil Analysis &amp; Filtration Services</field>
+    <field name="slug">oil-analysis-filtration</field>
+    <field name="subtitle">Clean Lubrication for Maximum Equipment Protection</field>
+    <field name="card_description">Advanced oil diagnostics and filtration solutions to control contamination, extend lubricant life, and protect equipment from wear and failure.</field>
+    <field name="intro">Advanced oil management solutions ensuring lubrication integrity, reduced wear, and extended equipment life.</field>
+  </record>
+  <record id="service_oil_analysis_filtration_off_1" model="atlasco.service.offering">
+    <field name="service_id" ref="service_oil_analysis_filtration"/>
+    <field name="sequence">10</field>
+    <field name="name">Oil Analysis &amp; Diagnostics</field>
+    <field name="desc">Laboratory testing for oil condition and contamination, identification of wear particles, moisture and degradation, lubricant performance assessment.</field>
+  </record>
+  <record id="service_oil_analysis_filtration_off_2" model="atlasco.service.offering">
+    <field name="service_id" ref="service_oil_analysis_filtration"/>
+    <field name="sequence">20</field>
+    <field name="name">Oil Filtration &amp; Purification</field>
+    <field name="desc">Removal of solid particles, water and contaminants, on-site oil purification solutions (EPT Clean Oil), restoration of oil cleanliness to optimal levels.</field>
+  </record>
+  <record id="service_oil_analysis_filtration_off_3" model="atlasco.service.offering">
+    <field name="service_id" ref="service_oil_analysis_filtration"/>
+    <field name="sequence">30</field>
+    <field name="name">Contamination Control Programs</field>
+    <field name="desc">Implementation of clean oil practices, monitoring and control of contamination sources, reduction of wear and failure risks.</field>
+  </record>
+  <record id="service_oil_analysis_filtration_off_4" model="atlasco.service.offering">
+    <field name="service_id" ref="service_oil_analysis_filtration"/>
+    <field name="sequence">40</field>
+    <field name="name">Fluid Monitoring &amp; Lifecycle Management</field>
+    <field name="desc">Continuous monitoring of oil condition, extension of oil life and reduced replacement frequency, improved equipment reliability and efficiency.</field>
+  </record>
+
+  <!-- 04 Piping & Installation -->
+  <record id="service_piping_installation" model="atlasco.service">
+    <field name="sequence">40</field>
+    <field name="name">Piping &amp; Installation Services</field>
+    <field name="slug">piping-installation</field>
+    <field name="subtitle">Engineered Systems for Efficient and Reliable Operations</field>
+    <field name="card_description">Engineered system design and installation to optimize flow, reduce pressure loss, and ensure reliable operational performance.</field>
+    <field name="intro">End-to-end engineering and installation services ensuring optimal system performance and long-term reliability.</field>
+  </record>
+  <record id="service_piping_installation_off_1" model="atlasco.service.offering">
+    <field name="service_id" ref="service_piping_installation"/>
+    <field name="sequence">10</field>
+    <field name="name">System Design &amp; Engineering</field>
+    <field name="desc">Application-specific design for compressed air and utility systems, flow optimization, redundancy planning and scalability, compliance with international engineering standards.</field>
+  </record>
+  <record id="service_piping_installation_off_2" model="atlasco.service.offering">
+    <field name="service_id" ref="service_piping_installation"/>
+    <field name="sequence">20</field>
+    <field name="name">Piping Network Installation</field>
+    <field name="desc">Installation of high-performance piping systems, leak-proof connections and pressure optimization, integration with existing infrastructure.</field>
+  </record>
+  <record id="service_piping_installation_off_3" model="atlasco.service.offering">
+    <field name="service_id" ref="service_piping_installation"/>
+    <field name="sequence">30</field>
+    <field name="name">Equipment Installation &amp; Integration</field>
+    <field name="desc">Mechanical, electrical and control system installation, integration of compressors, dryers and treatment units.</field>
+  </record>
+  <record id="service_piping_installation_off_4" model="atlasco.service.offering">
+    <field name="service_id" ref="service_piping_installation"/>
+    <field name="sequence">40</field>
+    <field name="name">Commissioning &amp; Performance Verification</field>
+    <field name="desc">System testing and validation against design specifications, operational readiness and acceptance testing, operator handover and system training.</field>
+  </record>
+
+  <!-- 05 Consultation Services -->
+  <record id="service_consultation_audits" model="atlasco.service">
+    <field name="sequence">50</field>
+    <field name="name">Consultation Services</field>
+    <field name="slug">consultation-audits</field>
+    <field name="subtitle">Engineering Insights for Optimized Performance</field>
+    <field name="card_description">Engineering analysis and system assessments to identify inefficiencies, optimize energy usage, and reduce operational costs.</field>
+    <field name="intro">Technical consultation services designed to improve efficiency, reduce operational costs, and enhance system performance.</field>
+  </record>
+  <record id="service_consultation_audits_off_1" model="atlasco.service.offering">
+    <field name="service_id" ref="service_consultation_audits"/>
+    <field name="sequence">10</field>
+    <field name="name">System Assessment &amp; Performance Analysis</field>
+    <field name="desc">Compressed air and utility system evaluation, capacity analysis and operational benchmarking, identification of inefficiencies and performance gaps.</field>
+  </record>
+  <record id="service_consultation_audits_off_2" model="atlasco.service.offering">
+    <field name="service_id" ref="service_consultation_audits"/>
+    <field name="sequence">20</field>
+    <field name="name">Energy Efficiency &amp; Optimization Studies</field>
+    <field name="desc">Energy consumption analysis and optimization strategies, leak detection surveys and loss quantification, cost-saving opportunities with measurable ROI.</field>
+  </record>
+  <record id="service_consultation_audits_off_3" model="atlasco.service.offering">
+    <field name="service_id" ref="service_consultation_audits"/>
+    <field name="sequence">30</field>
+    <field name="name">Reliability &amp; Maintenance Strategy Development</field>
+    <field name="desc">Implementation of predictive and reliability-centered maintenance (RCM), maintenance planning aligned with operating conditions, asset lifecycle optimization.</field>
+  </record>
+  <record id="service_consultation_audits_off_4" model="atlasco.service.offering">
+    <field name="service_id" ref="service_consultation_audits"/>
+    <field name="sequence">40</field>
+    <field name="name">System Design Review &amp; Improvement</field>
+    <field name="desc">Evaluation of existing system configurations, recommendations for upgrades and system improvements, compliance with international standards and best practices.</field>
+  </record>
+
+  <!-- 06 Rental Services -->
+  <record id="service_rental" model="atlasco.service">
+    <field name="sequence">60</field>
+    <field name="name">Rental Services</field>
+    <field name="slug">rental</field>
+    <field name="subtitle">Flexible Solutions for Operational Continuity</field>
+    <field name="card_description">Flexible equipment rental solutions to maintain operational continuity during shutdowns, peak demand, and unexpected failures.</field>
+    <field name="intro">Reliable rental solutions ensuring uninterrupted operations during maintenance, peak demand, or unexpected failures.</field>
+  </record>
+  <record id="service_rental_off_1" model="atlasco.service.offering">
+    <field name="service_id" ref="service_rental"/>
+    <field name="sequence">10</field>
+    <field name="name">Equipment Rental Solutions</field>
+    <field name="desc">Compressors and air treatment equipment, short-term and long-term rental options.</field>
+  </record>
+  <record id="service_rental_off_2" model="atlasco.service.offering">
+    <field name="service_id" ref="service_rental"/>
+    <field name="sequence">20</field>
+    <field name="name">Emergency Backup Solutions</field>
+    <field name="desc">Immediate support for critical operations, temporary compressed air supply during breakdowns.</field>
+  </record>
+  <record id="service_rental_off_3" model="atlasco.service.offering">
+    <field name="service_id" ref="service_rental"/>
+    <field name="sequence">30</field>
+    <field name="name">Project &amp; Shutdown Support</field>
+    <field name="desc">Capacity support during shutdowns and expansions, flexible solutions for project-based requirements.</field>
+  </record>
+  <record id="service_rental_off_4" model="atlasco.service.offering">
+    <field name="service_id" ref="service_rental"/>
+    <field name="sequence">40</field>
+    <field name="name">Installation &amp; Technical Support</field>
+    <field name="desc">On-site installation and commissioning, continuous technical support throughout the rental period.</field>
+  </record>
+
+  <!-- 07 Training / PrimeGear Academy — closing dark panel, links out to /primegear -->
+  <record id="service_training_primegear" model="atlasco.service">
+    <field name="sequence">70</field>
+    <field name="name">Training Services (PrimeGear Academy)</field>
+    <field name="slug">training-primegear</field>
+    <field name="subtitle">Building Competence for Sustainable Performance</field>
+    <field name="card_description">Certified training programs and practical workshops to enhance technical capabilities and improve maintenance and reliability practices.</field>
+    <field name="intro">Professional training solutions designed to enhance technical expertise and improve maintenance practices.</field>
+    <field name="is_dark_panel" eval="True"/>
+    <field name="link_override">/primegear</field>
+  </record>
+  <record id="service_training_primegear_off_1" model="atlasco.service.offering">
+    <field name="service_id" ref="service_training_primegear"/>
+    <field name="sequence">10</field>
+    <field name="name">Certified Training Programs</field>
+    <field name="desc">MLA, MLT, CMRP, Vibration Analysis, Thermal Imaging, Ultrasound — internationally accredited certifications.</field>
+  </record>
+  <record id="service_training_primegear_off_2" model="atlasco.service.offering">
+    <field name="service_id" ref="service_training_primegear"/>
+    <field name="sequence">20</field>
+    <field name="name">Technical Workshops &amp; Hands-On Training</field>
+    <field name="desc">Practical sessions based on real applications, equipment-focused technical training.</field>
+  </record>
+  <record id="service_training_primegear_off_3" model="atlasco.service.offering">
+    <field name="service_id" ref="service_training_primegear"/>
+    <field name="sequence">30</field>
+    <field name="name">Customized On-Site Training</field>
+    <field name="desc">Tailored programs aligned with operational needs, industry-specific training solutions.</field>
+  </record>
+  <record id="service_training_primegear_off_4" model="atlasco.service.offering">
+    <field name="service_id" ref="service_training_primegear"/>
+    <field name="sequence">40</field>
+    <field name="name">Knowledge Transfer &amp; Best Practices</field>
+    <field name="desc">Reliability-centered maintenance methodologies, safety, efficiency and operational excellence practices.</field>
+  </record>
+
+  <!-- Backfill hero_image from the bundled static hero.jpg each service used
+       to reference by hardcoded path. Idempotent — only fills empty images,
+       so a real upload made after this fix ships is never overwritten. -->
+  <function model="atlasco.service" name="_seed_hero_images"/>
+
+</odoo>
+

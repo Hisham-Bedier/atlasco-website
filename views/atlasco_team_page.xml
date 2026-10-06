@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--
+  Team — /about/team editable website page (12-7 redesign, mirrors atlasco_careers_page.xml pattern).
+  EDITABLE WEBSITE PAGE: mostly plain editable text (no t-foreach / no atlasco.content
+  binding) — EXCEPT the hero title/label, which are bound via t-field to the
+  atlasco.content singleton (team_hero_title / team_hero_label, edited from the
+  backend "Website Content > Team" tab). This mirrors the rest of the site (see
+  homepage.xml) and fixes a bug where editing those two backend fields had no
+  effect on this page. The chairman portrait + EVERY member PHOTO remain plain
+  editable <img src> / editor-background images the Website Editor can swap
+  ("Replace media"). Real Atlasco members, names, roles, and photos preserved
+  exactly from data/seed_team.xml + content_team.py defaults. Served via
+  controller with website=True → Website Editor toolbar active on /about/team,
+  same primary-qweb class as the homepage.
+-->
+<template id="team" name="People Behind Atlasco Egypt">
+<t t-call="atlasco_website.atlasco_layout">
+<!-- Hero title/label are backed by the atlasco.content singleton (Website
+     Content > Team tab). Fetched directly here rather than relying on the
+     controller to pass it, so this binding works regardless of what the
+     /about/team route currently supplies. -->
+<t t-set="content" t-value="request.env['atlasco.content'].sudo()._get()"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+  .tmp{font-family:'Poppins',system-ui,-apple-system,sans-serif;color:#10442F;background:#ffffff;overflow-x:hidden}
+  .tmp *{box-sizing:border-box}
+  /* HERO (editable background photo).
+     ClickUp 869eg53bw (2026-09-11, Ziad): min-height:470px added to match
+     Culture's reference hero height (.lax-hero on /culture) - this hero was
+     purely padding/content-driven before (clamp 72-120px + label + h1),
+     rendering noticeably shorter than Culture. min-height (not a fixed
+     height) so it can still grow past 470px for real content, never clip. */
+  .tmp-hero{position:relative;padding:clamp(72px,9vw,120px) clamp(20px,5vw,72px);min-height:470px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background-color:#10442F}
+  .tmp-hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,40,27,.72),rgba(9,40,27,.58) 55%,rgba(9,40,27,.80));pointer-events:none}
+  .tmp-hero-inner{position:relative;max-width:900px;margin:0 auto}
+  .tmp-hero-label{font-weight:700;font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:#8FE3AC}
+  .tmp-hero h1{margin:14px 0 0;font-size:clamp(34px,5vw,52px);line-height:1.06;font-weight:800;color:#ffffff;letter-spacing:-.01em}
+  /* CHAIRMAN MESSAGE card */
+  .tmp-cmsg{max-width:var(--atl-content-max-width);margin:0 auto;padding:clamp(44px,5.5vw,84px) clamp(18px,4vw,56px)}
+  .tmp-cmsg-card{display:grid;grid-template-columns:320px 1fr;gap:clamp(28px,4vw,56px);align-items:start;background:#ffffff;border:1px solid #E7EEE9;border-radius:24px;padding:clamp(24px,3vw,40px);box-shadow:0 30px 60px -44px rgba(16,45,32,.4)}
+  .tmp-cmsg-portrait{position:relative}
+  .tmp-cmsg-portrait img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:18px;display:block;background:#f1f4f7}
+  .tmp-cmsg-caption{margin-top:16px}
+  .tmp-cmsg-name{font-weight:700;font-size:19px;color:#10442F}
+  .tmp-cmsg-role{font-weight:600;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:#5B6A72;margin-top:5px}
+  .tmp-cmsg-kicker{font-weight:700;font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:#17924A}
+  .tmp-cmsg-rule{width:52px;height:3px;border-radius:2px;background:#17924A;margin:14px 0 22px}
+  .tmp-cmsg-body p{margin:0 0 16px;font-size:15.5px;line-height:1.75;color:#4C5763}
+  .tmp-cmsg-body p:last-child{margin-bottom:0}
+  .tmp-cmsg-body p.dropcap:first-letter{float:left;font-size:52px;line-height:.9;font-weight:800;color:#10442F;margin:4px 12px 0 0}
+  /* GRID SECTIONS */
+  .tmp-sec{padding:clamp(44px,5.5vw,84px) clamp(18px,4vw,56px);max-width:var(--atl-content-max-width);margin:0 auto}
+  .tmp-eyebrow{font-weight:700;font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:#17924A}
+  .tmp-h2{margin:10px 0 0;font-weight:700;font-size:clamp(26px,2.4vw,36px);letter-spacing:-.01em;color:#10442F}
+  .tmp-lead{margin:14px 0 0;max-width:60ch;font-weight:400;font-size:clamp(15px,1.1vw,17px);line-height:1.6;color:#5B6A72}
+  .tmp-board-grid{display:grid;grid-template-columns:repeat(2,minmax(0,300px));gap:clamp(20px,2vw,34px);justify-content:center;margin-top:clamp(28px,3vw,44px)}
+  .tmp-team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:clamp(18px,1.6vw,28px);margin-top:clamp(28px,3vw,44px)}
+  .tmp-card{display:flex;flex-direction:column}
+  .tmp-photo{position:relative;width:100%;aspect-ratio:3/4;border-radius:20px;overflow:hidden;background:radial-gradient(120% 95% at 50% 18%,#ffffff 0%,#f1f4f7 45%,#dde5ea 100%);transition:transform .3s ease,box-shadow .3s ease}
+  .tmp-img{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;transition:transform .5s ease}
+  .tmp-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .tmp-name{font-weight:700;font-size:clamp(16px,1.3vw,21px);color:#10442F;margin-top:18px;line-height:1.22}
+  .tmp-role{font-weight:400;font-size:clamp(13px,1vw,15px);color:#5B6A72;margin-top:6px}
+  .tmp-founder:hover .tmp-photo{transform:translateY(-5px);box-shadow:0 26px 48px -28px rgba(16,45,32,.6)}
+  .tmp-founder:hover .tmp-img{transform:scale(1.05)}
+  .tmp-member:hover .tmp-photo{transform:translateY(-4px);box-shadow:0 22px 40px -26px rgba(16,45,32,.5)}
+  .tmp-member:hover .tmp-img{transform:scale(1.04)}
+  @media(max-width:820px){.tmp-cmsg-card{grid-template-columns:1fr;gap:24px}.tmp-cmsg-portrait{max-width:280px}}
+  @media(max-width:640px){.tmp-board-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}}
+</style>
+
+<!-- Page-scoped oe_structure (same pattern as /about, /culture) so
+     Insert Blocks has a valid drop target between the sections below -
+     without it the Website Editor has nowhere valid to save a mid-page
+     block into on this route. -->
+<div id="wrap_team" class="tmp oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.team').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+  <!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+       below are real Odoo-native Insert-Blocks drop targets - see the long
+       root-cause comment on wrap_about in atlasco_about_page.xml. -->
+  <div id="wrap_team_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.team').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+  <!-- ============ HERO — editable background photo ============ -->
+  <t t-set="hero_bg" t-value="request.env['atlasco.page.hero'].sudo()._image_url('team')"/>
+  <header class="tmp-hero">
+    <img class="tmp-hero-bg" t-att-src="hero_bg or '/atlasco_website/static/src/img/banners/team.jpg'" alt="Atlasco team" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;"/>
+    <div class="tmp-hero-scrim" style="z-index:1;"></div>
+    <div class="tmp-hero-inner" style="z-index:2;">
+      <div class="tmp-hero-label" t-field="content.team_hero_label"/>
+      <h1 t-field="content.team_hero_title"/>
+    </div>
+  </header>
+
+  <!-- ============ CHAIRMAN MESSAGE — bound to atlasco.content (Website Content
+       > Team tab > "Chairman Message (Team page)"). Was plain hardcoded HTML,
+       so backend edits to team_cmsg_* never reached this page and the text
+       wasn't inline-editable either (t-field is what wires the Website Editor
+       to a model field). Portrait stays a plain editor-replaceable <img>
+       (see class comment above) but now defaults from team_cmsg_portrait so a
+       backend image change is reflected too. ============ -->
+  <div id="wrap_team_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.team').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+  <section class="tmp-cmsg">
+    <article class="tmp-cmsg-card">
+      <div class="tmp-cmsg-portrait">
+        <img t-att-src="content.team_cmsg_portrait or '/atlasco_website/static/src/img/chairman-nabil-handoff.jpg'" t-att-alt="content.team_cmsg_portrait_alt or 'Eng. Nabil Soliman, Chairman of Atlasco Egypt'"/>
+        <div class="tmp-cmsg-caption">
+          <div class="tmp-cmsg-name" t-field="content.team_cmsg_name"/>
+          <div class="tmp-cmsg-role" t-field="content.team_cmsg_role"/>
+        </div>
+      </div>
+      <div class="tmp-cmsg-message">
+        <div class="tmp-cmsg-kicker" t-field="content.team_cmsg_kicker"/>
+        <div class="tmp-cmsg-rule"></div>
+        <div class="tmp-cmsg-body">
+          <p class="dropcap" t-field="content.team_cmsg_p1"/>
+          <p t-field="content.team_cmsg_p2"/>
+          <p t-field="content.team_cmsg_p3"/>
+          <p t-field="content.team_cmsg_p4"/>
+          <p t-field="content.team_cmsg_p5"/>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <div id="wrap_team_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.team').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+  <!-- ============ BOARD OF DIRECTORS — editable member photos ============ -->
+  <section class="tmp-sec">
+    <div class="tmp-eyebrow">Leadership</div>
+    <h2 class="tmp-h2">Board of Directors</h2>
+    <div class="tmp-board-grid">
+      <t t-foreach="content.team_member_ids.filtered(lambda m: m.section == 'board')" t-as="m">
+      <div class="tmp-card tmp-founder">
+        <div class="tmp-photo"><span class="tmp-img" t-field="m.photo" t-options="{'widget': 'image'}"/></div>
+        <div class="tmp-name" t-field="m.name"/>
+        <div class="tmp-role" t-field="m.role"/>
+      </div>
+      </t>
+    </div>
+  </section>
+
+  <!-- ============ LEADERSHIP TEAM — editable member photos ============ -->
+  <div id="wrap_team_gap_3" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.team').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[4]"/>
+
+  <section class="tmp-sec" style="padding-top:0">
+    <div class="tmp-eyebrow">The Team</div>
+    <h2 class="tmp-h2">Leadership Excellence</h2>
+    <p class="tmp-lead">Guided by visionaries with decades of collective experience in the global engineering landscape.</p>
+    <div class="tmp-team-grid">
+      <t t-foreach="content.team_member_ids.filtered(lambda m: m.section == 'team')" t-as="m">
+      <div class="tmp-card tmp-member">
+        <div class="tmp-photo"><span class="tmp-img" t-field="m.photo" t-options="{'widget': 'image'}"/></div>
+        <div class="tmp-name" t-field="m.name"/>
+        <div class="tmp-role" t-field="m.role"/>
+      </div>
+      </t>
+    </div>
+  </section>
+
+  <div id="wrap_team_gap_4" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.team').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[5]"/>
+
+</div>
+
+</t>
+</template>
+
+</odoo>

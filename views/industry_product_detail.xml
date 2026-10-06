@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="industry_product_detail" name="Industry Product Detail">
+<t t-call="atlasco_website.atlasco_layout">
+
+<!-- Namespaced per-industry-per-product oe_structure (same pattern as
+     industry_detail.xml): this template is shared across every
+     /industries/<slug>/<product> page, so a plain id="wrap" would make a
+     block inserted while editing one product appear on every other
+     industry/product pair sharing this template. -->
+<div t-attf-id="wrap_industry_product_#{industry_slug or ''}_#{product.slug}" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_product_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+     below are real Odoo-native Insert-Blocks drop targets - see the long
+     root-cause comment on wrap_about in atlasco_about_page.xml. Namespaced
+     per-industry-per-product like the div above, for the same COW-safety
+     reason. -->
+<div t-attf-id="wrap_industry_product_#{industry_slug or ''}_#{product.slug}_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_product_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<section class="atl-ipd-hero">
+    <div class="atl-ipd-hero-inner">
+        <div class="atl-ipd-breadcrumb">
+            <a href="/industries">Industries</a>
+            <span class="sep">/</span>
+            <a t-att-href="'/industries/' + industry_slug" t-esc="industry_name"/>
+            <span class="sep">/</span>
+            <span t-esc="product['name']"/>
+        </div>
+        <h1 t-esc="product['name']"/>
+        <p class="atl-ipd-context">For <t t-esc="industry_name"/></p>
+    </div>
+</section>
+
+<div t-attf-id="wrap_industry_product_#{industry_slug or ''}_#{product.slug}_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_product_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<t t-if="rich">
+    <!-- Rich product page (adjusted PDF deep spec layout) -->
+    <section class="atl-ipd-overview-block">
+        <h2 t-esc="rich['overview_title']"/>
+        <p t-esc="rich['overview_body']"/>
+    </section>
+
+    <t t-foreach="rich['sections']" t-as="sec">
+        <section class="atl-ipd-section">
+            <h3 class="atl-ipd-section-title" t-esc="sec['title']"/>
+            <p class="atl-ipd-section-tagline" t-esc="sec['tagline']"/>
+            <t t-if="sec.get('images')">
+                <div class="atl-ipd-gallery">
+                    <t t-foreach="sec['images']" t-as="img">
+                        <div class="atl-ipd-gallery-img" t-att-style="'background-image:url(' + img + ');'"/>
+                    </t>
+                </div>
+            </t>
+            <t t-if="sec.get('sub_products')">
+                <p class="atl-ipd-subproducts-label" t-esc="sec.get('sub_products_label')"/>
+                <div class="atl-ipd-subproducts">
+                    <t t-foreach="sec['sub_products']" t-as="sp">
+                        <div class="atl-ipd-subproduct">
+                            <h4 t-esc="sp['name']"/>
+                            <ul>
+                                <t t-foreach="sp['rows']" t-as="row"><li t-esc="row"/></t>
+                            </ul>
+                        </div>
+                    </t>
+                </div>
+            </t>
+            <div class="atl-ipd-specs">
+                <t t-foreach="sec['spec_groups']" t-as="grp">
+                    <div class="atl-ipd-spec-group">
+                        <h4 t-esc="grp['label']"/>
+                        <ul>
+                            <t t-foreach="grp['rows']" t-as="row"><li t-esc="row"/></t>
+                        </ul>
+                    </div>
+                </t>
+            </div>
+        </section>
+    </t>
+
+    <section class="atl-ipd-cta-block">
+        <a t-att-href="'/contact?industry=' + (industry_slug or '')" class="btn-green">Talk to a Specialist &#8594;</a>
+    </section>
+</t>
+<t t-else="">
+    <!-- Standard product page (overview + simple cards from page-2 PDF data) -->
+    <section class="atl-ipd-overview">
+        <div class="atl-ipd-image" t-attf-style="background-image:url(/web/image/atlasco.industry.product/#{product['id']}/image);"></div>
+        <div class="atl-ipd-copy">
+            <h2><t t-esc="product['name']"/> for <t t-esc="industry_name"/></h2>
+            <p t-esc="product['desc']"/>
+            <a t-att-href="'/contact?industry=' + (industry_slug or '')" class="btn-green">Talk to a Specialist &#8594;</a>
+        </div>
+    </section>
+
+    <t t-if="cards">
+        <section class="atl-ipd-cards-section">
+            <div class="atl-ipd-cards">
+                <t t-foreach="cards" t-as="c">
+                    <div class="atl-pd-card">
+                        <div class="atl-pd-card-accent"></div>
+                        <h3 class="atl-pd-card-title" t-esc="c['title']"/>
+                        <p class="atl-pd-card-tagline" t-esc="c['tagline']"/>
+                        <div class="atl-pd-card-divider"></div>
+                        <div class="atl-pd-card-section">
+                            <p class="atl-pd-card-label" t-esc="(c.get('used_in_label') or 'Used in') + ':'"/>
+                            <ul class="atl-pd-card-list atl-pd-list--bullets">
+                                <t t-foreach="c['used_in']" t-as="u"><li t-esc="u"/></t>
+                            </ul>
+                        </div>
+                        <div class="atl-pd-card-section">
+                            <p class="atl-pd-card-label" t-esc="c['delivers_label'] + ':'"/>
+                            <ul class="atl-pd-card-list atl-pd-list--checks">
+                                <t t-foreach="c['delivers']" t-as="d"><li t-esc="d"/></t>
+                            </ul>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </section>
+    </t>
+    <t t-else="">
+        <section class="atl-ipd-empty">
+            <p>Detailed product specifications for <t t-esc="product['name']"/> in the <t t-esc="industry_name"/> industry are coming soon. <a href="/contact">Contact a specialist</a> for current availability and configurations.</p>
+        </section>
+    </t>
+</t>
+
+<div t-attf-id="wrap_industry_product_#{industry_slug or ''}_#{product.slug}_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_product_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+</div>
+
+</t>
+</template>
+</odoo>

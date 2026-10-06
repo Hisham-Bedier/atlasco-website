@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="industry_detail" name="Industry Detail">
+<t t-call="atlasco_website.atlasco_layout">
+
+<!-- This page's OWN oe_structure, for ticket 869f082az ("cannot add a new
+     section BETWEEN existing customized sections") — same fix pattern as
+     /culture, /services and the homepage. IMPORTANT DIFFERENCE from those:
+     this template is a single shared view rendered for ~10 different
+     industry slugs (/industries/oil-gas, /industries/steel, ...) via one
+     controller route (controllers/main.py industry_detail). A single
+     STATIC id="wrap" here would give every industry page the exact same
+     oe_structure, so a section inserted while editing one industry (e.g.
+     oil-gas) would silently appear on every other industry page too
+     (steel, medical, cement, ...) since they'd all resolve to the same
+     underlying child view/xpath target. To keep each industry's inserted
+     sections independent, the id is namespaced per-slug so each industry
+     gets its own oe_structure/child view: -->
+<t t-set="hero_bg" t-value="request.env['atlasco.page.hero'].sudo()._image_url('industry_' + industry.get('slug', '')) or (hero_copy and hero_copy.get('hero_image'))"/>
+<div t-attf-id="wrap_industry_#{industry.get('slug', 'oil-gas')}" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]">
+
+<!-- Genuinely-empty "gap" oe_structure divs threaded between the sections
+     below are real Odoo-native Insert-Blocks drop targets - see the long
+     root-cause comment on wrap_about in atlasco_about_page.xml. Namespaced
+     per-slug like the div above, for the same COW-safety reason: a block
+     inserted while editing one industry must not leak onto another. -->
+<div t-attf-id="wrap_industry_#{industry.get('slug', 'oil-gas')}_gap_0" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[1]"/>
+
+<!-- HERO (per Figma 4801:619 — dark industry hero) -->
+<section class="atl-id-hero-v2" t-att-style="hero_bg and ('background-image:linear-gradient(rgba(11,15,17,.12),rgba(11,15,17,.15)),url(' + hero_bg + ');background-size:cover;background-position:center;') or ''">
+    <div class="atl-id-hero-v2-accent"></div>
+    <div class="atl-id-hero-v2-inner">
+        <p class="atl-id-hero-v2-crumb">
+            <a href="/">Home</a><span> / </span>
+            <a href="/industries">Industries</a><span> / </span>
+            <t t-esc="industry.get('name', 'Industry')"/>
+        </p>
+        <span class="atl-id-hero-v2-badge">INDUSTRY VERTICAL</span>
+        <h1 class="atl-id-hero-v2-title" t-esc="industry.get('name', 'Industry')"/>
+        <p class="atl-id-hero-v2-brief" t-esc="(hero_copy and hero_copy.get('short_brief')) or industry.get('subtitle', '')"/>
+        <a t-att-href="'/contact?industry=' + industry.get('slug', '')" class="atl-id-hero-v2-cta">Talk to a Specialist &#8594;</a>
+    </div>
+</section>
+
+<div t-attf-id="wrap_industry_#{industry.get('slug', 'oil-gas')}_gap_1" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[2]"/>
+
+<!-- TAGLINE + LONG BODY (per per-industry PDF p1) -->
+<t t-if="hero_copy and hero_copy.get('tagline')">
+    <section class="atl-id-tagline-section">
+        <h2 class="atl-id-tagline" t-esc="hero_copy['tagline']"/>
+        <p class="atl-id-long-body" t-esc="hero_copy['long_body']"/>
+    </section>
+</t>
+
+<!-- HOW ATLASCO SOLUTIONS CREATE VALUE — heading + subhead + intro (cards rendered after partners)
+     BUG-07 (ClickUp 869f03rua) fix: this heading used to be gated ONLY on the hardcoded
+     INDUSTRY_RELIABILITY dict (controllers/main.py), so an industry missing a dict entry
+     (e.g. 'cement' — no source PDF yet) could never show the section header even after real
+     atlasco.reliability.card records were added for it via the backend (Website > Configuration
+     > Atlasco Website > Reliability Cards). Gate on "reliability or reliability_cards" instead,
+     so the heading appears as soon as EITHER the dict OR real backend-entered cards exist —
+     subhead/intro (dict-only copy) stay optional. Cement/Power-Generation still render nothing
+     here today because neither source has real content yet (no fabricated copy added) — see
+     ClickUp 869f03rua comment for the content request to the client. -->
+<div t-attf-id="wrap_industry_#{industry.get('slug', 'oil-gas')}_gap_2" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[3]"/>
+
+<t t-if="reliability or reliability_cards">
+    <section class="atl-reliability-intro-section">
+        <h2 class="atl-section-title atl-reliability-h2">How Atlasco Solutions Create Value For <t t-esc="industry.get('name')"/></h2>
+        <t t-if="reliability">
+            <p class="atl-reliability-subhead" t-esc="reliability['subhead']"/>
+            <p class="atl-reliability-intro" t-esc="reliability['intro']"/>
+        </t>
+    </section>
+</t>
+
+<!-- RELIABILITY CARDS v2 — predictive-maintenance image cards (client animation handoff 2026-07-25;
+     migrated to editable atlasco.reliability.card records 2026-07-26 — text via t-field, image via image widget) -->
+<div t-attf-id="wrap_industry_#{industry.get('slug', 'oil-gas')}_gap_3" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[4]"/>
+
+<t t-if="reliability_cards">
+    <section class="atl-reliability-section atl-reliability-section--cards-only">
+        <div class="atl-reliability-cards">
+            <t t-foreach="reliability_cards" t-as="c">
+                <div t-attf-class="atl-reliability-card#{'' if c.image else ' rc-no-image'}">
+                    <span class="atl-rc-media" t-field="c.image" t-options="{'widget': 'image'}"/>
+                    <div class="atl-rc-scrim"/>
+                    <div class="atl-rc-wash"/>
+                    <div class="atl-rc-body">
+                        <div class="atl-rc-eyebrow">Challenge</div>
+                        <h3 t-field="c.problem"/>
+                        <div class="atl-rc-reveal">
+                            <p class="atl-rc-solution-title" t-field="c.solution_title"/>
+                            <p class="atl-rc-solution-body" t-field="c.solution_body"/>
+                        </div>
+                        <div class="atl-rc-rule"/>
+                        <a href="/contact" class="atl-rc-cta">
+                            <span>Let's Connect</span>
+                            <span class="atl-rc-arrow">&#8594;</span>
+                        </a>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </section>
+</t>
+
+<div t-attf-id="wrap_industry_#{industry.get('slug', 'oil-gas')}_gap_4" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[5]"/>
+
+<!-- Our Technology Partners (per matrix: atlasco_supplier_industry_matrix.xlsx) -->
+<t t-if="partners">
+    <section class="atl-id-partners-section">
+        <div class="atl-id-partners">
+            <h3 class="atl-id-partners-title">Our Technology Partners</h3>
+            <div class="atl-id-partners-grid">
+                <t t-foreach="partners" t-as="p">
+                    <t t-if="p.get('slug')">
+                        <a t-att-href="'/partners/' + p['slug']" class="atl-id-partner-tile" t-att-title="p['name']">
+                            <t t-if="p.get('logo')">
+                                <img t-att-src="p['logo']" t-att-alt="p['name']"/>
+                            </t>
+                            <t t-else="">
+                                <span t-esc="p['name']"/>
+                            </t>
+                        </a>
+                    </t>
+                    <t t-else="">
+                        <div class="atl-id-partner-tile atl-id-partner-tile--nolink" t-att-title="p['name']">
+                            <t t-if="p.get('logo')">
+                                <img t-att-src="p['logo']" t-att-alt="p['name']"/>
+                            </t>
+                            <t t-else="">
+                                <span t-esc="p['name']"/>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </div>
+        </div>
+    </section>
+</t>
+
+
+
+<div t-attf-id="wrap_industry_#{industry.get('slug', 'oil-gas')}_gap_5" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[6]"/>
+
+<!-- PRODUCTS — header + cards -->
+<section class="atl-industry-products-section">
+    <h2 class="atl-id-products-title">The Technologies Behind Reliable Industry</h2>
+    <p class="atl-id-products-sub">Explore the product solutions that support uptime, efficiency, safety, and performance across your critical operations.</p>
+    <div class="atl-industry-products-grid">
+        <t t-foreach="industry_products" t-as="p">
+            <a t-att-href="p.link_url or ('/industries/' + industry['slug'] + '/' + p.slug)" class="atl-industry-card">
+                <div class="atl-industry-placeholder" t-attf-style="background-image:url(/web/image/atlasco.industry.product/#{p.id}/image);background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#f3f4f6;"></div>
+                <div class="atl-industry-card-overlay"></div>
+                <div class="atl-industry-card-label">
+                    <span class="tag">Product</span>
+                    <h3 t-esc="p.name.upper()"/>
+                    <p class="ind-desc" t-field="p.desc"/>
+                    <div class="ind-line"></div>
+                    <span class="atl-industry-card-cta" t-field="p.cta_label"/>
+                    <span class="atl-industry-card-cta-arrow">&#8594;</span>
+                </div>
+            </a>
+        </t>
+    </div>
+</section>
+
+<!-- RELATED INDUSTRIES (filtered — excludes current industry) -->
+<div t-attf-id="wrap_industry_#{industry.get('slug', 'oil-gas')}_gap_6" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[7]"/>
+
+<section class="atl-related-section">
+  <div class="atl-related-section-inner">
+    <div class="atl-section-label">Explore More Industries</div>
+    <h2 class="atl-section-title">Related Industries</h2>
+    <div class="atl-related-grid">
+        <t t-foreach="related_industries" t-as="ri">
+            <t t-set="hi" t-value="ri.get('home_industry')"/>
+            <a t-att-href="'/industries/' + ri['slug']" class="atl-related-card" style="text-decoration:none;">
+                <t t-if="hi and hi.image">
+                    <span class="rind-photo" t-field="hi.image" t-options="{'widget': 'image'}"/>
+                </t>
+                <t t-else="">
+                    <div class="rind-placeholder">Industry photo</div>
+                </t>
+                <h4>
+                    <t t-if="hi and hi.card_name"><span t-field="hi.card_name"/></t>
+                    <t t-else=""><t t-esc="ri['name']"/></t>
+                    &#8594;
+                </h4>
+                <t t-if="hi and hi.card_name">
+                    <p t-field="hi.card_desc"/>
+                </t>
+                <t t-else="">
+                    <p t-esc="ri['desc']"/>
+                </t>
+            </a>
+        </t>
+    </div>
+  </div>
+</section>
+
+<div t-attf-id="wrap_industry_#{industry.get('slug', 'oil-gas')}_gap_7" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[8]"/>
+
+<!-- CTA BANNER -->
+<div class="atl-cta-banner">
+  <div class="atl-cta-banner-inner">
+    <div>
+        <h2>Ready to boost your Industry?</h2>
+        <p>Connect with our industrial reliability team for a free plant assessment.</p>
+    </div>
+    <div class="btn-group">
+        <a t-att-href="'/contact?industry=' + industry.get('slug', '')" class="btn-outline-white">Request Free Assessment</a>
+        <a t-att-href="'/contact?industry=' + industry.get('slug', '')" class="btn-green">Contact our industrial team &#8594;</a>
+    </div>
+  </div>
+</div>
+
+<div t-attf-id="wrap_industry_#{industry.get('slug', 'oil-gas')}_gap_8" class="oe_structure" data-oe-model="ir.ui.view" t-att-data-oe-id="request.env.ref('atlasco_website.industry_detail').id" data-oe-field="arch" data-oe-xpath="/t[1]/t[1]/div[1]/div[9]"/>
+
+</div>
+
+</t>
+</template>
+</odoo>

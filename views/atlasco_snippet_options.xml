@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Registers the "Replace video" option in the Website editor sidebar for
+        Atlasco's video blocks: the /about background video (.atl-mv-video),
+        the /careers "Life at Atlasco" video (.crb-video-frame), and the
+        /culture "Life Beyond the Workplace" gallery tiles (.lax-tile-video —
+        GEM Gathering plus the 3 tiles migrated off Google Drive iframes, see
+        AtlascoCultureLife._migrate_iframe_tiles_to_video). Registered
+        separately (rather than a combined selector) so each clearly maps to
+        its own block, same as the carousel buttons below.
+        Backed by atlasco_website/static/src/js/atlasco_video_option.js
+        (AtlascoVideoReplace), which reads data-video-model/id/field off the
+        selected element and writes the uploaded file's URL straight to that
+        field via orm.write() - this is what makes it actually persist,
+        unlike the old /careers "editable URL text" approach it replaces,
+        which only ever edited the page's own HTML, never the real field.
+    -->
+    <template id="atlasco_video_snippet_option" inherit_id="web_editor.snippet_options"
+              name="Atlasco Video Replace Option">
+        <xpath expr="." position="inside">
+            <div data-js="AtlascoVideoReplace" data-selector=".atl-mv-video">
+                <we-button data-replace-video="" data-no-preview="true"
+                           class="fa fa-fw fa-film"
+                           title="Upload / replace this video">
+                    Replace video
+                </we-button>
+            </div>
+            <div data-js="AtlascoVideoReplace" data-selector=".crb-video-frame">
+                <we-button data-replace-video="" data-no-preview="true"
+                           class="fa fa-fw fa-film"
+                           title="Upload / replace this video">
+                    Replace video
+                </we-button>
+            </div>
+            <div data-js="AtlascoVideoReplace" data-selector=".lax-tile-video">
+                <we-button data-replace-video="" data-no-preview="true"
+                           class="fa fa-fw fa-film"
+                           title="Upload / replace this video">
+                    Replace video
+                </we-button>
+            </div>
+        </xpath>
+    </template>
+    <!--
+        Registers a "Font" option for hand-coded static blocks (Partners,
+        Industries, Products, Services, ...) that have no content-field
+        binding for Odoo's built-in text-toolbar font controls to persist to
+        - see the "font editing on static blocks" ticket. Any block wrapper
+        carrying class "atl-font-editable" (and the "o_editable" class,
+        required for it to be inside the Website Editor's recognized
+        editable area at all - see atlasco_content_views.xml/the page
+        templates) gets this option. Backed by
+        atlasco_website/static/src/js/atlasco_font_option.js
+        (AtlascoFontStyle), which applies the choice via CSS variables and
+        writes it to that block's own atlasco.block.style record via
+        orm.write() - same persistence pattern as AtlascoVideoReplace.
+    -->
+    <!--
+        Registers a "Show all partners" URL option in the Website editor
+        sidebar for the home page Partners honeycomb (#atlPartnerComb) - see
+        ClickUp 869eg533x. That block's <a> tags (including the CTA hex) are
+        built entirely at runtime by atlasco.js from content.home_partners_
+        showall_url, so the block was never inside a mechanism the built-in
+        Link dialog could actually persist to (see atlasco_partners_link_
+        option.js for the full root-cause note). Backed by
+        atlasco_website/static/src/js/atlasco_partners_link_option.js
+        (AtlascoPartnersLink), same orm.write() persistence pattern as
+        AtlascoVideoReplace/AtlascoFontStyle above.
+    -->
+    <template id="atlasco_partners_link_snippet_option" inherit_id="web_editor.snippet_options"
+              name="Atlasco Partners Link Option">
+        <xpath expr="." position="inside">
+            <div data-js="AtlascoPartnersLink" data-selector="#atlPartnerComb">
+                <we-input string="Show all partners URL"
+                          data-set-partners-show-all-url=""
+                          data-no-preview="true"></we-input>
+            </div>
+        </xpath>
+    </template>
+    <template id="atlasco_font_snippet_option" inherit_id="web_editor.snippet_options"
+              name="Atlasco Font Option">
+        <xpath expr="." position="inside">
+            <div data-js="AtlascoFontStyle" data-selector=".atl-font-editable">
+                <we-select string="Font">
+                    <we-button data-select-font-family="">Default</we-button>
+                    <we-button data-select-font-family="'Archivo', system-ui, sans-serif">Archivo</we-button>
+                    <we-button data-select-font-family="'IBM Plex Sans', system-ui, sans-serif">IBM Plex Sans</we-button>
+                    <we-button data-select-font-family="'Playfair Display', serif">Playfair Display</we-button>
+                    <we-button data-select-font-family="Georgia, serif">Georgia</we-button>
+                    <we-button data-select-font-family="'Typo Square', var(--font-main)">Typo Square</we-button>
+                    <we-button data-select-font-family="'Dancing Script', cursive">Dancing Script</we-button>
+                    <we-button data-select-font-family="Helvetica, Arial, sans-serif">Helvetica</we-button>
+                </we-select>
+                <we-select string="Size">
+                    <we-button data-select-font-size="">Default</we-button>
+                    <we-button data-select-font-size="14px">14px</we-button>
+                    <we-button data-select-font-size="16px">16px</we-button>
+                    <we-button data-select-font-size="18px">18px</we-button>
+                    <we-button data-select-font-size="20px">20px</we-button>
+                    <we-button data-select-font-size="24px">24px</we-button>
+                    <we-button data-select-font-size="28px">28px</we-button>
+                    <we-button data-select-font-size="32px">32px</we-button>
+                </we-select>
+            </div>
+        </xpath>
+    </template>
+</odoo>
